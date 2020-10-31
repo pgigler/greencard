@@ -82,7 +82,7 @@
     "build": "gatsby build",
     "rebuild": "npm run clean && npm run build",
     "createcert": "node ./scripts/createcert.js",
-    "dev": "gatsby develop -H greencard.dev -p 8020 --https --key-file greencard.dev.key --cert-file greencard.dev.crt --ca-file greencard.dev.crt",
+    "dev": "gatsby develop -H greencard.dev -p 8020 --https --key-file greencard.dev.key --cert-file greencard.dev.crt",
     "dev:php": "php -S localhost:7575 -t ./php",
     "_deploy:uat:build": "gatsby clean && cross-env ENV=uat gatsby build --prefix-paths",
     "deploy:uat": "npm run _deploy:uat:build && node ./scripts/deploy-uat.js && npm run clean",

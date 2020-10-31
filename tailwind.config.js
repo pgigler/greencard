@@ -2,9 +2,7 @@ const { colors } = require("tailwindcss/defaultTheme");
 
 module.exports = {
 	theme: {
-		container: {
-			center: true,
-		},
+		container: false,
 		fontFamily: {
 			body: ["Open Sans"],
 		},
@@ -18,8 +16,8 @@ module.exports = {
 			yellow: colors.yellow,
 			brand: {
 				greendark: "#0a4722",
-				green: "#1dcf61",
-				green1: "#1aac54",
+				green: "#24c762",
+				green1: "#129c47",
 				gray1: "#34383d",
 				gray2: "#40454b",
 				gray3: "#acacac",
@@ -39,6 +37,28 @@ module.exports = {
 		},
 	},
 	variants: {},
-	plugins: [],
+	plugins: [
+        ({ addComponents, theme }) => {
+            addComponents({
+              ".container": {
+                "marginInline": "auto",
+                "paddingInline": theme("spacing.4"),
+                "width": "100%",
+                "margin": "auto",
+
+                // Breakpoints
+                "@screen sm": {
+                    maxWidth: theme("screens.sm"),
+                },
+                "@screen md": {
+                    maxWidth: theme("screens.md"),
+                },
+                "@screen lg": {
+                    maxWidth: theme("screens.lg"),
+                },
+              },
+            });
+          },
+    ],
 	purge: false,
 };

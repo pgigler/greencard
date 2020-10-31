@@ -112,24 +112,6 @@ main {
 	}
 }
 
-.banner {
-	height: 1000px;
-
-	.banner-text {
-		margin-top: 190px;
-	}
-}
-
-@media (max-width: 640px) {
-	.banner {
-		height: 500px;
-
-		.banner-text {
-			margin-top: 70px;
-		}
-	}
-}
-
 q {
 	quotes: "\201C""\201D""\2018""\2019";
 	padding: 20px;
