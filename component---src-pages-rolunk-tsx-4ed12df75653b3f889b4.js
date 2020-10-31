@@ -1,0 +1,2 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[10],{DKj7:function(e,t,a){"use strict";a.r(t);var n=a("q1tI"),l=a.n(n),c=a("9Dj+"),s=a("H8eV");t.default=function(){return l.a.createElement(c.a,null,l.a.createElement(s.a,{title:"Rólunk"}),l.a.createElement("div",{className:"container px-4"},l.a.createElement("h1",{className:"pt-12 text-4xl leading-tight font-semibold"},"Rólunk"),l.a.createElement("p",{className:"text-lg my-8"},"Cégünk kezdetben...")))}}}]);
+//# sourceMappingURL=component---src-pages-rolunk-tsx-4ed12df75653b3f889b4.js.map
