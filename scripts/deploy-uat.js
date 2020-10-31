@@ -6,7 +6,7 @@ ghpages.publish(
 	"public",
 	{
 		branch: "gh-pages",
-		repo: `https://${process.env.GH_TOKEN}@github.com/pgigler/tersus.git`,
+		repo: `https://${process.env.GH_TOKEN}@github.com/pgigler/greencard.git`,
 	},
 	(err) => {
 		if (err) {

@@ -11,7 +11,7 @@ const Footer = () => {
 					<div className="pb-12 flex flex-col md:w-1/3 items-center sm:items-start">
 						<h2 className="text-white uppercase font-semibold text-lg mb-1">Cégadatok</h2>
 						<div>Cégjegyzékszám: 01-06-617448</div>
-						<div>Adószám: 28918721242-2-42</div>
+						<div>Adószám: 28918721-2-42</div>
 					</div>
 					<div id="kapcsolat" className="flex items-center flex-col md:w-1/3 pb-12">
 						<h2 className="text-white uppercase font-semibold text-lg mb-1">Kapcsolat</h2>

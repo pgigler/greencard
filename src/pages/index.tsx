@@ -185,7 +185,7 @@ const IndexPage = () => {
 					<div className="text-3xl uppercase flex justify-around py-8 text-center">
 						<div>Nálunk jobbat nem talál</div>
 					</div>
-					<div className="lg:px-32">
+					<div className="lg:px-32 text-center">
 						Szakembereink hosszú évek óta a tökéletesre törekszenek. Folyamatosan követik a trendeket,
 						csiszolják elméjüket. Szervízünk mindig igyekszik az elérhető legjobb technológiával dolgozni.
 					</div>
@@ -215,7 +215,7 @@ const IndexPage = () => {
 										</svg>
 									</div>
 									<div className="text-2xl my-4 font-thin">{item.title}</div>
-									<div>{item.text}</div>
+									<div className="text-center">{item.text}</div>
 								</div>
 							);
 						})}
