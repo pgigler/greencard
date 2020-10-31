@@ -1,0 +1,158 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,900");
+
+@import "notifications";
+
+@tailwind base;
+
+@tailwind components;
+
+@tailwind utilities;
+
+.btn {
+	@apply border uppercase text-center px-10 py-2 inline-block uppercase whitespace-no-wrap text-xl duration-300;
+
+	&.btn-primary {
+		@apply text-white bg-brand-green;
+
+		&.btn-transparent {
+			@apply .bg-transparent;
+		}
+
+		&:disabled {
+			@apply bg-gray-400 cursor-default;
+		}
+
+		&.btn-green {
+			&:not(:disabled) {
+				@apply bg-green-500;
+
+				&:hover {
+					@apply bg-white text-brand-green;
+				}
+			}
+		}
+
+		&.btn-light {
+			&:not(:disabled) {
+				@apply text-brand-green bg-white;
+				&:hover {
+					@apply bg-gray-200;
+				}
+			}
+		}
+
+		&:not(:disabled) {
+			&:hover {
+				@apply bg-white text-brand-green;
+			}
+		}
+	}
+
+	&.btn-small {
+		@apply text-white bg-brand-green px-2;
+		&:hover {
+			@apply bg-white text-brand-green;
+		}
+	}
+
+	&.toggled {
+		@apply bg-white text-brand-green;
+	}
+}
+
+.title {
+	@apply text-3xl uppercase font-semibold;
+
+	&.title-wide {
+		@apply tracking-widest;
+	}
+}
+
+.link {
+	@apply text-brand-green font-semibold;
+
+	&:hover {
+		@apply text-black;
+	}
+}
+
+.link-inverse {
+	@apply text-black font-semibold;
+
+	&:hover {
+		@apply text-white;
+	}
+}
+
+.checkout-data {
+	@apply text-brand-greendark;
+}
+
+main {
+	position: relative;
+	min-height: calc(100vh - 265px);
+}
+
+.menu {
+	h1 {
+		// transition: color 0.3s;
+	}
+	div {
+		background-color: rgba(#34383d, 0.8);
+		// transition: height 0.3s;
+	}
+	&.active,
+	&:hover {
+		h1 {
+			@apply text-white;
+		}
+		div {
+			@apply h-full;
+		}
+	}
+}
+
+.banner {
+	height: 1000px;
+
+	.banner-text {
+		margin-top: 190px;
+	}
+}
+
+@media (max-width: 640px) {
+	.banner {
+		height: 500px;
+
+		.banner-text {
+			margin-top: 70px;
+		}
+	}
+}
+
+q {
+	quotes: "\201C""\201D""\2018""\2019";
+	padding: 20px;
+	line-height: 0em;
+}
+
+q:before {
+	@apply text-brand-green;
+	content: open-quote;
+	font-size: 2em;
+	display: inline;
+	height: 0;
+	left: -10px;
+	position: relative;
+	top: 5px;
+}
+q:after {
+	@apply text-brand-green;
+	content: close-quote;
+	font-size: 2em;
+	display: inline;
+	height: 0;
+	left: 10px;
+	position: relative;
+	top: 5px;
+}

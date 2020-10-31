@@ -1,0 +1,69 @@
+@import "variables";
+
+dc-select {
+	.dc-select {
+		@apply relative select-none block w-full;
+
+		.select-input {
+			@apply bg-white text-gray-800 py-2 px-3 pr-8 border border-solid border-gray-600 cursor-pointer w-full;
+		}
+
+		&:after {
+			@apply absolute w-0 h-0 cursor-pointer;
+			content: "";
+			top: 50%;
+			transform: translateY(-50%) translateY(3px);
+			transform-origin: top center;
+			transition: transform 0.2s ease-in-out;
+			right: 10px;
+			border: 6px solid transparent;
+			border-color: $text-color transparent transparent transparent;
+		}
+
+		&.opened {
+			&:after {
+				transform: translateY(-50%) translateY(6px) rotate(-180deg);
+			}
+		}
+
+		.select-items {
+			@apply absolute bg-white left-0 right-0 overflow-auto shadow-select;
+			max-height: 25vh;
+			top: 100%;
+			z-index: 99;
+
+			li {
+				@apply bg-white text-gray-800 py-2 px-3 border border-transparent cursor-pointer select-none overflow-hidden whitespace-no-wrap;
+				text-overflow: ellipsis;
+
+				&:hover {
+					@apply text-white;
+					background-color: $gray-dark;
+				}
+
+				&.selected {
+					@apply text-white;
+					background-color: $brand-primary;
+				}
+			}
+		}
+	}
+
+	&.sm {
+		.dc-select {
+			.select-input {
+				@apply text-sm py-1 px-2 pr-8;
+			}
+
+			.select-items {
+				li {
+					@apply py-1 px-2 text-sm;
+				}
+			}
+
+			&:after {
+				right: 10px;
+			}
+		}
+	}
+}

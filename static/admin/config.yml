@@ -1,0 +1,38 @@
+backend:
+    # name: test-repo
+    name: github
+    repo: pgigler/greencardcms
+    commit_messages:
+        create: "Create {{collection}} “{{slug}}”"
+        update: "Update {{collection}} “{{slug}}”"
+        delete: "Delete {{collection}} “{{slug}}”"
+        uploadMedia: "[skip ci] Upload “{{path}}”"
+        deleteMedia: "[skip ci] Delete “{{path}}”"
+publish_mode: editorial_workflow
+media_folder: assets
+public_folder: /assets
+collections:
+    - name: useful_infos
+      label: Useful Infos
+      folder: useful_infos
+      create: true
+      fields:
+          - { name: title, label: Title }
+          - { name: slug, label: Slug }
+          - { name: image, label: Image, widget: image }
+          - { name: body, label: Body, widget: markdown }
+    - name: configs
+      label: Configs
+      files:
+          - file: products.md
+            label: products
+            name: products
+            fields:
+                - { label: Title, name: title, widget: string }
+                - {
+                      label: Content,
+                      name: content,
+                      widget: code,
+                      default_language: "json",
+                      allow_language_selection: false,
+                  }
