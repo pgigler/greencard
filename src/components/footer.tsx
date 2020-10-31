@@ -100,10 +100,10 @@ const Footer = () => {
 						<Link className="hover:text-brand-green" to="/adatvedelmi-tajekoztato">
 							Adatvédelmi tájékoztató
 						</Link>{" "}
-						|{" "}
+						{/* |{" "}
 						<Link className="hover:text-brand-green" to="/altalanos-szerzodesi-feltetelek">
 							Általános szerződési feltételek
-						</Link>
+						</Link> */}
 					</div>
 				</div>
 			</section>

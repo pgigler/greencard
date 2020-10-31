@@ -98,12 +98,12 @@ module.exports = {
 				whitelistPatterns: [/^notification/],
 			},
 		},
-		{
-			resolve: "gatsby-plugin-netlify-cms",
-			options: {
-				modulePath: `${__dirname}/src/cms.js`,
-			},
-		},
+		// {
+		// 	resolve: "gatsby-plugin-netlify-cms",
+		// 	options: {
+		// 		modulePath: `${__dirname}/src/cms.js`,
+		// 	},
+		// },
 		{
 			resolve: `gatsby-plugin-create-client-paths`,
 			options: { prefixes: [`/ops/*`] },

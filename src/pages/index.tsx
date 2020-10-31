@@ -79,7 +79,7 @@ const BEST_SOLUTION_ITEMS: {
 const IndexPage = () => {
 	const data = useStaticQuery(graphql`
 		query IndexPageQuery {
-			allFile(filter: { relativePath: { in: ["banner/home2.png"] } }) {
+			allFile(filter: { relativePath: { in: ["banner/home2.png", "banner/home_mobile.png"] } }) {
 				edges {
 					node {
 						relativePath
@@ -96,6 +96,7 @@ const IndexPage = () => {
 	`);
 
 	const fluidBanner = getFluid(data.allFile.edges, "banner/home2.png");
+	const fluidBannerMobile = getFluid(data.allFile.edges, "banner/home_mobile.png");
 
 	return (
 		<Layout>
@@ -120,9 +121,28 @@ const IndexPage = () => {
 				</div>
 			</div>
 
+			<div className="text-brand-grayt block lg:hidden">
+				<div>
+					<BackgroundImage
+						id="banner"
+						Tag="div"
+						className="bg-gray-400 text-black"
+						style={{
+							backgroundSize: "100% auto",
+							backgroundAttachment: "fixed",
+							backgroundPosition: "center top",
+							height: "400px",
+							backgroundColor: "transparent",
+							filter: "brightness(0.8)",
+						}}
+						fluid={fluidBannerMobile}
+					></BackgroundImage>
+				</div>
+			</div>
+
 			<div id="pageMenu" className="bg-brand-green text-white">
 				<div className="container p-4">
-					<div className="md:flex w-full justify-between">
+					<div className="px-4 md:px-0 md:flex w-full justify-between">
 						{PAGE_MENU.map((menu, i) => {
 							return (
 								<>
@@ -162,17 +182,17 @@ const IndexPage = () => {
 			{/* Best solutions */}
 			<div style={{ backgroundColor: "#EEFFF0" }}>
 				<div className="container px-4">
-					<div className="text-3xl uppercase flex justify-around py-8">
+					<div className="text-3xl uppercase flex justify-around py-8 text-center">
 						<div>Nálunk jobbat nem talál</div>
 					</div>
 					<div className="lg:px-32">
 						Szakembereink hosszú évek óta a tökéletesre törekszenek. Folyamatosan követik a trendeket,
 						csiszolják elméjüket. Szervízünk mindig igyekszik az elérhető legjobb technológiával dolgozni.
 					</div>
-					<div className="sm:flex py-8 justify-between">
+					<div className="sm:flex py-4 justify-between">
 						{BEST_SOLUTION_ITEMS.map((item, i) => {
 							return (
-								<div key={i} className="flex flex-col items-center px-4">
+								<div key={i} className="flex flex-col items-center md:px-4">
 									<div
 										style={{
 											strokeWidth: item.strokeWidth,
