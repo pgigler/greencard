@@ -14,7 +14,7 @@ const GetInTouch = () => {
 					<li>Máshol javíttatott és nem elégedett az eredménnyel?</li>
 				</ul>
 				<p>Nyugodtan forduljon hozzánk, segítünk amiben tudunk.</p>
-				<a className="text-right link-inverse" href={`mailto:info@zoldkartyabt.com?subject=weboldalról`}>
+				<a className="text-right link-inverse" href={`mailto:zoldkartyabt1@gmail.com?subject=weboldalról`}>
 					<div className="uppercase">Email &#10230;</div>
 				</a>
 			</div>

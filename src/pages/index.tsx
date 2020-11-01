@@ -6,6 +6,7 @@ import SEO from "../components/seo";
 import { getFluid } from "../util/helper";
 import BackgroundImage from "gatsby-background-image";
 import GetInTouch from "../components/get-in-touch";
+import Img from "gatsby-image";
 
 interface PageMenu {
 	label: string;
@@ -13,26 +14,26 @@ interface PageMenu {
 	link: string;
 }
 
-const PAGE_MENU = [
+const PAGE_MENU: PageMenu[] = [
 	{
 		label: "Műszaki vizsga",
 		text: "Profi szakszervízzel egybekötött műszaki vizsga",
-		link: "szolgaltatasok#muszaki_vizsga",
+		link: "szolgaltatasok#muszaki-vizsga",
 	},
 	{
-		label: "Szakszervíz",
+		label: "Autószervíz",
 		text: "Szakembereink maximális hatékonysággal állnak rendelkezésre",
-		link: "szolgaltatasok#szakszerviz",
+		link: "szolgaltatasok#autoszerviz",
 	},
 	{
-		label: "Gyorsszervíz",
-		text: "A nap 24 órájában kollégáink folyamatosan várják a bajba jutott autókat",
-		link: "szolgaltatasok#gyorsszerviz",
+		label: "Eredetiség vizsgálat",
+		text: "Gyanús forrásból származik az autója, mi megmondjuk honnan jött",
+		link: "szolgaltatasok#eredetiseg-vizsgalat",
 	},
 	{
-		label: "Zöldkártya",
-		text: "Kettő a egyben, Műszaki és zöldkártya, ami már nem is zöld",
-		link: "szolgaltatasok#zoldkartya",
+		label: "Gumiszervíz",
+		text: "Kollégáink munkaidőben folyamatosan várják a bajba jutott autókat",
+		link: "szolgaltatasok#gumiszerviz",
 	},
 ];
 
@@ -79,7 +80,7 @@ const BEST_SOLUTION_ITEMS: {
 const IndexPage = () => {
 	const data = useStaticQuery(graphql`
 		query IndexPageQuery {
-			allFile(filter: { relativePath: { in: ["banner/home2.png", "banner/home_mobile.png"] } }) {
+			allFile(filter: { relativePath: { in: ["banner/home2.png", "banner/home_mobile.png", "sos.png"] } }) {
 				edges {
 					node {
 						relativePath
@@ -97,6 +98,7 @@ const IndexPage = () => {
 
 	const fluidBanner = getFluid(data.allFile.edges, "banner/home2.png");
 	const fluidBannerMobile = getFluid(data.allFile.edges, "banner/home_mobile.png");
+	const sos = getFluid(data.allFile.edges, "sos.png");
 
 	return (
 		<Layout>
@@ -141,8 +143,8 @@ const IndexPage = () => {
 			</div>
 
 			<div id="pageMenu" className="bg-brand-green text-white">
-				<div className="container p-4">
-					<div className="px-4 md:px-0 md:flex w-full justify-between">
+				<div className="container py-4">
+					<div className="md:flex w-full justify-between">
 						{PAGE_MENU.map((menu, i) => {
 							return (
 								<>
@@ -169,13 +171,32 @@ const IndexPage = () => {
 				</div>
 			</div>
 
-			{/* Come and visit us */}
-			<div className="py-12">
-				<h2 className="pb-4 w-full text-center title title-wide">Látogasson el hozzánk</h2>
-				<div className="mb-12 flex justify-around">
-					<Link to="/szolgaltatasok">
-						<div className="btn btn-primary">Szolgáltatások</div>
-					</Link>
+			<div className="container py-12">
+				<div className="md:flex justify justify-between mx-16">
+					<div className="md:mr-8">
+						<h2 className="pb-4 w-full text-center md:text-left title title-wide text-red-600">
+							S.O.S Műszaki vizsga
+						</h2>
+						<div className="text-center md:text-left">
+							Későn vette észre, hogy lejárt a műszaki vizsgája? Esetleg a rendőrök figyelmeztették?
+							Hozzánk bármikor hozhatja az autóját, akár 4 órán belül is levizsgáztatjuk.
+						</div>
+						<h2 className="hidden lg:block py-4 w-full title title-wide text-red-600">
+							S.O.S Eredetiségvizsgálat
+						</h2>
+						<h2 className="lg:hidden text-center md:text-left py-4 w-full title title-wide text-red-600">
+							S.O.S Eredetiség-vizsgálat
+						</h2>
+						<div className="text-center md:text-left">Hipergyors vizsgálat bármelyik kategóriában.</div>
+						<div className="mt-8 text-center md:text-right">
+							<Link to="/szolgaltatasok#sos">
+								<div className="btn btn-primary">Részletek</div>
+							</Link>
+						</div>
+					</div>
+					<div className="mt-8 md:mt-0">
+						<Img fluid={sos} alt="SOS" style={{ width: "283px" }} />
+					</div>
 				</div>
 			</div>
 
@@ -220,6 +241,16 @@ const IndexPage = () => {
 							);
 						})}
 					</div>
+				</div>
+			</div>
+
+			{/* Come and visit us */}
+			<div className="py-12">
+				<h2 className="pb-4 w-full text-center title title-wide">Látogasson el hozzánk</h2>
+				<div className="mb-12 flex justify-around">
+					<Link to="/szolgaltatasok">
+						<div className="btn btn-primary">Szolgáltatások</div>
+					</Link>
 				</div>
 			</div>
 

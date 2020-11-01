@@ -8,8 +8,8 @@ const PrivacyPolicyPage = () => (
 		<div className="container text-brand-grayt p-4">
 			<h1 className="text-3xl uppercase mb-8">Adatvédelmi tájékoztató</h1>
 			<p>
-				Zöldkártya Bt understands that the customer’s privacy is important. In respect of the privacy of the Firm’s
-				contacts, personal data will be collected and used only in ways described in this document.
+				Zöldkártya Bt understands that the customer’s privacy is important. In respect of the privacy of the
+				Firm’s contacts, personal data will be collected and used only in ways described in this document.
 			</p>
 			<h2 className="text-xl font-semibold py-4">Purpose</h2>
 			<p>
@@ -24,13 +24,13 @@ const PrivacyPolicyPage = () => (
 			</p>
 			<h2 className="text-xl font-semibold py-4">Information About Us</h2>
 			<p>
-                Zöldkártya Bt is a limited company registered address at 8314 Vonyarcvashegy, Hóvirág u. 2/3, e-mail:{" "}
-				<a className="text-brand-green" href="mailto:info@zoldkartyabt.com">
-					info@zoldkartyabt.com
+				Zöldkártya Bt is a limited company registered address at 8314 Vonyarcvashegy, Hóvirág u. 2/3, e-mail:{" "}
+				<a className="text-brand-green" href="mailto:zoldkartyabt1@gmail.com">
+					zoldkartyabt1@gmail.com
 				</a>
 				, telephone: +36 (XX) XXX XXXX, website:{" "}
 				<a className="text-brand-green" href="https://zoldkartyabt.com/">
-                zoldkartyabt.com
+					zoldkartyabt.com
 				</a>
 				.
 			</p>
