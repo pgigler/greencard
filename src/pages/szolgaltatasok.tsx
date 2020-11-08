@@ -1,9 +1,41 @@
+import { graphql, useStaticQuery } from "gatsby";
 import React from "react";
 import Layout from "../components/layout";
 import SEO from "../components/seo";
-import { isBrowser } from "../util/helper";
+import { getFluid, isBrowser } from "../util/helper";
+import Img from "gatsby-image";
 
 const ServicesPage = () => {
+	const data = useStaticQuery(graphql`
+		query ServicesPageQuery {
+			allFile(
+				filter: {
+					relativePath: {
+						in: ["eredetiseg.jpg", "gumiszerviz.png", "muszaki.jpg", "muszaki2.jpg", "autoszerviz.jpg"]
+					}
+				}
+			) {
+				edges {
+					node {
+						relativePath
+						childImageSharp {
+							fluid(maxWidth: 400) {
+								...GatsbyImageSharpFluid
+								...GatsbyImageSharpFluidLimitPresentationSize
+							}
+						}
+					}
+				}
+			}
+		}
+	`);
+
+	const fluidEredetiseg = getFluid(data.allFile.edges, "eredetiseg.jpg");
+	const fluidGumiSzerviz = getFluid(data.allFile.edges, "gumiszerviz.png");
+	const fluidAutoSzerviz = getFluid(data.allFile.edges, "autoszerviz.jpg");
+	const fluidMuszaki = getFluid(data.allFile.edges, "muszaki.jpg");
+	const fluidMuszaki2 = getFluid(data.allFile.edges, "muszaki2.jpg");
+
 	let hash = "";
 	if (isBrowser()) {
 		hash = window.location.hash;
@@ -13,7 +45,7 @@ const ServicesPage = () => {
 		<div>
 			<p
 				id="muszaki-vizsga"
-				className="text-4xl text-brand-greendark font-semibold my-8 text-center md:text-left"
+				className="text-4xl text-brand-greendark font-semibold mb-8 text-center md:text-left"
 			>
 				Műszaki vizsga
 			</p>
@@ -29,12 +61,16 @@ const ServicesPage = () => {
 						<td className="font-bold text-brand-greendark">22.000 Ft</td>
 					</tr>
 					<tr>
-						<td>Személygépjármű (M1G)</td>
+						<td>Személygépjármű (4x4 - M1G)</td>
 						<td className="font-bold text-brand-greendark">26.000 Ft</td>
 					</tr>
 					<tr>
-						<td>Tehergépjármű (3.5 Tonnáig)</td>
-						<td className="font-bold text-brand-greendark">27.000 Ft</td>
+						<td>Tehergépjármű (3,5 Tonnáig)</td>
+						<td className="font-bold text-brand-greendark">26.000 Ft</td>
+					</tr>
+					<tr>
+						<td>Tehergépjármű (4x4)</td>
+						<td className="font-bold text-brand-greendark">30.000 Ft</td>
 					</tr>
 					<tr>
 						<td>Motorkerékpár</td>
@@ -57,10 +93,10 @@ const ServicesPage = () => {
 			</div>
 			<div className="pt-4">
 				Ha a gépjármű állapota nem megfelelő az átvizsgálási díj kerül felszámításra, melynek összege bruttó
-				<span className="font-bold text-brand-greendark"> 5710 Ft.</span>
+				<span className="font-bold text-brand-greendark"> 5000 Ft.</span>
 			</div>
 			<div className="pt-4">
-				Hiba esetén szervizünkben teljes körű javításra van lehetőség. Amennyiben gépjárművét nálunk javítatja,
+				Hiba esetén szervizünkben teljes körű javításra van lehetőség. Amennyiben gépjárművét nálunk javíttatja,
 				az előzetes átvizsgálás díja nem kerül felszámításra.
 			</div>
 			<div className="pt-4">A műszaki vizsgához szükséges okmányok:</div>
@@ -80,13 +116,13 @@ const ServicesPage = () => {
 
 	const autoSzerviz = (
 		<div>
-			<p id="autoszerviz" className="text-4xl text-brand-greendark font-semibold mt-8 text-center md:text-left">
-				Autószervíz
+			<p id="autoszerviz" className="text-4xl text-brand-greendark font-semibold text-center md:text-left">
+				Autószerviz
 			</p>
 			<div className="pt-4">Teljeskörű gépjárműjavítás</div>
 			<ul className="list-disc list-inside mt-4 ml-4">
-				<li>Fék, Futóműszervíz</li>
-				<li>Motorszervíz</li>
+				<li>Fék, Futóműszerviz</li>
+				<li>Motorszerviz</li>
 				<li>Gépjármű diagnosztika</li>
 				<li>Időszakos karbantartás</li>
 				<li>Fényszóró polírozás</li>
@@ -113,7 +149,7 @@ const ServicesPage = () => {
 		<div>
 			<p
 				id="eredetiseg-vizsgalat"
-				className="text-4xl text-brand-greendark font-semibold mt-8 text-center md:text-left"
+				className="text-4xl text-brand-greendark font-semibold text-center md:text-left"
 			>
 				Eredetiség vizsgálat
 			</p>
@@ -176,8 +212,8 @@ const ServicesPage = () => {
 
 	const gumiSzerviz = (
 		<div>
-			<p id="gumiszerviz" className="text-4xl text-brand-greendark font-semibold mt-8 text-center md:text-left">
-				Gumiszervíz
+			<p id="gumiszerviz" className="text-4xl text-brand-greendark font-semibold text-center md:text-left">
+				Gumiszerviz
 			</p>
 			<div className="mt-4">Komplett szerelési árak (átszerelés, centírozás, kerékcsere)</div>
 			<table className="mt-4 bg-gray-100 m-4" cellSpacing="5" cellPadding="5">
@@ -220,7 +256,7 @@ const ServicesPage = () => {
 
 	const sos = (
 		<div>
-			<p id="sos" className="text-4xl text-red-600 font-semibold mt-8 text-center md:text-left">
+			<p id="sos" className="text-4xl text-red-600 font-semibold text-center md:text-left">
 				S.O.S műszaki vizsga / eredetvizsgálat
 			</p>
 			<div className="mt-4 py-2 font-semibold">Lejárt a műszaki vizsgája?</div>
@@ -235,6 +271,20 @@ const ServicesPage = () => {
 				foglalás nem lehetséges.
 			</div>
 			<div className="mt-4">
+				<div className="flex items-center font-semibold text-red-600 text-2xl">
+					<span>
+						<svg
+							className="h-6 w-6 fill-current mr-2 mt-1"
+							viewBox="0 0 1792 1792"
+							xmlns="http://www.w3.org/2000/svg"
+						>
+							<path d="M1600 1240q0 27-10 70.5t-21 68.5q-21 50-122 106-94 51-186 51-27 0-53-3.5t-57.5-12.5-47-14.5-55.5-20.5-49-18q-98-35-175-83-127-79-264-216t-216-264q-48-77-83-175-3-9-18-49t-20.5-55.5-14.5-47-12.5-57.5-3.5-53q0-92 51-186 56-101 106-122 25-11 68.5-21t70.5-10q14 0 21 3 18 6 53 76 11 19 30 54t35 63.5 31 53.5q3 4 17.5 25t21.5 35.5 7 28.5q0 20-28.5 50t-62 55-62 53-28.5 46q0 9 5 22.5t8.5 20.5 14 24 11.5 19q76 137 174 235t235 174q2 1 19 11.5t24 14 20.5 8.5 22.5 5q18 0 46-28.5t53-62 55-62 50-28.5q14 0 28.5 7t35.5 21.5 25 17.5q25 15 53.5 31t63.5 35 54 30q70 35 76 53 3 7 3 21z" />
+						</svg>
+					</span>
+					<span className="">+36 (70) 424 5264</span>
+				</div>
+			</div>
+			<div className="mt-4">
 				Az S.O.S. szolgáltatás díja bruttó <span className="font-bold text-brand-greendark">5000 Ft</span>, mely
 				a Műszaki vizsga illetve az Eredetiség vizsga díján felül értendő.
 			</div>
@@ -245,13 +295,96 @@ const ServicesPage = () => {
 		<Layout>
 			<SEO title="Szolgáltatások" />
 			<SEO title="Rólunk" />
-			<div className="container px-4">
-				<div className="w-full md:w-2/3 lg:w-1/2 mb-8">
-					{muszakiVizsga}
-					{autoSzerviz}
-					{eredetisegVizsgalat}
-					{gumiSzerviz}
-					{sos}
+			<div className="container px-4 my-8">
+				<div className="w-full">
+					<div className="md:flex justify-between">
+						<div className="mr-8">{muszakiVizsga}</div>
+						<div>
+							<Img
+								className="hidden md:block mt-24"
+								fluid={fluidMuszaki}
+								alt="Műszaki vizsga"
+								style={{ width: "800px" }}
+							/>
+							<Img
+								className="hidden md:block mt-24"
+								fluid={fluidMuszaki2}
+								alt="Műszaki vizsga 2"
+								style={{ width: "800px" }}
+							/>
+							{/* Mobile */}
+							<Img
+								className="md:hidden mt-8 m-auto"
+								fluid={fluidMuszaki}
+								alt="Műszaki vizsga"
+								style={{ width: "300px" }}
+							/>
+						</div>
+					</div>
+					<div className="md:flex justify-between mt-8">
+						<div className="mr-8">{autoSzerviz}</div>
+						<Img
+							className="hidden md:block mr-0 mt-24"
+							fluid={fluidAutoSzerviz}
+							alt="Autó szerviz"
+							style={{ width: "600px" }}
+						/>
+						{/* Mobile */}
+						<Img
+							className="md:hidden m-auto mt-8"
+							fluid={fluidAutoSzerviz}
+							alt="Autó szerviz"
+							style={{ width: "300px" }}
+						/>
+					</div>
+					<div className="md:flex justify-between mt-8">
+						<div className="mr-8">{eredetisegVizsgalat}</div>
+						<Img
+							className="hidden md:block mt-24"
+							fluid={fluidEredetiseg}
+							alt="Eredetiség vizsgálat"
+							style={{ width: "500px" }}
+						/>
+						{/* Mobile */}
+						<Img
+							className="md:hidden mt-8 m-auto"
+							fluid={fluidEredetiseg}
+							alt="Eredetiség vizsgálat"
+							style={{ width: "300px" }}
+						/>
+					</div>
+					<div className="md:flex justify-between mt-8">
+						<div className="mr-8">{gumiSzerviz}</div>
+						<Img
+							className="hidden md:block mt-24"
+							fluid={fluidGumiSzerviz}
+							alt="Gumiszerviz"
+							style={{ width: "600px" }}
+						/>
+						{/* Mobile */}
+						<Img
+							className="md:hidden mt-8 m-auto"
+							fluid={fluidGumiSzerviz}
+							alt="Gumiszerviz"
+							style={{ width: "300px" }}
+						/>
+					</div>
+					<div className="md:flex justify-between mt-8 md:mt-32">
+						<div className="mr-8">{sos}</div>
+						<Img
+							className="hidden md:block mt-24"
+							fluid={fluidMuszaki}
+							alt="S.O.S"
+							style={{ width: "700px" }}
+						/>
+						{/* Mobile */}
+						<Img
+							className="md:hidden mt-8 m-auto"
+							fluid={fluidMuszaki}
+							alt="S.O.S"
+							style={{ width: "300px" }}
+						/>
+					</div>
 				</div>
 			</div>
 		</Layout>

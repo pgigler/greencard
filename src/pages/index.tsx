@@ -17,11 +17,11 @@ interface PageMenu {
 const PAGE_MENU: PageMenu[] = [
 	{
 		label: "Műszaki vizsga",
-		text: "Profi szakszervízzel egybekötött műszaki vizsga",
+		text: "Profi szakszervizzel egybekötött műszaki vizsga",
 		link: "szolgaltatasok#muszaki-vizsga",
 	},
 	{
-		label: "Autószervíz",
+		label: "Autószerviz",
 		text: "Szakembereink maximális hatékonysággal állnak rendelkezésre",
 		link: "szolgaltatasok#autoszerviz",
 	},
@@ -31,7 +31,7 @@ const PAGE_MENU: PageMenu[] = [
 		link: "szolgaltatasok#eredetiseg-vizsgalat",
 	},
 	{
-		label: "Gumiszervíz",
+		label: "Gumiszerviz",
 		text: "Kollégáink munkaidőben folyamatosan várják a bajba jutott autókat",
 		link: "szolgaltatasok#gumiszerviz",
 	},
@@ -80,7 +80,7 @@ const BEST_SOLUTION_ITEMS: {
 const IndexPage = () => {
 	const data = useStaticQuery(graphql`
 		query IndexPageQuery {
-			allFile(filter: { relativePath: { in: ["banner/home2.png", "banner/home_mobile.png", "sos.png"] } }) {
+			allFile(filter: { relativePath: { in: ["banner/home2.png", "banner/home_mobile.png", "sos_main2.jpg"] } }) {
 				edges {
 					node {
 						relativePath
@@ -98,7 +98,7 @@ const IndexPage = () => {
 
 	const fluidBanner = getFluid(data.allFile.edges, "banner/home2.png");
 	const fluidBannerMobile = getFluid(data.allFile.edges, "banner/home_mobile.png");
-	const sos = getFluid(data.allFile.edges, "sos.png");
+	const sos = getFluid(data.allFile.edges, "sos_main2.jpg");
 
 	return (
 		<Layout>
@@ -142,8 +142,8 @@ const IndexPage = () => {
 				</div>
 			</div>
 
-			<div id="pageMenu" className="bg-brand-green text-white">
-				<div className="container py-4">
+			<div id="pageMenu" className="">
+				<div className="container bg-brand-green text-white py-4">
 					<div className="md:flex w-full justify-between">
 						{PAGE_MENU.map((menu, i) => {
 							return (
@@ -172,14 +172,14 @@ const IndexPage = () => {
 			</div>
 
 			<div className="container py-12">
-				<div className="md:flex justify justify-between mx-16">
+				<div className="md:flex justify justify-between mx-4 md:mx-16">
 					<div className="md:mr-8">
 						<h2 className="pb-4 w-full text-center md:text-left title title-wide text-red-600">
 							S.O.S Műszaki vizsga
 						</h2>
 						<div className="text-center md:text-left">
 							Későn vette észre, hogy lejárt a műszaki vizsgája? Esetleg a rendőrök figyelmeztették?
-							Hozzánk bármikor hozhatja az autóját, akár 4 órán belül is levizsgáztatjuk.
+							Hozzánk bármikor hozhatja az autóját, akár 4 órán belül levizsgáztatjuk.
 						</div>
 						<h2 className="hidden lg:block py-4 w-full title title-wide text-red-600">
 							S.O.S Eredetiségvizsgálat
@@ -194,8 +194,13 @@ const IndexPage = () => {
 							</Link>
 						</div>
 					</div>
-					<div className="mt-8 md:mt-0">
-						<Img fluid={sos} alt="SOS" style={{ width: "283px" }} />
+					<div className="mt-8">
+						<div className="hidden md:block mt-0 ml-8">
+							<Img fluid={sos} alt="SOS" style={{ width: "450px" }} />
+						</div>
+						<div className="md:hidden">
+							<Img className="m-auto" fluid={sos} alt="SOS" style={{ width: "300px" }} />
+						</div>
 					</div>
 				</div>
 			</div>
@@ -208,7 +213,7 @@ const IndexPage = () => {
 					</div>
 					<div className="lg:px-32 text-center">
 						Szakembereink hosszú évek óta a tökéletesre törekszenek. Folyamatosan követik a trendeket,
-						csiszolják elméjüket. Szervízünk mindig igyekszik az elérhető legjobb technológiával dolgozni.
+						csiszolják elméjüket. Szervizünk mindig igyekszik az elérhető legjobb technológiával dolgozni.
 					</div>
 					<div className="sm:flex py-4 justify-between">
 						{BEST_SOLUTION_ITEMS.map((item, i) => {
@@ -236,7 +241,7 @@ const IndexPage = () => {
 										</svg>
 									</div>
 									<div className="text-2xl my-4 font-thin">{item.title}</div>
-									<div className="text-center">{item.text}</div>
+									{/* <div className="text-center">{item.text}</div> */}
 								</div>
 							);
 						})}

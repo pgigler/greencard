@@ -16,12 +16,11 @@ const AboutUsPage = () => {
 				</p>
 				<p className="text-lg my-8">
 					Szervizünkben a teljes gépjármű szervizelés,karbantartás részeként, igény szerint gumiszerelést,
-					fényszóró polírozást, belső motortisztítást , ózonos belső tisztítást is végzünk.
+					fényszóró polírozást, belső motortisztítást, ózonos belső tisztítást is végzünk.
 				</p>
 				<p className="text-lg my-8">
 					Fontos számunkra a bizalom. Ügyfeleink igényeit szem előtt tartva, a szerelés során felmerülő
-					kérdésekre, speciális szaktudású autószerelő kollegánk készséggel áll az önök rendelkezésére. A
-					szerelés minden esetben előzetes árajánlat után történik.
+					kérdésekre autószerelő kollegánk készséggel áll az önök rendelkezésére.
 				</p>
 			</div>
 		</Layout>

@@ -24,13 +24,13 @@ const PrivacyPolicyPage = () => (
 			</p>
 			<h2 className="text-xl font-semibold py-4">Information About Us</h2>
 			<p>
-				Zöldkártya Bt is a limited company registered address at 8314 Vonyarcvashegy, Hóvirág u. 2/3, e-mail:{" "}
+				Zöldkártya Bt is a limited company registered address at 1103 Budapest, Csombor utca 15., e-mail:{" "}
 				<a className="text-brand-green" href="mailto:zoldkartyabt1@gmail.com">
 					zoldkartyabt1@gmail.com
 				</a>
-				, telephone: +36 (XX) XXX XXXX, website:{" "}
-				<a className="text-brand-green" href="https://zoldkartyabt.com/">
-					zoldkartyabt.com
+				, website:{" "}
+				<a className="text-brand-green" href="https://zoldkartyabt.hu/">
+					zoldkartyabt.hu
 				</a>
 				.
 			</p>
