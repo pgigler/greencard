@@ -6,7 +6,7 @@ import "./../../assets/main.scss";
 
 const Layout = ({ children }: any) => {
 	return (
-		<>
+		<div style={{ backgroundColor: "#e8e3d1" }}>
 			<Header />
 			<div>
 				<main>{children}</main>
@@ -23,7 +23,7 @@ const Layout = ({ children }: any) => {
 				)}
 				<Footer />
 			</div>
-		</>
+		</div>
 	);
 };
 

@@ -19,7 +19,7 @@ const MENUS: Menu[] = [
 const Header = () => {
 	const data = useStaticQuery(graphql`
 		query HeaderQuery {
-			allFile(filter: { relativePath: { in: ["main_logo2.png"] } }) {
+			allFile(filter: { relativePath: { in: ["main_logo3.png"] } }) {
 				edges {
 					node {
 						relativePath
@@ -35,7 +35,7 @@ const Header = () => {
 		}
 	`);
 
-	const fluidLogo = getFluid(data.allFile.edges, "main_logo2.png");
+	const fluidLogo = getFluid(data.allFile.edges, "main_logo3.png");
 
 	const [client, setClient] = useState(false);
 

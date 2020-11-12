@@ -32,7 +32,7 @@ const PAGE_MENU: PageMenu[] = [
 	},
 	{
 		label: "Gumiszerviz",
-		text: "Kollégáink munkaidőben folyamatosan várják a bajba jutott autókat",
+		text: "Személy és tehergépjárművek gumiabroncsainak szakszerű és gyors cseréje",
 		link: "szolgaltatasok#gumiszerviz",
 	},
 ];
@@ -81,7 +81,7 @@ const IndexPage = () => {
 	const data = useStaticQuery(graphql`
 		query IndexPageQuery {
 			allFile(
-				filter: { relativePath: { in: ["banner/home2.png", "banner/home_mobile2.png", "sos_main3.png"] } }
+				filter: { relativePath: { in: ["banner/home2.png", "banner/home_mobile2.png", "sos_main4.png"] } }
 			) {
 				edges {
 					node {
@@ -100,7 +100,7 @@ const IndexPage = () => {
 
 	const fluidBanner = getFluid(data.allFile.edges, "banner/home2.png");
 	const fluidBannerMobile = getFluid(data.allFile.edges, "banner/home_mobile2.png");
-	const sos = getFluid(data.allFile.edges, "sos_main3.png");
+	const sos = getFluid(data.allFile.edges, "sos_main4.png");
 
 	return (
 		<Layout>
@@ -170,19 +170,19 @@ const IndexPage = () => {
 			</div>
 
 			<div className="container py-12">
-				<div className="md:flex justify justify-between mx-4 md:mx-16">
+				<div className="md:flex justify justify-between p-4 mx-4 md:px-16 md:mx-0 border-4 border-red-500">
 					<div className="md:mr-8">
-						<h2 className="pb-4 w-full text-center md:text-left title title-wide text-red-600">
+						<h2 className="pb-4 w-full text-center md:text-left title title-wide text-red-600 underline">
 							S.O.S Műszaki vizsga
 						</h2>
 						<div className="text-center md:text-left">
 							Későn vette észre, hogy lejárt a műszaki vizsgája? Esetleg a rendőrök figyelmeztették?
 							Hozzánk bármikor hozhatja az autóját, akár 4 órán belül levizsgáztatjuk.
 						</div>
-						<h2 className="hidden lg:block py-4 w-full title title-wide text-red-600">
+						<h2 className="hidden lg:block py-4 w-full title title-wide text-red-600 underline">
 							S.O.S Eredetiségvizsgálat
 						</h2>
-						<h2 className="lg:hidden text-center md:text-left py-4 w-full title title-wide text-red-600">
+						<h2 className="lg:hidden text-center md:text-left py-4 w-full title title-wide text-red-600 underline">
 							S.O.S Eredetiség-vizsgálat
 						</h2>
 						<div className="text-center md:text-left">Hipergyors vizsgálat bármelyik kategóriában.</div>
@@ -192,9 +192,9 @@ const IndexPage = () => {
 							</Link>
 						</div>
 					</div>
-					<div className="mt-8">
+					<div className="mt-8 md:mt-0">
 						<div className="hidden md:block mt-0 ml-8">
-							<Img fluid={sos} alt="SOS" style={{ width: "450px" }} />
+							<Img fluid={sos} alt="SOS" style={{ width: "300px" }} />
 						</div>
 						<div className="md:hidden">
 							<Img className="m-auto" fluid={sos} alt="SOS" style={{ width: "300px" }} />

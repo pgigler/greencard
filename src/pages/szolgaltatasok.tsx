@@ -11,7 +11,14 @@ const ServicesPage = () => {
 			allFile(
 				filter: {
 					relativePath: {
-						in: ["eredetiseg.jpg", "gumiszerviz.png", "muszaki.jpg", "muszaki2.jpg", "autoszerviz.jpg"]
+						in: [
+							"eredetiseg.jpg"
+							"gumiszerviz.png"
+							"muszaki.jpg"
+							"muszaki2.jpg"
+							"autoszerviz.jpg"
+							"sos_main4.png"
+						]
 					}
 				}
 			) {
@@ -35,6 +42,7 @@ const ServicesPage = () => {
 	const fluidAutoSzerviz = getFluid(data.allFile.edges, "autoszerviz.jpg");
 	const fluidMuszaki = getFluid(data.allFile.edges, "muszaki.jpg");
 	const fluidMuszaki2 = getFluid(data.allFile.edges, "muszaki2.jpg");
+	const fluidSos = getFluid(data.allFile.edges, "sos_main4.png");
 
 	let hash = "";
 	if (isBrowser()) {
@@ -43,7 +51,10 @@ const ServicesPage = () => {
 
 	const muszakiVizsga = (
 		<div>
-			<p id="muszaki-vizsga" className="text-4xl text-black font-semibold mb-8 text-center md:text-left">
+			<p
+				id="muszaki-vizsga"
+				className="text-4xl text-black font-semibold mb-8 text-center md:text-left underline"
+			>
 				Műszaki vizsga
 			</p>
 			<div>Feltüntetett áraink bruttóban értendők, valamint tartalmazzák az előzetes átvizsgálás díját.</div>
@@ -65,19 +76,19 @@ const ServicesPage = () => {
 							<td className="font-bold text-black">26.000 Ft</td>
 						</tr>
 						<tr>
-							<td>Tehergépjármű (3,5 Tonnáig)</td>
-							<td className="font-bold text-black">26.000 Ft</td>
+							<td>Tehergépjármű (3,5 tonnáig)</td>
+							<td className="font-bold text-black">24.000 Ft</td>
 						</tr>
 						<tr>
 							<td>Tehergépjármű (4x4)</td>
-							<td className="font-bold text-black">30.000 Ft</td>
+							<td className="font-bold text-black">28.000 Ft</td>
 						</tr>
 						<tr>
 							<td>Motorkerékpár</td>
 							<td className="font-bold text-black">9.900 Ft</td>
 						</tr>
 						<tr>
-							<td>Utánfutó (Fék nélkül)</td>
+							<td>Utánfutó (fék nélkül)</td>
 							<td className="font-bold text-black">16.000 Ft</td>
 						</tr>
 						<tr>
@@ -87,7 +98,7 @@ const ServicesPage = () => {
 					</tbody>
 				</table>
 			</div>
-			<div className="pt-4">(fék,futómű átvizsgálás,festékréteg mérés,lengéscsillapító mérés)</div>
+			<div className="pt-4">(fék, futómű átvizsgálás, festékréteg mérés, lengéscsillapító mérés)</div>
 			<div className="pt-4">
 				A műszaki vizsgára minden esetben előzetes átvizsgálás után kerül sor, melynek költségét a vizsga ára
 				tartalmazza.
@@ -117,22 +128,19 @@ const ServicesPage = () => {
 
 	const autoSzerviz = (
 		<div>
-			<p id="autoszerviz" className="text-4xl text-black font-semibold text-center md:text-left">
+			<p id="autoszerviz" className="text-4xl text-black font-semibold text-center md:text-left underline">
 				Autószerviz
 			</p>
 			<div className="pt-4">Teljeskörű gépjárműjavítás</div>
 			<ul className="list-disc list-inside mt-4 ml-4">
-				<li>Fék, Futóműszerviz</li>
-				<li>Motorszerviz</li>
+				<li>Fék, futóműszerviz</li>
 				<li>Gépjármű diagnosztika</li>
 				<li>Időszakos karbantartás</li>
 				<li>Fényszóró polírozás</li>
 				<li>Műszaki vizsgára való felkészítés</li>
 				<li>Gépjármű vásárlás előtti állapotfelmérés</li>
 			</ul>
-			<div className="pt-4">
-				A gépjármű javítás díja bruttó<span className="font-bold text-black"> 7500/óra</span>
-			</div>
+			<div className="pt-4 text-red-600 font-bold">A gépjármű javítás díja: bruttó 7500/óra</div>
 			<div className="pt-4">
 				A javítás minden esetben a hiba feltárása és az előzetes árajánlat után történik.
 			</div>
@@ -148,7 +156,10 @@ const ServicesPage = () => {
 
 	const eredetisegVizsgalat = (
 		<div>
-			<p id="eredetiseg-vizsgalat" className="text-4xl text-black font-semibold text-center md:text-left">
+			<p
+				id="eredetiseg-vizsgalat"
+				className="text-4xl text-black font-semibold text-center md:text-left underline"
+			>
 				Eredetiség vizsgálat
 			</p>
 			<div>
@@ -214,7 +225,7 @@ const ServicesPage = () => {
 
 	const gumiSzerviz = (
 		<div>
-			<p id="gumiszerviz" className="text-4xl text-black font-semibold text-center md:text-left">
+			<p id="gumiszerviz" className="text-4xl text-black font-semibold text-center md:text-left underline">
 				Gumiszerviz
 			</p>
 			<div className="mt-4">Komplett szerelési árak (átszerelés, centírozás, kerékcsere)</div>
@@ -262,7 +273,7 @@ const ServicesPage = () => {
 
 	const sos = (
 		<div>
-			<p id="sos" className="text-4xl text-red-600 font-semibold text-center md:text-left">
+			<p id="sos" className="text-4xl text-red-600 font-semibold text-center md:text-left underline">
 				S.O.S műszaki vizsga / eredetvizsgálat
 			</p>
 			<div className="mt-4 py-2 font-semibold">Lejárt a műszaki vizsgája?</div>
@@ -287,7 +298,7 @@ const ServicesPage = () => {
 							<path d="M1600 1240q0 27-10 70.5t-21 68.5q-21 50-122 106-94 51-186 51-27 0-53-3.5t-57.5-12.5-47-14.5-55.5-20.5-49-18q-98-35-175-83-127-79-264-216t-216-264q-48-77-83-175-3-9-18-49t-20.5-55.5-14.5-47-12.5-57.5-3.5-53q0-92 51-186 56-101 106-122 25-11 68.5-21t70.5-10q14 0 21 3 18 6 53 76 11 19 30 54t35 63.5 31 53.5q3 4 17.5 25t21.5 35.5 7 28.5q0 20-28.5 50t-62 55-62 53-28.5 46q0 9 5 22.5t8.5 20.5 14 24 11.5 19q76 137 174 235t235 174q2 1 19 11.5t24 14 20.5 8.5 22.5 5q18 0 46-28.5t53-62 55-62 50-28.5q14 0 28.5 7t35.5 21.5 25 17.5q25 15 53.5 31t63.5 35 54 30q70 35 76 53 3 7 3 21z" />
 						</svg>
 					</span>
-					<span className="">+36 (70) 424 5264</span>
+					<span className="">+36 (30) 131 4101</span>
 				</div>
 			</div>
 			<div className="mt-4">
@@ -379,14 +390,14 @@ const ServicesPage = () => {
 						<div className="mr-8">{sos}</div>
 						<Img
 							className="hidden md:block mt-24"
-							fluid={fluidMuszaki}
+							fluid={fluidSos}
 							alt="S.O.S"
 							style={{ width: "700px" }}
 						/>
 						{/* Mobile */}
 						<Img
 							className="md:hidden mt-8 m-auto"
-							fluid={fluidMuszaki}
+							fluid={fluidSos}
 							alt="S.O.S"
 							style={{ width: "300px" }}
 						/>
