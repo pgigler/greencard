@@ -43,7 +43,7 @@ const Footer = () => {
 							<a
 								href="mailto:zoldkartyabt1@gmail.com"
 								itemProp="email"
-								className="flex items-center hover:text-brand-green"
+								className="flex items-center hover:text-brand-yellow"
 							>
 								<svg
 									className="h-4 w-4 fill-current mr-2"
@@ -58,7 +58,7 @@ const Footer = () => {
 					</div>
 					<div className="flex flex-col md:w-1/3 items-center sm:items-end">
 						<h2 className="text-white uppercase font-semibold text-lg mb-1">Zöldkártya Bt (2007)</h2>
-						<div className="hover:text-brand-green">
+						<div className="hover:text-brand-yellow">
 							<a
 								href="https://www.google.hu/maps/dir//47.4624743,19.1670784/@47.4624791,19.1670463,20.67z/data=!4m2!4m1!3e0?hl=hu"
 								className="flex flex-col items-end"
@@ -81,7 +81,7 @@ const Footer = () => {
 								<div>
 									<a href="https://www.facebook.com/Z%C3%B6ldk%C3%A1rtya-Bt-104471474543433/">
 										<svg
-											className="h-8 w-8 fill-current hover:text-brand-green mr-2"
+											className="h-8 w-8 fill-current hover:text-brand-yellow mr-2"
 											viewBox="0 0 1792 1792"
 											xmlns="http://www.w3.org/2000/svg"
 										>
@@ -92,7 +92,7 @@ const Footer = () => {
 								<div>
 									<a href="https://instagram.com/zoldkartyabt">
 										<svg
-											className="h-8 w-8 fill-current hover:text-brand-green"
+											className="h-8 w-8 fill-current hover:text-brand-yellow"
 											viewBox="0 0 1792 1792"
 											xmlns="http://www.w3.org/2000/svg"
 										>
@@ -109,11 +109,11 @@ const Footer = () => {
 			<section className="bg-brand-gray1">
 				<div className="flex flex-col items-center sm:flex-row sm:justify-around max-w-screen-xl mx-auto px-3 pb-2 pt-3">
 					<div className="mb-2">
-						{/* <Link className="hover:text-brand-green" to="/adatvedelmi-tajekoztato">
+						{/* <Link className="hover:text-brand-yellow" to="/adatvedelmi-tajekoztato">
 							Adatvédelmi tájékoztató
 						</Link>{" "} */}
 						{/* |{" "}
-						<Link className="hover:text-brand-green" to="/altalanos-szerzodesi-feltetelek">
+						<Link className="hover:text-brand-yellow" to="/altalanos-szerzodesi-feltetelek">
 							Általános szerződési feltételek
 						</Link> */}
 					</div>

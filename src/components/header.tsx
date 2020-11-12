@@ -1,6 +1,7 @@
 import { Link, useStaticQuery, graphql } from "gatsby";
 import React, { useState, useEffect, useContext } from "react";
-import { isBrowser } from "../util/helper";
+import { getFluid, isBrowser } from "../util/helper";
+import Img from "gatsby-image";
 
 interface Menu {
 	title: string;
@@ -16,6 +17,26 @@ const MENUS: Menu[] = [
 ];
 
 const Header = () => {
+	const data = useStaticQuery(graphql`
+		query HeaderQuery {
+			allFile(filter: { relativePath: { in: ["main_logo2.png"] } }) {
+				edges {
+					node {
+						relativePath
+						childImageSharp {
+							fluid(maxWidth: 1920) {
+								...GatsbyImageSharpFluid
+								...GatsbyImageSharpFluidLimitPresentationSize
+							}
+						}
+					}
+				}
+			}
+		}
+	`);
+
+	const fluidLogo = getFluid(data.allFile.edges, "main_logo2.png");
+
 	const [client, setClient] = useState(false);
 
 	useEffect(() => {
@@ -29,18 +50,20 @@ const Header = () => {
 	const [menuVisible, setMenuVisible] = useState(false);
 
 	return (
-		<header className="bg-brand-green">
+		<header className="bg-black">
 			<div className="container md:flex md:justify-between h-16 top-0 md:items-center select-none">
 				<div className="flex items-center h-full w-full justify-between md:p-0">
 					<div className="text-4xl font-semibold tracking-wide font-sans text-gray-800 ml-4">
-						<Link to="/">Zöldkártya Bt</Link>
+						<Link to="/">
+							<Img fluid={fluidLogo} alt="Logo" style={{ width: "300px" }} />
+						</Link>
 					</div>
 					<div className="md:block"></div>
 					<div className="md:hidden mr-4 flex items-center">
 						<button
 							onClick={() => setMenuVisible(!menuVisible)}
 							type="button"
-							className="block text-gray-600 focus:outline-none"
+							className="block text-gray-100 focus:outline-none"
 						>
 							<div className={menuVisible ? "block" : "hidden"}>
 								<svg
@@ -68,7 +91,7 @@ const Header = () => {
 				<nav
 					className={`${
 						menuVisible ? "block" : "hidden"
-					} relative md:flex bg-white md:bg-transparent md:h-full md:pb-0 z-10`}
+					} relative md:flex bg-black md:bg-transparent md:h-full md:pb-0 z-10`}
 				>
 					{MENUS.map((item) => (
 						<Link
@@ -81,7 +104,7 @@ const Header = () => {
 									: ""
 							}`}
 						>
-							<h1 className="uppercase font-medium text-brand-grayt md:mx-2 z-20">{item.title}</h1>
+							<h1 className="uppercase font-medium text-gray-100 md:mx-2 z-20">{item.title}</h1>
 							<div className="absolute bottom-0 left-0 w-full h-0"></div>
 						</Link>
 					))}

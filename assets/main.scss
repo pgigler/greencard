@@ -9,10 +9,10 @@
 @tailwind utilities;
 
 .btn {
-	@apply border uppercase text-center px-10 py-2 inline-block uppercase whitespace-no-wrap text-xl duration-300;
+	@apply border text-center px-10 py-2 inline-block uppercase whitespace-no-wrap text-xl duration-300;
 
 	&.btn-primary {
-		@apply text-white bg-brand-green;
+		@apply text-black bg-brand-yellow;
 
 		&.btn-transparent {
 			@apply .bg-transparent;
@@ -27,14 +27,14 @@
 				@apply bg-green-500;
 
 				&:hover {
-					@apply bg-white text-brand-green;
+					@apply bg-white text-black;
 				}
 			}
 		}
 
 		&.btn-light {
 			&:not(:disabled) {
-				@apply text-brand-green bg-white;
+				@apply text-black bg-white;
 				&:hover {
 					@apply bg-gray-200;
 				}
@@ -43,20 +43,20 @@
 
 		&:not(:disabled) {
 			&:hover {
-				@apply bg-white text-brand-green;
+				@apply bg-white text-black;
 			}
 		}
 	}
 
 	&.btn-small {
-		@apply text-white bg-brand-green px-2;
+		@apply text-white bg-brand-yellow px-2;
 		&:hover {
-			@apply bg-white text-brand-green;
+			@apply bg-white text-black;
 		}
 	}
 
 	&.toggled {
-		@apply bg-white text-brand-green;
+		@apply bg-white text-black;
 	}
 }
 
@@ -69,7 +69,7 @@
 }
 
 .link {
-	@apply text-brand-green font-semibold;
+	@apply text-brand-yellow font-semibold;
 
 	&:hover {
 		@apply text-black;
@@ -85,7 +85,7 @@
 }
 
 .checkout-data {
-	@apply text-brand-greendark;
+	@apply text-brand-yellowdark;
 }
 
 main {
@@ -119,7 +119,7 @@ q {
 }
 
 q:before {
-	@apply text-brand-green;
+	@apply text-brand-yellow;
 	content: open-quote;
 	font-size: 2em;
 	display: inline;
@@ -129,7 +129,7 @@ q:before {
 	top: 5px;
 }
 q:after {
-	@apply text-brand-green;
+	@apply text-brand-yellow;
 	content: close-quote;
 	font-size: 2em;
 	display: inline;

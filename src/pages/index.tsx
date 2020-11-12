@@ -80,7 +80,9 @@ const BEST_SOLUTION_ITEMS: {
 const IndexPage = () => {
 	const data = useStaticQuery(graphql`
 		query IndexPageQuery {
-			allFile(filter: { relativePath: { in: ["banner/home2.png", "banner/home_mobile.png", "sos_main2.jpg"] } }) {
+			allFile(
+				filter: { relativePath: { in: ["banner/home2.png", "banner/home_mobile2.png", "sos_main3.png"] } }
+			) {
 				edges {
 					node {
 						relativePath
@@ -97,8 +99,8 @@ const IndexPage = () => {
 	`);
 
 	const fluidBanner = getFluid(data.allFile.edges, "banner/home2.png");
-	const fluidBannerMobile = getFluid(data.allFile.edges, "banner/home_mobile.png");
-	const sos = getFluid(data.allFile.edges, "sos_main2.jpg");
+	const fluidBannerMobile = getFluid(data.allFile.edges, "banner/home_mobile2.png");
+	const sos = getFluid(data.allFile.edges, "sos_main3.png");
 
 	return (
 		<Layout>
@@ -143,28 +145,24 @@ const IndexPage = () => {
 			</div>
 
 			<div id="pageMenu" className="">
-				<div className="container bg-brand-green text-white py-4">
+				<div className="container bg-brand-yellow text-black py-4">
 					<div className="md:flex w-full justify-between">
 						{PAGE_MENU.map((menu, i) => {
 							return (
-								<>
+								<React.Fragment key={i}>
 									<div
-										key={i * 2}
-										className="px-4 cursor-pointer hover:text-gray-900"
+										className="px-4 cursor-pointer hover:text-red-600"
 										onClick={() => navigate(menu.link)}
 									>
 										<div className="text-xl font-semibold mb-2">{menu.label}</div>
 										<div>{menu.text}</div>
 									</div>
 									{i !== PAGE_MENU.length - 1 ? (
-										<div
-											key={i * 2 + 1}
-											className="border border-r-0 border-b-0 my-4 md:my-0 border-white"
-										></div>
+										<div className="border border-r-0 border-b-0 my-4 md:my-0 border-black"></div>
 									) : (
 										""
 									)}
-								</>
+								</React.Fragment>
 							);
 						})}
 					</div>

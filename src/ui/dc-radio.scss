@@ -42,7 +42,7 @@ dc-radio {
 
 		/* When the radio button is checked, add a green background */
 		input:checked ~ .checkmark {
-			@apply .bg-brand-green;
+			@apply .bg-brand-yellow;
 
 			/* Show the indicator (dot/circle) when checked */
 			&:after {

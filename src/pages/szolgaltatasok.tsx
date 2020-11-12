@@ -43,47 +43,48 @@ const ServicesPage = () => {
 
 	const muszakiVizsga = (
 		<div>
-			<p
-				id="muszaki-vizsga"
-				className="text-4xl text-brand-greendark font-semibold mb-8 text-center md:text-left"
-			>
+			<p id="muszaki-vizsga" className="text-4xl text-black font-semibold mb-8 text-center md:text-left">
 				Műszaki vizsga
 			</p>
 			<div>Feltüntetett áraink bruttóban értendők, valamint tartalmazzák az előzetes átvizsgálás díját.</div>
 			<div>
 				<table className="mt-4 bg-gray-100 m-4" cellSpacing="5" cellPadding="5">
-					<tr>
-						<td className="bg-brand-greendark font-semibold text-white">Típus</td>
-						<td className="bg-brand-greendark font-semibold text-white">Díjak (bruttó)</td>
-					</tr>
-					<tr>
-						<td>Személygépjármű (M1)</td>
-						<td className="font-bold text-brand-greendark">22.000 Ft</td>
-					</tr>
-					<tr>
-						<td>Személygépjármű (4x4 - M1G)</td>
-						<td className="font-bold text-brand-greendark">26.000 Ft</td>
-					</tr>
-					<tr>
-						<td>Tehergépjármű (3,5 Tonnáig)</td>
-						<td className="font-bold text-brand-greendark">26.000 Ft</td>
-					</tr>
-					<tr>
-						<td>Tehergépjármű (4x4)</td>
-						<td className="font-bold text-brand-greendark">30.000 Ft</td>
-					</tr>
-					<tr>
-						<td>Motorkerékpár</td>
-						<td className="font-bold text-brand-greendark">9.900 Ft</td>
-					</tr>
-					<tr>
-						<td>Utánfutó (Fék nélkül)</td>
-						<td className="font-bold text-brand-greendark">16.000 Ft</td>
-					</tr>
-					<tr>
-						<td>Komplett állapotfelmérés</td>
-						<td className="font-bold text-brand-greendark">10.000 Ft</td>
-					</tr>
+					<thead>
+						<tr>
+							<td className="bg-brand-yellowdark font-semibold text-black">Típus</td>
+							<td className="bg-brand-yellowdark font-semibold text-black">Díjak (bruttó)</td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Személygépjármű (M1)</td>
+							<td className="font-bold text-black">22.000 Ft</td>
+						</tr>
+						<tr>
+							<td>Személygépjármű (4x4 - M1G)</td>
+							<td className="font-bold text-black">26.000 Ft</td>
+						</tr>
+						<tr>
+							<td>Tehergépjármű (3,5 Tonnáig)</td>
+							<td className="font-bold text-black">26.000 Ft</td>
+						</tr>
+						<tr>
+							<td>Tehergépjármű (4x4)</td>
+							<td className="font-bold text-black">30.000 Ft</td>
+						</tr>
+						<tr>
+							<td>Motorkerékpár</td>
+							<td className="font-bold text-black">9.900 Ft</td>
+						</tr>
+						<tr>
+							<td>Utánfutó (Fék nélkül)</td>
+							<td className="font-bold text-black">16.000 Ft</td>
+						</tr>
+						<tr>
+							<td>Komplett állapotfelmérés</td>
+							<td className="font-bold text-black">10.000 Ft</td>
+						</tr>
+					</tbody>
 				</table>
 			</div>
 			<div className="pt-4">(fék,futómű átvizsgálás,festékréteg mérés,lengéscsillapító mérés)</div>
@@ -93,7 +94,7 @@ const ServicesPage = () => {
 			</div>
 			<div className="pt-4">
 				Ha a gépjármű állapota nem megfelelő az átvizsgálási díj kerül felszámításra, melynek összege bruttó
-				<span className="font-bold text-brand-greendark"> 5000 Ft.</span>
+				<span className="font-bold text-black"> 5000 Ft.</span>
 			</div>
 			<div className="pt-4">
 				Hiba esetén szervizünkben teljes körű javításra van lehetőség. Amennyiben gépjárművét nálunk javíttatja,
@@ -116,7 +117,7 @@ const ServicesPage = () => {
 
 	const autoSzerviz = (
 		<div>
-			<p id="autoszerviz" className="text-4xl text-brand-greendark font-semibold text-center md:text-left">
+			<p id="autoszerviz" className="text-4xl text-black font-semibold text-center md:text-left">
 				Autószerviz
 			</p>
 			<div className="pt-4">Teljeskörű gépjárműjavítás</div>
@@ -130,7 +131,7 @@ const ServicesPage = () => {
 				<li>Gépjármű vásárlás előtti állapotfelmérés</li>
 			</ul>
 			<div className="pt-4">
-				A gépjármű javítás díja bruttó<span className="font-bold text-brand-greendark"> 7500/óra</span>
+				A gépjármű javítás díja bruttó<span className="font-bold text-black"> 7500/óra</span>
 			</div>
 			<div className="pt-4">
 				A javítás minden esetben a hiba feltárása és az előzetes árajánlat után történik.
@@ -147,51 +148,52 @@ const ServicesPage = () => {
 
 	const eredetisegVizsgalat = (
 		<div>
-			<p
-				id="eredetiseg-vizsgalat"
-				className="text-4xl text-brand-greendark font-semibold text-center md:text-left"
-			>
+			<p id="eredetiseg-vizsgalat" className="text-4xl text-black font-semibold text-center md:text-left">
 				Eredetiség vizsgálat
 			</p>
 			<div>
 				<div className="mt-4 font-semibold">Hatósági árak (bruttó):</div>
 				<table className="mt-4 bg-gray-100 m-4" cellSpacing="5" cellPadding="5" style={{ minWidth: "300px" }}>
-					<tr>
-						<td className="bg-brand-greendark font-semibold text-white">Személygépjármű</td>
-						<td className="bg-brand-greendark font-semibold text-white"></td>
-					</tr>
-					<tr>
-						<td>1400 ccm3-ig</td>
-						<td className="font-bold text-brand-greendark">17.000 Ft</td>
-					</tr>
-					<tr>
-						<td>1401-2000 ccm3</td>
-						<td className="font-bold text-brand-greendark">18.500 Ft</td>
-					</tr>
-					<tr>
-						<td>2000 ccm3 felett</td>
-						<td className="font-bold text-brand-greendark">20.000 Ft</td>
-					</tr>
-					<tr>
-						<td className="bg-brand-greendark font-semibold text-white">Tehergépjármű</td>
-						<td className="bg-brand-greendark font-semibold text-white"></td>
-					</tr>
-					<tr>
-						<td>3,5 tonnáig</td>
-						<td className="font-bold text-brand-greendark">20.000 Ft</td>
-					</tr>
-					<tr>
-						<td className="bg-brand-greendark font-semibold text-white">Motorkerékpár</td>
-						<td className="bg-brand-greendark font-semibold text-white"></td>
-					</tr>
-					<tr>
-						<td>500 ccm3 alatt</td>
-						<td className="font-bold text-brand-greendark">15.000 Ft</td>
-					</tr>
-					<tr>
-						<td>500 ccm3 felett</td>
-						<td className="font-bold text-brand-greendark">17.000 Ft</td>
-					</tr>
+					<thead>
+						<tr>
+							<td className="bg-brand-yellowdark font-semibold text-black">Személygépjármű</td>
+							<td className="bg-brand-yellowdark font-semibold text-black"></td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>1400 ccm3-ig</td>
+							<td className="font-bold text-black">17.000 Ft</td>
+						</tr>
+						<tr>
+							<td>1401-2000 ccm3</td>
+							<td className="font-bold text-black">18.500 Ft</td>
+						</tr>
+						<tr>
+							<td>2000 ccm3 felett</td>
+							<td className="font-bold text-black">20.000 Ft</td>
+						</tr>
+						<tr>
+							<td className="bg-brand-yellowdark font-semibold text-black">Tehergépjármű</td>
+							<td className="bg-brand-yellowdark font-semibold text-black"></td>
+						</tr>
+						<tr>
+							<td>3,5 tonnáig</td>
+							<td className="font-bold text-black">20.000 Ft</td>
+						</tr>
+						<tr>
+							<td className="bg-brand-yellowdark font-semibold text-black">Motorkerékpár</td>
+							<td className="bg-brand-yellowdark font-semibold text-black"></td>
+						</tr>
+						<tr>
+							<td>500 ccm3 alatt</td>
+							<td className="font-bold text-black">15.000 Ft</td>
+						</tr>
+						<tr>
+							<td>500 ccm3 felett</td>
+							<td className="font-bold text-black">17.000 Ft</td>
+						</tr>
+					</tbody>
 				</table>
 			</div>
 			<div className="pt-4 font-semibold">Szükséges okmányok:</div>
@@ -212,43 +214,47 @@ const ServicesPage = () => {
 
 	const gumiSzerviz = (
 		<div>
-			<p id="gumiszerviz" className="text-4xl text-brand-greendark font-semibold text-center md:text-left">
+			<p id="gumiszerviz" className="text-4xl text-black font-semibold text-center md:text-left">
 				Gumiszerviz
 			</p>
 			<div className="mt-4">Komplett szerelési árak (átszerelés, centírozás, kerékcsere)</div>
 			<table className="mt-4 bg-gray-100 m-4" cellSpacing="5" cellPadding="5">
-				<tr>
-					<td className="bg-brand-greendark font-semibold text-white"></td>
-					<td className="bg-brand-greendark font-semibold text-white">Lemezfelni</td>
-					<td className="bg-brand-greendark font-semibold text-white">Alufelni</td>
-				</tr>
-				<tr>
-					<td>Személygépjármű (13"-15")</td>
-					<td className="font-bold text-brand-greendark">2000 Ft/db</td>
-					<td className="font-bold text-brand-greendark">2500 Ft/db</td>
-				</tr>
-				<tr>
-					<td>Személygépjármű (16"-17")</td>
-					<td className="font-bold text-brand-greendark">2500 Ft/db</td>
-					<td className="font-bold text-brand-greendark">3000 Ft/db</td>
-				</tr>
-				<tr>
-					<td>Tehergépjármű</td>
-					<td className="font-bold text-brand-greendark text-center" colSpan={2}>
-						3500 Ft/db
-					</td>
-				</tr>
-				<tr>
-					<td>Gumiszelepház</td>
-					<td className="font-bold text-center text-brand-greendark" colSpan={2}>
-						250 Ft/db
-					</td>
-				</tr>
-				<tr>
-					<td>Kerék le- és felszerelés centírozással</td>
-					<td className="font-bold text-brand-greendark">1500 Ft/db</td>
-					<td className="font-bold text-brand-greendark">1750 Ft/db</td>
-				</tr>
+				<thead>
+					<tr>
+						<td className="bg-brand-yellowdark font-semibold text-black"></td>
+						<td className="bg-brand-yellowdark font-semibold text-black">Lemezfelni</td>
+						<td className="bg-brand-yellowdark font-semibold text-black">Alufelni</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Személygépjármű (13"-15")</td>
+						<td className="font-bold text-black">2000 Ft/db</td>
+						<td className="font-bold text-black">2500 Ft/db</td>
+					</tr>
+					<tr>
+						<td>Személygépjármű (16"-17")</td>
+						<td className="font-bold text-black">2500 Ft/db</td>
+						<td className="font-bold text-black">3000 Ft/db</td>
+					</tr>
+					<tr>
+						<td>Tehergépjármű</td>
+						<td className="font-bold text-black text-center" colSpan={2}>
+							3500 Ft/db
+						</td>
+					</tr>
+					<tr>
+						<td>Gumiszelepház</td>
+						<td className="font-bold text-center text-black" colSpan={2}>
+							250 Ft/db
+						</td>
+					</tr>
+					<tr>
+						<td>Kerék le- és felszerelés centírozással</td>
+						<td className="font-bold text-black">1500 Ft/db</td>
+						<td className="font-bold text-black">1750 Ft/db</td>
+					</tr>
+				</tbody>
 			</table>
 			<div>Áraink bruttóban értendők és tartalmazzák a centírozáshoz szükséges anyagokat</div>
 		</div>
@@ -285,8 +291,8 @@ const ServicesPage = () => {
 				</div>
 			</div>
 			<div className="mt-4">
-				Az S.O.S. szolgáltatás díja bruttó <span className="font-bold text-brand-greendark">5000 Ft</span>, mely
-				a Műszaki vizsga illetve az Eredetiség vizsga díján felül értendő.
+				Az S.O.S. szolgáltatás díja bruttó <span className="font-bold text-black">5000 Ft</span>, mely a Műszaki
+				vizsga illetve az Eredetiség vizsga díján felül értendő.
 			</div>
 		</div>
 	);

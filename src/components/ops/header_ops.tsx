@@ -103,7 +103,7 @@ const HeaderOps = () => {
 							<div className={isLoggedIn ? "block" : "hidden"}>
 								<div className={menuVisible ? "block" : "hidden"}>
 									<svg
-										className="h-4 w-4 fill-current hover:text-brand-green"
+										className="h-4 w-4 fill-current hover:text-brand-yellow"
 										xmlns="http://www.w3.org/2000/svg"
 										viewBox="0 0 20 20"
 									>
@@ -113,7 +113,7 @@ const HeaderOps = () => {
 								<div className={menuVisible ? "hidden" : "block"}>
 									<div className="flex">
 										<svg
-											className="h-4 w-4 fill-current hover:text-brand-green"
+											className="h-4 w-4 fill-current hover:text-brand-yellow"
 											xmlns="http://www.w3.org/2000/svg"
 											viewBox="0 0 20 20"
 										>

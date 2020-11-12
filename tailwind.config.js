@@ -17,7 +17,10 @@ module.exports = {
 			brand: {
 				greendark: "#0a4722",
 				green: "#24c762",
-				green1: "#129c47",
+                green1: "#129c47",
+                yellow: "#f5f533",
+                yellow1: "#bfbf26",
+                yellowdark: "#ffd036",
 				gray1: "#34383d",
 				gray2: "#40454b",
 				gray3: "#acacac",

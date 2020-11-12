@@ -25,11 +25,11 @@ const PrivacyPolicyPage = () => (
 			<h2 className="text-xl font-semibold py-4">Information About Us</h2>
 			<p>
 				Zöldkártya Bt is a limited company registered address at 1103 Budapest, Csombor utca 15., e-mail:{" "}
-				<a className="text-brand-green" href="mailto:zoldkartyabt1@gmail.com">
+				<a className="text-brand-yellow" href="mailto:zoldkartyabt1@gmail.com">
 					zoldkartyabt1@gmail.com
 				</a>
 				, website:{" "}
-				<a className="text-brand-green" href="https://zoldkartyabt.hu/">
+				<a className="text-brand-yellow" href="https://zoldkartyabt.hu/">
 					zoldkartyabt.hu
 				</a>
 				.
