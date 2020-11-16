@@ -29,9 +29,12 @@ const Footer = () => {
 			<div className="container">
 				<section className="flex flex-col items-center sm:flex-row sm:justify-between max-w-screen-xl mx-auto sm:items-start p-3">
 					<div className="pb-12 flex flex-col md:w-1/5 items-center sm:items-start">
-						<h2 className="text-white uppercase font-semibold text-lg mb-1">Cégadatok</h2>
-						<div>Cégjegyzékszám: 01-06-617448</div>
-						<div>Adószám: 28918721-2-42</div>
+						<h2 className="text-white uppercase font-semibold text-lg mb-1">Nyitvatartás</h2>
+						<div>H 8:00-16:30</div>
+						<div>K 8:00-16:30</div>
+						<div>SZ 8:00-16:30</div>
+						<div>CS 8:00-16:30</div>
+						<div>P 8:00-16:00</div>
 					</div>
 					<div id="kapcsolat" className="flex items-center flex-col md:w-1/5 pb-12">
 						<h2 className="text-white uppercase font-semibold text-lg mb-1">Kapcsolat</h2>
@@ -63,6 +66,8 @@ const Footer = () => {
 								<span className="email-address">zoldkartyabt1@gmail.com</span>
 							</a>
 						</div>
+						<div>Cégjegyzékszám: 01-06-617448</div>
+						<div>Adószám: 28918721-2-42</div>
 					</div>
 					<div className="flex flex-col md:flex-row md:w-2/5 items-center">
 						<div className="flex flex-col items-center sm:items-end">
@@ -70,7 +75,7 @@ const Footer = () => {
 							<div className="hover:text-brand-yellow">
 								<a
 									target="_blank"
-									href="https://www.google.hu/maps/dir//47.4624743,19.1670784/@47.4624791,19.1670463,20.67z/data=!4m2!4m1!3e0?hl=hu"
+									href="https://www.google.hu/maps/place/Z%C3%B6ldk%C3%A1rtya+Bt/@47.4624791,19.1670463,20z/data=!4m5!3m4!1s0x4741c35bc8c1caaf:0x2298aefceb866fef!8m2!3d47.4622465!4d19.1675001?hl=hu"
 									className="flex flex-col items-center md:items-end"
 								>
 									<div itemScope itemType="http://schema.org/address" className="flex items-center">
@@ -124,7 +129,7 @@ const Footer = () => {
 							<div className="ml-4 mt-4 md:mt-0">
 								<a
 									target="_blank"
-									href="https://www.google.hu/maps/dir//47.4624743,19.1670784/@47.4624791,19.1670463,20.67z/data=!4m2!4m1!3e0?hl=hu"
+									href="https://www.google.hu/maps/place/Z%C3%B6ldk%C3%A1rtya+Bt/@47.4624791,19.1670463,20z/data=!4m5!3m4!1s0x4741c35bc8c1caaf:0x2298aefceb866fef!8m2!3d47.4622465!4d19.1675001?hl=hu"
 								>
 									<Img fluid={fluidMap} alt="Map" style={{ minHeight: "100px", width: "100px" }} />
 								</a>

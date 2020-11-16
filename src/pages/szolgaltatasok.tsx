@@ -311,7 +311,6 @@ const ServicesPage = () => {
 	return (
 		<Layout>
 			<SEO title="Szolgáltatások" />
-			<SEO title="Rólunk" />
 			<div className="container px-4 my-8">
 				<div className="w-full">
 					<div className="md:flex justify-between">

@@ -169,8 +169,16 @@ const IndexPage = () => {
 				</div>
 			</div>
 
+			<div className="container pt-8 font-semibold text-red-600 text-4xl">
+				<div className="hidden md:block">Bejelentkezés: +36 (30) 131 4101</div>
+				<div className="md:hidden px-4  text-center">
+					<div>Bejelentkezés:</div>
+					<div>+36 (30) 131 4101</div>
+				</div>
+			</div>
+
 			<div className="container py-12">
-				<div className="md:flex justify justify-between p-4 mx-4 md:px-16 md:mx-0 border-4 border-red-500">
+				<div className="md:flex justify justify-between p-4 mx-4 md:px-16 md:mx-0 border-4 border-red-600">
 					<div className="md:mr-8">
 						<h2 className="pb-4 w-full text-center md:text-left title title-wide text-red-600 underline">
 							S.O.S Műszaki vizsga
