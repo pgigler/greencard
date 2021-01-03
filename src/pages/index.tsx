@@ -178,11 +178,11 @@ const IndexPage = () => {
 						<div>+36 (30) 131 4101</div>
 					</div>
 				</div>
-				<div className="flex justify-around mt-4">
+				{/* <div className="flex justify-around mt-4">
 					<Link to="/idopont-foglalas">
 						<div className="btn btn-primary">Időpont foglalás</div>
 					</Link>
-				</div>
+				</div> */}
 			</div>
 
 			{/* Come and visit us */}

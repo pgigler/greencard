@@ -40,6 +40,11 @@ export const TIME_SLOTS = [
 	"16:00",
 ];
 
+export interface TimeSlot {
+	label: string;
+	free: boolean;
+}
+
 export interface CalendarItem {
 	date: Date;
 	enabled: boolean;
@@ -48,13 +53,20 @@ export interface CalendarItem {
 
 export interface AppointmentModel {
 	serviceIndex?: number;
-	date?: Date;
 	slotIndex?: number;
 	email: string;
+	name: string;
+	phone: string;
+	autoType: string;
+	regNumber: string;
+	remark: string;
 }
 
-export const getTimeSlots = (date?: Date) => {
-	return TIME_SLOTS.filter((_, i) => date?.getDay() !== 5 || i < TIME_SLOTS.length - 1);
+export const getTimeSlots = (date?: Date): TimeSlot[] => {
+	return TIME_SLOTS.filter((_, i) => date?.getDay() !== 5 || i < TIME_SLOTS.length - 1).map((label) => ({
+		label,
+		free: Math.random() < 0.5,
+	}));
 };
 
 export const getCalendarItemClass = (calendarItem: CalendarItem, selectedDate?: Date) => {
@@ -68,6 +80,18 @@ export const getCalendarItemClass = (calendarItem: CalendarItem, selectedDate?: 
 		classes.push("bg-brand-gray2", "border", "text-white");
 	}
 
+	return classes.join(" ");
+};
+
+export const getTimeSlotClass = (timeSlot: TimeSlot, selected: boolean) => {
+	const classes = ["text-center", "border", "border-black"];
+	if (selected) {
+		classes.push("bg-brand-yellow");
+	} else if (timeSlot.free) {
+		classes.push("bg-green-600");
+	} else {
+		classes.push("bg-red-600");
+	}
 	return classes.join(" ");
 };
 
@@ -133,8 +157,9 @@ export const getNow = () => {
 
 // Validation
 
-export type ValidationKey = "email";
+export type ValidationKey = "email" | "name" | "phone" | "regNumber" | "autoType" | "remark";
 
+// eslint-disable-next-line complexity
 export const getValidationMessage = (field: ValidationKey, value: string) => {
 	if (field === "email") {
 		if (value === undefined || value.length === 0) {
@@ -145,6 +170,42 @@ export const getValidationMessage = (field: ValidationKey, value: string) => {
 			return "Hibás email formátum";
 		} else {
 			return undefined;
+		}
+	}
+
+	if (field === "name") {
+		if (value !== undefined && value.length > 200) {
+			return "Maximum 200 karakter";
+		}
+	}
+
+	if (field === "phone") {
+		if (value === undefined || value.length === 0) {
+			return "Kötelező mező";
+		} else if (value.length > 20) {
+			return "Maximum 200 karakter";
+		}
+	}
+
+	if (field === "regNumber") {
+		if (value === undefined || value.length === 0) {
+			return "Kötelező mező";
+		} else if (value.length > 10) {
+			return "Maximum 10 karakter";
+		}
+	}
+
+	if (field === "autoType") {
+		if (value === undefined || value.length === 0) {
+			return "Kötelező mező";
+		} else if (value.length > 100) {
+			return "Maximum 100 karakter";
+		}
+	}
+
+	if (field === "remark") {
+		if (value !== undefined && value.length > 100) {
+			return "Maximum 100 karakter";
 		}
 	}
 
