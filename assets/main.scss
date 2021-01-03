@@ -49,7 +49,7 @@
 	}
 
 	&.btn-small {
-		@apply text-white bg-brand-yellow px-2;
+		@apply text-black bg-brand-yellow px-2;
 		&:hover {
 			@apply bg-white text-black;
 		}

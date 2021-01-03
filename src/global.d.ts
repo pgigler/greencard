@@ -6,6 +6,7 @@ declare global {
 			"dc-checkbox": any;
 			"dc-radio": any;
 			"dc-select": any;
+			"gc-appointment": any;
 		}
 	}
 }

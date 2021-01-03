@@ -169,14 +169,33 @@ const IndexPage = () => {
 				</div>
 			</div>
 
-			<div className="container pt-8 font-semibold text-red-600 text-4xl">
-				<div className="hidden md:block">Bejelentkezés: +36 (30) 131 4101</div>
-				<div className="md:hidden px-4  text-center">
-					<div>Bejelentkezés:</div>
-					<div>+36 (30) 131 4101</div>
+			{/* Appointment */}
+			<div className="container py-8 ">
+				<div className="font-semibold text-red-600 text-4xl text-center">
+					<div className="hidden md:block">Bejelentkezés: +36 (30) 131 4101</div>
+					<div className="md:hidden px-4">
+						<div>Bejelentkezés:</div>
+						<div>+36 (30) 131 4101</div>
+					</div>
+				</div>
+				<div className="flex justify-around mt-4">
+					<Link to="/idopont-foglalas">
+						<div className="btn btn-primary">Időpont foglalás</div>
+					</Link>
 				</div>
 			</div>
 
+			{/* Come and visit us */}
+			<div className="py-12" style={{ backgroundColor: "#EEFFF0" }}>
+				<h2 className="pb-4 w-full text-center title title-wide">Látogasson el hozzánk</h2>
+				<div className="flex justify-around">
+					<Link to="/szolgaltatasok">
+						<div className="btn btn-primary">Szolgáltatások</div>
+					</Link>
+				</div>
+			</div>
+
+			{/* SOS */}
 			<div className="container py-12">
 				<div className="md:flex justify justify-between p-4 mx-4 md:px-16 md:mx-0 border-4 border-red-600">
 					<div className="md:mr-8">
@@ -205,7 +224,7 @@ const IndexPage = () => {
 							<Img fluid={sos} alt="SOS" style={{ width: "300px" }} />
 						</div>
 						<div className="md:hidden">
-							<Img className="m-auto" fluid={sos} alt="SOS" style={{ width: "300px" }} />
+							<Img className="m-auto" fluid={sos} alt="SOS" style={{ maxWidth: "300px" }} />
 						</div>
 					</div>
 				</div>
@@ -252,16 +271,6 @@ const IndexPage = () => {
 							);
 						})}
 					</div>
-				</div>
-			</div>
-
-			{/* Come and visit us */}
-			<div className="py-12">
-				<h2 className="pb-4 w-full text-center title title-wide">Látogasson el hozzánk</h2>
-				<div className="mb-12 flex justify-around">
-					<Link to="/szolgaltatasok">
-						<div className="btn btn-primary">Szolgáltatások</div>
-					</Link>
 				</div>
 			</div>
 
