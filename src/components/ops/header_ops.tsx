@@ -31,23 +31,21 @@ const HeaderOps = () => {
 	const [menuVisible, setMenuVisible] = useState(false);
 
 	const loginLogout = (
-		<div className="m-2 btn btn-small">
+		<div className="m-2">
 			{isLoggedIn ? (
-				<div>
-					<a
-						href="#"
-						onClick={(event) => {
-							event.preventDefault();
-							logout(() => navigate(`/ops/login`));
-						}}
-					>
-						<span className="px-4">Kilépés</span>
-					</a>
-				</div>
+				<a
+					href="#"
+					onClick={(event) => {
+						event.preventDefault();
+						logout(() => navigate(`/ops/login`));
+					}}
+				>
+					<span className="px-4 btn btn-primary">Kilépés</span>
+				</a>
 			) : (
-				<div>
-					<Link to="/ops/login">Belépés</Link>
-				</div>
+				<Link to="/ops/login" className="btn btn-primary">
+					Belépés
+				</Link>
 			)}
 		</div>
 	);
@@ -89,7 +87,7 @@ const HeaderOps = () => {
 			<header className="sticky top-0 z-40 h-16 md:flex md:justify-between md:items-center select-none shadow bg-white">
 				<div className="flex items-center h-full w-full justify-between md:p-0">
 					<div className="text-4xl font-semibold tracking-wide font-sans pl-4">
-						<Link to="/ops">T-OPS</Link>
+						<Link to="/ops">GC-OPS</Link>
 					</div>
 					<div>{user ? <div className="pl-4">{user?.email}</div> : ""}</div>
 					<div className="md:block"></div>
