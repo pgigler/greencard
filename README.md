@@ -41,3 +41,20 @@ npm run build
 
 -   UAT: https://pgigler.github.io/greencard/
 -   PROD: https://greencardbt.com
+
+
+Spec:
+
+8:30
+15:30
+Péntek - 15:00
+
+Műszaki vizsga, Eredetvizsga
+email cím javítás
+
+Amennyiben módosítani vagy törölni szeretné foglalását kérem vegye fel velünk a kapcsolatot.
+vizsgaallomas1@gmail.com
+
+- 30 nappal előre lehet foglalni (3 months)
+- napok nyitása, zárása
+- külön calendar a műszakira és eredetvizsgára

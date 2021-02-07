@@ -233,7 +233,7 @@ const Component: HauntedFunc<Properties> = (host) => {
 					}}
 				></dc-input>
 				<dc-input
-					.label=${"Név (opcionális)"}
+					.label=${"Név*"}
 					.placeholder=${"pl: Kiss Béla"}
 					.value=${currentAppointment.name}
 					.validationMessage=${validations.name}
@@ -302,8 +302,10 @@ const Component: HauntedFunc<Properties> = (host) => {
 			<p class="py-2">
 				Ha nem érkezne meg az email pár percen belül, kérem vegye fel ügyfélszolgálatunkkal a kapcsolatot
 				emailben:
-				<a class="text-brand-blue font-semibold" href="mailto:info@tersus.hu">info@tersus.hu </a> vagy
-				munkaidőben telefonon: <span class="text-brand-blue font-semibold">+36 (30) 131 4101</span>.
+				<a class="text-brand-blue font-semibold" href="mailto:zoldkartyabt1@gmail.com"
+					>vizsgaallomas1@gmail.com</a
+				>
+				vagy munkaidőben telefonon: <span class="text-brand-blue font-semibold">+36 (30) 131 4101</span>.
 			</p>
 		</div>
 	</div>`;

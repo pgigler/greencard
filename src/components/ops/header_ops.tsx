@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { logout, getCurrentUser } from "../../util/auth";
 import { isBrowser } from "../../util/helper";
 import { Link, navigate, withPrefix } from "gatsby";
+import { directive } from "lit-html";
 
 interface Menu {
 	title: string;
@@ -9,9 +10,9 @@ interface Menu {
 }
 
 const MENUS: Menu[] = [
-	{ title: "Időpont foglalások", slug: "/ops/appointments" },
-	{ title: "Ügyfelek", slug: "/ops/ugyfelek" },
-	{ title: "Profil", slug: "/ops/profil" },
+	// { title: "Időpont foglalások", slug: "/ops/appointments" },
+	// { title: "Ügyfelek", slug: "/ops/customers" },
+	{ title: "Profil", slug: "/ops/profile" },
 ];
 
 const HeaderOps = () => {
@@ -43,9 +44,7 @@ const HeaderOps = () => {
 					<span className="px-4 btn btn-primary">Kilépés</span>
 				</a>
 			) : (
-				<Link to="/ops/login" className="btn btn-primary">
-					Belépés
-				</Link>
+				""
 			)}
 		</div>
 	);
@@ -86,10 +85,10 @@ const HeaderOps = () => {
 		<div>
 			<header className="sticky top-0 z-40 h-16 md:flex md:justify-between md:items-center select-none shadow bg-white">
 				<div className="flex items-center h-full w-full justify-between md:p-0">
-					<div className="text-4xl font-semibold tracking-wide font-sans pl-4">
-						<Link to="/ops">GC-OPS</Link>
+					<div className="text-2xl md:text-4xl font-semibold tracking-wide font-sans pl-4">
+						<Link to="/ops">OPS</Link>
 					</div>
-					<div>{user ? <div className="pl-4">{user?.email}</div> : ""}</div>
+					<div className="hidden md:block">{user ? <div className="pl-4">{user?.email}</div> : ""}</div>
 					<div className="md:block"></div>
 					<div className="md:hidden mr-4 flex items-center">
 						<div className="md:hidden">{loginLogout}</div>

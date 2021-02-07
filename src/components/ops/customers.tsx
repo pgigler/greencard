@@ -1,7 +1,7 @@
 import React from "react";
 import { getCurrentUser } from "../../util/auth";
 
-const Customers = () => {
+const OpsCustomers = () => {
 	const user = getCurrentUser();
 
 	return (
@@ -11,4 +11,4 @@ const Customers = () => {
 	);
 };
 
-export default Customers;
+export default OpsCustomers;

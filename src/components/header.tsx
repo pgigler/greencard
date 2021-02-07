@@ -13,7 +13,7 @@ const MENUS: Menu[] = [
 	{ title: "Kezdőlap", slug: "/" },
 	{ title: "Szolgáltatások", slug: "/szolgaltatasok" },
 	{ title: "Rólunk", slug: "/rolunk" },
-	{ title: "Kapcsolat", slug: "/#kapcsolat" },
+    { title: "Kapcsolat", slug: "/#kapcsolat" },
 ];
 
 const Header = () => {

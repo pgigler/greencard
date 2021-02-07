@@ -39,7 +39,7 @@ async function syncBackend(onlyApi, remoteTempFolder, pRemoteDestFolder, env) {
 		await runCommand(`unzip ${remoteTempFolder}/api.zip -d  ${remoteTempFolder}/api`, false);
 
 		await runCommand(
-			`mkdir -p ${remoteDestFolder} && rm -rf ${remoteDestFolder}/api && mv ${remoteTempFolder}/api ${remoteDestFolder} && cp /web/tersus_config${envPostfix}.php ${remoteDestFolder}/tersus_config.php`
+			`mkdir -p ${remoteDestFolder} && rm -rf ${remoteDestFolder}/api && mv ${remoteTempFolder}/api ${remoteDestFolder} && cp /web/greencard_config${envPostfix}.php ${remoteDestFolder}/greencard_config.php`
 		);
 		if (!onlyApi) {
 			await runCommand(`rm -rf ${remoteDestFolder}/vendor && mv ${remoteTempFolder}/vendor ${remoteDestFolder}`);

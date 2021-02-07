@@ -3,7 +3,7 @@ const fs = require("fs");
 
 const createCertificate = require("./create-selfsignedcert").createCertificate;
 
-const HOST_NAME = "tersus.dev";
+const HOST_NAME = "greencard.dev";
 const CERT_INSTALL_LOCATION = "../";
 const CERT_LOCATION = path.resolve(__dirname, CERT_INSTALL_LOCATION);
 const CERT_CRTFILE = path.join(CERT_LOCATION, HOST_NAME + ".crt");
@@ -21,4 +21,4 @@ if (!certExistOnLocation) {
 }
 
 // Create PFX
-// "c:\Program Files\Git\usr\bin\openssl.exe" pkcs12 -export -out c:\Projects\my\tersus\tersus.dev.pfx -inkey c:\Projects\my\tersus\tersus.dev.key -in c:\Projects\my\tersus\tersus.dev.crt
+// "c:\Program Files\Git\usr\bin\openssl.exe" pkcs12 -export -out c:\Projects\my\greencard\greencard.dev.pfx -inkey c:\Projects\my\greencard\greencard.dev.key -in c:\Projects\my\greencard\greencard.dev.crt

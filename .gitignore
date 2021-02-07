@@ -100,6 +100,6 @@ public
 temp/
 .cmsgit
 public_sorry/*.php
-php/greencard_config.php
+php/greencard_config*.php
 /php/vendor/
 .env

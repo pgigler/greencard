@@ -1,8 +1,6 @@
 export const SERVICE_TYPES = [
 	{ name: "Műszaki vizsga", type: "MotTest" },
-	{ name: "Autószerviz", type: "AutoService" },
 	{ name: "Eredetiség vizsgálat", type: "InformationCheck" },
-	{ name: "Gumiszerviz", type: "TireService" },
 ];
 export const WEEK_DAYS = ["h", "k", "sze", "cs", "p", "szo", "v"];
 export const MONTH_NAMES = [
@@ -21,7 +19,6 @@ export const MONTH_NAMES = [
 ];
 
 export const TIME_SLOTS = [
-	"8:00",
 	"8:30",
 	"9:00",
 	"9:30",
@@ -37,7 +34,6 @@ export const TIME_SLOTS = [
 	"14:30",
 	"15:00",
 	"15:30",
-	"16:00",
 ];
 
 export interface TimeSlot {
@@ -174,7 +170,9 @@ export const getValidationMessage = (field: ValidationKey, value: string) => {
 	}
 
 	if (field === "name") {
-		if (value !== undefined && value.length > 200) {
+		if (value === undefined || value.length === 0) {
+			return "Kötelező mező";
+		} else if (value.length > 200) {
 			return "Maximum 200 karakter";
 		}
 	}
@@ -183,7 +181,7 @@ export const getValidationMessage = (field: ValidationKey, value: string) => {
 		if (value === undefined || value.length === 0) {
 			return "Kötelező mező";
 		} else if (value.length > 20) {
-			return "Maximum 200 karakter";
+			return "Maximum 20 karakter";
 		}
 	}
 
@@ -204,8 +202,8 @@ export const getValidationMessage = (field: ValidationKey, value: string) => {
 	}
 
 	if (field === "remark") {
-		if (value !== undefined && value.length > 100) {
-			return "Maximum 100 karakter";
+		if (value !== undefined && value.length > 500) {
+			return "Maximum 500 karakter";
 		}
 	}
 
