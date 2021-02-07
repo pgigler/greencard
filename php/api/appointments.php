@@ -5,25 +5,40 @@ require_once __DIR__ . '/../greencard_config.php';
 require_once 'helpers.php';
 
 \My\Helpers\handleCORS();
-$email = \My\Helpers\authenticate();
-$tablePrefix = \My\Helpers\getTablePrefix();
-
+$authEmail = \My\Helpers\authenticate();
 header('Content-Type: application/json; charset=utf-8');
 
-try {
-	$dsn = "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME;
-	$pdo = new PDO($dsn, DB_USER, DB_PASS);
-} catch (\PDOException $e) {
-	throw new \PDOException($e->getMessage(), (int) $e->getCode());
+$request = json_decode(file_get_contents('php://input'));
+$fromDate = date("Y-m-d", strtotime($request->fromDate));
+$toDate = date("Y-m-d", strtotime($request->toDate));
+
+$tablePrefix = \My\Helpers\getTablePrefix();
+$pdo = createDBContext();
+
+$stmtAppointments = $pdo->prepare(
+	"SELECT * FROM `${tablePrefix}appointments` WHERE day >= :fromDate AND day <= :toDate AND deleted = 0"
+);
+$stmtAppointments->bindParam(':fromDate', $fromDate);
+$stmtAppointments->bindParam(':toDate', $toDate);
+$stmtAppointments->execute();
+
+$result = new \stdClass();
+$result->appointments = [];
+while ($rowAppointments = $stmtAppointments->fetch(PDO::FETCH_ASSOC)) {
+	$result->appointments[] = $rowAppointments;
 }
 
-$stmt = $pdo->query("SELECT * FROM `${tablePrefix}orders` WHERE 1");
-$arr = [];
-while ($row = $stmt->fetch()) {
-	array_push($arr, $row);
+$stmtDays = $pdo->prepare("SELECT * FROM `${tablePrefix}days` WHERE day >= :fromDate AND day <= :toDate");
+$stmtDays->bindParam(':fromDate', $fromDate);
+$stmtDays->bindParam(':toDate', $toDate);
+$stmtDays->execute();
+
+$result->days = [];
+while ($rowDays = $stmtDays->fetch(PDO::FETCH_ASSOC)) {
+	$result->days[] = $rowDays;
 }
 
-echo json_encode($arr, JSON_UNESCAPED_UNICODE);
+echo json_encode($result, JSON_UNESCAPED_UNICODE);
 
 header('HTTP/1.1 200 OK');
 

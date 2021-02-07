@@ -102,4 +102,5 @@ temp/
 public_sorry/*.php
 php/greencard_config*.php
 /php/vendor/
+!/php/api/public/
 .env

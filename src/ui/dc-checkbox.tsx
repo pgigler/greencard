@@ -3,7 +3,6 @@ import "./dc-checkbox.scss";
 import { html } from "lit-html";
 
 import { useEffect, useState, component } from "haunted";
-import { HauntedFunc } from "../util/customhooks";
 
 const observedAttributes: (keyof Properties)[] = [];
 const useShadowDOM = false;
@@ -95,6 +94,7 @@ if (isBrowser()) {
 import React from "react";
 import useCustomElement from "../util/useCustomElement";
 import { isBrowser } from "../util/helper";
+import { HauntedFunc } from "../util/CustomHauntedHooks";
 
 const DCCheckbox = (props) => {
 	const [ref] = useCustomElement(props);

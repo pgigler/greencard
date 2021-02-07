@@ -1,3 +1,5 @@
+import { default as moment } from "moment";
+
 export const getFluid = (images: any, relativePath: string) => {
 	return images.filter((image) => image.node.relativePath === relativePath)[0].node.childImageSharp.fluid;
 };
@@ -25,16 +27,23 @@ export const getImageUrlFromAsset = (getAsset: (...args: any[]) => any, assetNam
 
 export const isBrowser = () => typeof window !== "undefined";
 
-export const withErrorHandling = (callback: () => Promise<void> | void, errorHandler: (error: Error) => void) => {
+export const withErrorHandling = async (
+	callback: () => Promise<void> | void,
+	errorHandler: (error: any) => void,
+	finallyFunc?: () => void
+) => {
 	try {
-		const result = callback();
-		if (result instanceof Promise) {
-			result.catch(async (error) => {
-				errorHandler(error);
-			});
-		}
+		await callback();
 	} catch (error) {
-		errorHandler(error);
+		if (error && error.statusCode === 401) {
+			window.location.reload();
+		} else {
+			errorHandler(error);
+		}
+	} finally {
+		if (finallyFunc) {
+			finallyFunc();
+		}
 	}
 };
 
@@ -99,4 +108,44 @@ const getSearchParamList = (search = ``) => {
 		acc.push([key, decodeURIComponent(val)]);
 		return acc;
 	}, [] as string[][]);
+};
+
+const DefaultDateFormat = "YYYY-MM-DD";
+const DefaultDateTimeFormat = "YYYY-MM-DD HH:mm";
+const DefaultTimestampFormat = "YYYY-MM-DD HH:mm:ss.SSS";
+export const parseDate = (dateStr: string): moment.Moment => {
+	return moment(dateStr, DefaultDateFormat);
+};
+export const parseDateTime = (dateStr: string): moment.Moment => {
+	return moment(dateStr, DefaultDateTimeFormat);
+};
+export const parseTimestamp = (dateStr: string): moment.Moment => {
+	return moment(dateStr, DefaultTimestampFormat);
+};
+export const formatDate = (date: Date | moment.Moment): string => {
+	if (!date) {
+		return "undefined";
+	} else if (date instanceof Date) {
+		return moment(date).format(DefaultDateFormat);
+	} else {
+		return date.format(DefaultDateFormat);
+	}
+};
+export const formatDateTime = (date: Date | moment.Moment): string => {
+	if (!date) {
+		return "undefined";
+	} else if (date instanceof Date) {
+		return moment(date).format(DefaultDateTimeFormat);
+	} else {
+		return date.format(DefaultDateTimeFormat);
+	}
+};
+export const formatTimestamp = (date: Date | moment.Moment): string => {
+	if (!date) {
+		return "undefined";
+	} else if (date instanceof Date) {
+		return moment(date).format(DefaultTimestampFormat);
+	} else {
+		return date.format(DefaultDateTimeFormat);
+	}
 };

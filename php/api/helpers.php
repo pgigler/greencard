@@ -7,7 +7,7 @@ require __DIR__ . '/../vendor/autoload.php';
 
 use Google\Auth\AccessToken;
 
-function getTablePrefix($name)
+function getTablePrefix()
 {
 	$isUAT = ENV == "uat";
 	return $isUAT ? "uat_" : "prod_";
@@ -45,12 +45,23 @@ function authenticate()
 		}
 		$auth = new AccessToken();
 		$payload = $auth->verify($idToken, ['throwException' => true]);
-		return $payload["email"];
+		$email = $payload["email"];
+		if (!isEmailAuthorized($email)) {
+			header('HTTP/1.1 403 Forbidden');
+			exit();
+		} else {
+			return $email;
+		}
 	} catch (\Exception $ex) {
-		// echo $ex;
 		header('HTTP/1.1 401 Unauthorized');
 		exit();
 	}
+}
+
+function isEmailAuthorized($email)
+{
+	$allowedEmails = array_map('trim', explode(",", ALLOWED_EMAILS));
+	return in_array($email, $allowedEmails);
 }
 
 function getAuthorizationHeader()
@@ -78,6 +89,16 @@ function getAuthorizationHeader()
 		}
 	}
 	return $headers;
+}
+
+function createDBContext()
+{
+	try {
+		$dsn = "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME;
+		return new \PDO($dsn, DB_USER, DB_PASS);
+	} catch (\PDOException $e) {
+		throw new \PDOException($e->getMessage(), (int) $e->getCode());
+	}
 }
 
 ?>

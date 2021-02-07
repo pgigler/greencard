@@ -1,7 +1,4 @@
-import { useEffect, useState, component } from "haunted";
-
-import { directive, html } from "lit-html";
-import { HauntedFunc } from "../util/customhooks";
+import { html } from "lit-html";
 import "../ui/dc-components";
 import * as DC from "../ui/dc-components-typing";
 import {
@@ -16,11 +13,15 @@ import {
 	getTimeSlots,
 	getValidationMessage,
 	MONTH_NAMES,
+	AppointmentModelShort,
+	DayModelShort,
+	ServiceType,
 	SERVICE_TYPES,
 	TimeSlot,
 	ValidationKey,
 	WEEK_DAYS,
 } from "./AppointmentHelpers";
+import { NotificationContainer, NotificationManager } from "react-notifications";
 
 const observedAttributes: (keyof Properties)[] = [];
 const useShadowDOM = false;
@@ -47,7 +48,7 @@ const Component: HauntedFunc<Properties> = (host) => {
 		setCurrentDate(date);
 		setCurrentAppointment({
 			...currentAppointment,
-			slotIndex: undefined,
+			timeSlotStr: undefined,
 		});
 		setValidations({});
 		setErrorMessage("");
@@ -103,6 +104,8 @@ const Component: HauntedFunc<Properties> = (host) => {
 
 	// COMPONENT
 
+	const [loading, dispatchLoading] = useLoadingReducer();
+	const apiClient = useApiClient();
 	const [currentMonth, setCurrentMonth] = useState<Date>(getFirstDayOfMonth(getNow()));
 	const [calendar, setCalendar] = useState<CalendarItem[]>([]);
 	const [currentTimeSlots, setCurrentTimeSlots] = useState<TimeSlot[]>([]);
@@ -115,14 +118,44 @@ const Component: HauntedFunc<Properties> = (host) => {
 		}
 	>({});
 	const [sent, setSent] = useState<boolean>(false);
+	const [qAppointments, setQAppointments] = useState<AppointmentModelShort[]>([]);
+	const [qDays, setQDays] = useState<DayModelShort[]>([]);
 
 	useEffect(() => {
-		setCalendar(generateCalendar(currentMonth));
-	}, [currentMonth]);
+		setCalendar(generateCalendar(qDays, currentMonth));
+	}, [currentMonth, qDays]);
 
 	useEffect(() => {
-		setCurrentTimeSlots(getTimeSlots(currentDate));
-	}, [currentDate]);
+		setCurrentTimeSlots(getTimeSlots(qAppointments, currentAppointment.serviceType, currentDate));
+	}, [currentDate, qAppointments, currentAppointment]);
+
+	const init = async () => {
+		withErrorHandling(
+			async () => {
+				dispatchLoading("inc");
+				const result = await apiClient.get("/api/public/appointments.php");
+				setQAppointments(
+					result.resp.appointments.map((appt) => ({
+						day: formatDate(parseDate(appt.day)),
+						serviceType: appt.serviceType,
+						timeSlotStr: appt.timeSlot,
+					}))
+				);
+				setQDays(
+					result.resp.days.map((day) => ({
+						day: formatDate(parseDate(day.day)),
+						status: day.status === "ENABLED" ? "Enabled" : "Disabled",
+					}))
+				);
+			},
+			(error: Error) => {
+				NotificationManager.error(error.message);
+			},
+			() => dispatchLoading("dec")
+		);
+	};
+
+	useEffect(init, []);
 
 	// TEMPLATE
 
@@ -130,13 +163,13 @@ const Component: HauntedFunc<Properties> = (host) => {
 		html`<div class="mt-4">
 			<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
 				${SERVICE_TYPES.map(
-					(service, serviceIndex) => html`<a
+					(service) => html`<a
 						href="#"
-						@click=${() => setCurrentAppointment({ ...currentAppointment, serviceIndex })}
+						@click=${() => setCurrentAppointment({ ...currentAppointment, serviceType: service.type })}
 					>
 						<div
-							class="text-center border border-black py-4 ${currentAppointment.serviceIndex ===
-							serviceIndex
+							class="text-center border border-black py-4 ${currentAppointment.serviceType ===
+							service.type
 								? "bg-brand-yellow"
 								: ""}"
 						>
@@ -197,21 +230,21 @@ const Component: HauntedFunc<Properties> = (host) => {
 		html`<div class="mt-4">
 			<!-- ${currentDate?.toDateString()} -->
 			<div class="grid grid-rows-5 grid-cols-4 grid-flow-col gap-4">
-				${currentTimeSlots.map((timeSlot, slotIndex) => {
+				${currentTimeSlots.map((timeSlot) => {
 					if (timeSlot.free) {
 						return html`<a
 							href="#"
 							@click=${() => {
-								setCurrentAppointment({ ...currentAppointment, slotIndex });
+								setCurrentAppointment({ ...currentAppointment, timeSlotStr: timeSlot.label });
 							}}
 						>
-							<div class=${getTimeSlotClass(timeSlot, currentAppointment.slotIndex === slotIndex)}>
+							<div class=${getTimeSlotClass(timeSlot, currentAppointment.timeSlotStr === timeSlot.label)}>
 								${timeSlot.label}
 							</div>
 						</a>`;
 					} else {
 						return html`<div
-							class=${getTimeSlotClass(timeSlot, currentAppointment.slotIndex === slotIndex)}
+							class=${getTimeSlotClass(timeSlot, currentAppointment.timeSlotStr === timeSlot.label)}
 						>
 							${timeSlot.label}
 						</div>`;
@@ -310,13 +343,15 @@ const Component: HauntedFunc<Properties> = (host) => {
 		</div>
 	</div>`;
 
-	if (!sent) {
+	if (loading.count > 0) {
+		return html`Kérem várjon míg lekérdezzük az foglaltságot...`;
+	} else if (!sent) {
 		return html`<div>
 			<h1 class="pt-12 text-4xl leading-tight font-semibold">Időpont foglalás</h1>
-			${templateServiceTypes()} ${currentAppointment.serviceIndex !== undefined ? templateCalendar() : ""}
+			${templateServiceTypes()} ${currentAppointment.serviceType !== undefined ? templateCalendar() : ""}
 			${currentDate !== undefined ? templateTimeSlots() : ""}
-			${currentAppointment.slotIndex !== undefined ? templatePersonalInfo() : ""}
-			${currentAppointment.slotIndex !== undefined ? templateSend() : ""}
+			${currentAppointment.timeSlotStr !== undefined ? templatePersonalInfo() : ""}
+			${currentAppointment.timeSlotStr !== undefined ? templateSend() : ""}
 		</div>`;
 	} else {
 		return templateSuccess();
@@ -338,13 +373,16 @@ if (isBrowser() && customElements.get(name) === undefined) {
 
 import React from "react";
 import useCustomElement from "../util/useCustomElement";
-import { isBrowser } from "../util/helper";
+import { formatDate, isBrowser, parseDate, withErrorHandling } from "../util/helper";
+import { HauntedFunc, useApiClient, useEffect, useLoadingReducer, useState } from "../util/CustomHauntedHooks";
+import { component } from "haunted";
 
 const Appointment = (props) => {
 	const [ref] = useCustomElement(props);
 	return (
 		<div>
 			<gc-appointment ref={ref}></gc-appointment>
+			<NotificationContainer />
 		</div>
 	);
 };

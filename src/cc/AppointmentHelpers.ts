@@ -1,6 +1,9 @@
-export const SERVICE_TYPES = [
+import { formatDate } from "../util/helper";
+
+export type ServiceType = "MotTest" | "InfoCheck";
+export const SERVICE_TYPES: { name: string; type: ServiceType }[] = [
 	{ name: "Műszaki vizsga", type: "MotTest" },
-	{ name: "Eredetiség vizsgálat", type: "InformationCheck" },
+	{ name: "Eredetiség vizsgálat", type: "InfoCheck" },
 ];
 export const WEEK_DAYS = ["h", "k", "sze", "cs", "p", "szo", "v"];
 export const MONTH_NAMES = [
@@ -47,9 +50,14 @@ export interface CalendarItem {
 	inCurrentMonth: boolean;
 }
 
-export interface AppointmentModel {
-	serviceIndex?: number;
-	slotIndex?: number;
+export interface AppointmentModelShort {
+	day: string;
+	serviceType: ServiceType;
+	timeSlotStr?: string;
+}
+
+export interface AppointmentModel extends AppointmentModelShort {
+	id: number;
 	email: string;
 	name: string;
 	phone: string;
@@ -58,11 +66,30 @@ export interface AppointmentModel {
 	remark: string;
 }
 
-export const getTimeSlots = (date?: Date): TimeSlot[] => {
-	return TIME_SLOTS.filter((_, i) => date?.getDay() !== 5 || i < TIME_SLOTS.length - 1).map((label) => ({
-		label,
-		free: Math.random() < 0.5,
-	}));
+export interface DayModelShort {
+	day: string;
+	status: "Enabled" | "Disabled";
+}
+
+export interface Daymodel extends DayModelShort {
+	id: number;
+}
+
+export const getTimeSlots = (
+	qAppointments: AppointmentModelShort[],
+	serviceType?: ServiceType,
+	date?: Date
+): TimeSlot[] => {
+	if (date !== undefined && serviceType !== undefined) {
+		const temp = qAppointments.filter((appt) => appt.day === formatDate(date) && appt.serviceType === serviceType);
+		const appointmentsForDate = temp.length === 1 ? temp : [];
+		return TIME_SLOTS.filter((_, i) => date?.getDay() !== 5 || i < TIME_SLOTS.length - 1).map((label) => ({
+			label,
+			free: !appointmentsForDate.some((appt) => appt.timeSlotStr === label),
+		}));
+	} else {
+		return [];
+	}
 };
 
 export const getCalendarItemClass = (calendarItem: CalendarItem, selectedDate?: Date) => {
@@ -91,7 +118,8 @@ export const getTimeSlotClass = (timeSlot: TimeSlot, selected: boolean) => {
 	return classes.join(" ");
 };
 
-export const generateCalendar = (currentDate: Date): CalendarItem[] => {
+export const generateCalendar = (qDays: DayModelShort[], currentDate: Date): CalendarItem[] => {
+	const thirtyDaysLater = addDays(new Date(), 40); // appointment can be made 40 days in advance
 	const firstDayOfMonth = getFirstDayOfMonth(currentDate);
 	const lastDayOfMonth = getLastDayOfMonth(currentDate);
 	const firstWeekday = firstDayOfMonth.getDay(); // 0 - Sunday, 1 - Monday, ..., 6 - Saturday
@@ -100,24 +128,38 @@ export const generateCalendar = (currentDate: Date): CalendarItem[] => {
 	const rightPad = 6 - ((lastWeekday + 6) % 7) - 1;
 	const days = lastDayOfMonth.getDate() - firstDayOfMonth.getDate();
 	return [
-		...createRange(0, leftPad).map((num) => ({
-			date: addDays(firstDayOfMonth, num - leftPad - 1),
-			enabled: false,
-			inCurrentMonth: false,
-		})),
-		...createRange(0, days).map((num) => {
-			const date = addDays(firstDayOfMonth, num);
+		...createRange(0, leftPad).map((num) => {
+			const date = addDays(firstDayOfMonth, num - leftPad - 1);
+			const enabled = false;
 			return {
 				date,
-				enabled: (date.getDay() + 6) % 7 < 5 && date > getNow(),
+				enabled,
+				inCurrentMonth: false,
+			};
+		}),
+		...createRange(0, days).map((num) => {
+			const date = addDays(firstDayOfMonth, num);
+			let enabled = (date.getDay() + 6) % 7 < 5 && date > getNow();
+			enabled =
+				(date <= thirtyDaysLater &&
+					enabled &&
+					!qDays.some((day) => day.day === formatDate(date) && day.status === "Disabled")) ||
+				(!enabled && qDays.some((day) => day.day === formatDate(date) && day.status === "Enabled"));
+			return {
+				date,
+				enabled,
 				inCurrentMonth: true,
 			};
 		}),
-		...createRange(0, rightPad).map((num) => ({
-			date: addDays(lastDayOfMonth, num + 1),
-			enabled: false,
-			inCurrentMonth: false,
-		})),
+		...createRange(0, rightPad).map((num) => {
+			const date = addDays(firstDayOfMonth, num + 1);
+			const enabled = false;
+			return {
+				date,
+				enabled,
+				inCurrentMonth: false,
+			};
+		}),
 	];
 };
 

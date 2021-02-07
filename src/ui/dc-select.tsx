@@ -4,7 +4,6 @@ import { html } from "lit-html";
 import { classMap } from "lit-html/directives/class-map";
 
 import { useState, useEffect, component } from "haunted";
-import { HauntedFunc } from "../util/customhooks";
 
 const observedAttributes: (keyof Properties)[] = [];
 const useShadowDOM = false;
@@ -208,6 +207,7 @@ if (isBrowser()) {
 import React from "react";
 import useCustomElement from "../util/useCustomElement";
 import { isBrowser } from "../util/helper";
+import { HauntedFunc } from "../util/CustomHauntedHooks";
 
 const DCSelect = (props) => {
 	const [ref] = useCustomElement(props);

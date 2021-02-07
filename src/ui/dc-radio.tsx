@@ -1,8 +1,6 @@
-import { useEffect, useState, component } from "haunted";
 import "./dc-radio.scss";
 
 import { html, TemplateResult } from "lit-html";
-import { HauntedFunc } from "../util/customhooks";
 
 const observedAttributes: (keyof Properties)[] = [];
 const useShadowDOM = false;
@@ -87,6 +85,8 @@ if (isBrowser()) {
 import React from "react";
 import useCustomElement from "../util/useCustomElement";
 import { isBrowser } from "../util/helper";
+import { HauntedFunc } from "../util/CustomHauntedHooks";
+import { component } from "haunted";
 
 const DCRadio = (props) => {
 	const [ref] = useCustomElement(props);

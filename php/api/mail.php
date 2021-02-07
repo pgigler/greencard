@@ -15,7 +15,7 @@ $mail->Username = SMTP_USERNAME;
 $mail->Password = SMTP_PASSWORD;
 
 $mail->From = SMTP_FROM;
-$mail->FromName = SMTP_FROM_NAME;
+$mail->FromName = "Zöldkártya Bt.";
 $mail->AddAddress('peter.gigler@gmail.com'); // To
 $mail->AddReplyTo('zoldkartyabt1@gmail.com');
 

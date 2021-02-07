@@ -1,5 +1,5 @@
 import { Link, useStaticQuery, graphql } from "gatsby";
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { getFluid, isBrowser } from "../util/helper";
 import Img from "gatsby-image";
 
