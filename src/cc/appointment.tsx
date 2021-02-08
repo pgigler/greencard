@@ -13,13 +13,13 @@ import {
 	getTimeSlots,
 	getValidationMessage,
 	MONTH_NAMES,
-	AppointmentModelShort,
-	DayModelShort,
-	ServiceType,
 	SERVICE_TYPES,
 	TimeSlot,
 	ValidationKey,
 	WEEK_DAYS,
+	DayModel,
+	getLastDayOfMonth,
+	isWeekDay,
 } from "./AppointmentHelpers";
 import { NotificationContainer, NotificationManager } from "react-notifications";
 
@@ -43,6 +43,10 @@ const Component: HauntedFunc<Properties> = (host) => {
 	};
 
 	// HELPER
+
+	const isAdmin = () => {
+		return props.mode === "ADMIN";
+	};
 
 	const handleCalendarDayClick = (date: Date) => {
 		setCurrentDate(date);
@@ -102,10 +106,52 @@ const Component: HauntedFunc<Properties> = (host) => {
 		});
 	};
 
+	const canClose = () => {
+		if (currentDate !== undefined) {
+			const dayRecordFromDB = qDays.find((day) => day.day === formatDate(currentDate));
+			return (
+				(isWeekDay(currentDate) && dayRecordFromDB === undefined) ||
+				(!isWeekDay(currentDate) && dayRecordFromDB?.status === "Enabled")
+			);
+		} else {
+			return false;
+		}
+	};
+
+	const toggleDay = async () => {
+		if (currentDate !== undefined) {
+			withErrorHandling(
+				async () => {
+					const tempIsWeekDay = isWeekDay(currentDate);
+					const dayRecordFromDB = qDays.find((day) => day.day === formatDate(currentDate));
+					if (
+						(tempIsWeekDay && dayRecordFromDB?.status === "Disabled") ||
+						(!tempIsWeekDay && dayRecordFromDB?.status === "Enabled")
+					) {
+						// DELETE
+						await apiClient.post(`/api/delete_day.php`, {
+							id: dayRecordFromDB.id,
+						});
+						loadCurrentMonth();
+					} else if (dayRecordFromDB === undefined) {
+						await apiClient.post(`/api/add_day.php`, {
+							day: formatDate(currentDate),
+							status: tempIsWeekDay ? "DISABLED" : "ENABLED",
+						});
+						loadCurrentMonth();
+					}
+				},
+				(error: Error) => {
+					NotificationManager.error(error.message);
+				}
+			);
+		}
+	};
+
 	// COMPONENT
 
-	const [loading, dispatchLoading] = useLoadingReducer();
 	const apiClient = useApiClient();
+	const [loading, dispatchLoading] = useLoadingReducer();
 	const [currentMonth, setCurrentMonth] = useState<Date>(getFirstDayOfMonth(getNow()));
 	const [calendar, setCalendar] = useState<CalendarItem[]>([]);
 	const [currentTimeSlots, setCurrentTimeSlots] = useState<TimeSlot[]>([]);
@@ -118,8 +164,8 @@ const Component: HauntedFunc<Properties> = (host) => {
 		}
 	>({});
 	const [sent, setSent] = useState<boolean>(false);
-	const [qAppointments, setQAppointments] = useState<AppointmentModelShort[]>([]);
-	const [qDays, setQDays] = useState<DayModelShort[]>([]);
+	const [qAppointments, setQAppointments] = useState<AppointmentModel[]>([]);
+	const [qDays, setQDays] = useState<DayModel[]>([]);
 
 	useEffect(() => {
 		setCalendar(generateCalendar(qDays, currentMonth));
@@ -129,24 +175,38 @@ const Component: HauntedFunc<Properties> = (host) => {
 		setCurrentTimeSlots(getTimeSlots(qAppointments, currentAppointment.serviceType, currentDate));
 	}, [currentDate, qAppointments, currentAppointment]);
 
-	const init = async () => {
+	const loadCurrentMonth = async () => {
 		withErrorHandling(
 			async () => {
 				dispatchLoading("inc");
-				const result = await apiClient.get("/api/public/appointments.php");
-				setQAppointments(
-					result.resp.appointments.map((appt) => ({
-						day: formatDate(parseDate(appt.day)),
-						serviceType: appt.serviceType,
-						timeSlotStr: appt.timeSlot,
-					}))
-				);
-				setQDays(
-					result.resp.days.map((day) => ({
-						day: formatDate(parseDate(day.day)),
-						status: day.status === "ENABLED" ? "Enabled" : "Disabled",
-					}))
-				);
+				if (isAdmin()) {
+					const result = await apiClient.post(`/api/appointments.php`, {
+						fromDate: formatDate(currentMonth),
+						toDate: formatDate(getLastDayOfMonth(currentMonth)),
+					});
+					setQAppointments(
+						result.resp.appointments.map((appt) => ({ ...appt, day: formatDate(parseDate(appt.day)) }))
+					);
+					setQDays(
+						result.resp.days.map((day) => ({
+							id: day.id,
+							day: formatDate(parseDate(day.day)),
+							status: day.status === "ENABLED" ? "Enabled" : "Disabled",
+						}))
+					);
+				} else {
+					const result = await apiClient.get(`/api/public/appointments.php`);
+					setQAppointments(
+						result.resp.appointments.map((appt) => ({ ...appt, day: formatDate(parseDate(appt.day)) }))
+					);
+					setQDays(
+						result.resp.days.map((day) => ({
+							id: day.id,
+							day: formatDate(parseDate(day.day)),
+							status: day.status === "ENABLED" ? "Enabled" : "Disabled",
+						}))
+					);
+				}
 			},
 			(error: Error) => {
 				NotificationManager.error(error.message);
@@ -155,7 +215,17 @@ const Component: HauntedFunc<Properties> = (host) => {
 		);
 	};
 
-	useEffect(init, []);
+	useEffect(() => {
+		if (!isAdmin()) {
+			loadCurrentMonth();
+		}
+	}, []);
+
+	useEffect(() => {
+		if (isAdmin()) {
+			loadCurrentMonth();
+		}
+	}, [currentMonth]);
 
 	// TEMPLATE
 
@@ -180,6 +250,18 @@ const Component: HauntedFunc<Properties> = (host) => {
 			</div>
 		</div>`;
 
+	const templateDayToggler = () => {
+		if (currentDate !== undefined) {
+			return html`<div class="mr-4">
+				<a class="inline-block" href="#" @click=${() => toggleDay()}>
+					<span class="btn btn-primary">${canClose() ? "Lezár" : "Megnyit"}</span>
+				</a>
+			</div>`;
+		} else {
+			return "";
+		}
+	};
+
 	const templateCalendar = () =>
 		html`<div>
 			<div class="mt-4 flex justify-between pb-2 items-center">
@@ -194,7 +276,8 @@ const Component: HauntedFunc<Properties> = (host) => {
 					</a>
 				</div>
 				<div class="font-semibold">${currentMonth.getFullYear()} ${MONTH_NAMES[currentMonth.getMonth()]}</div>
-				<div>
+				<div class="flex">
+					${isAdmin() ? templateDayToggler() : ""}
 					<a
 						href="#"
 						@click=${() => {
@@ -216,7 +299,7 @@ const Component: HauntedFunc<Properties> = (host) => {
 				${calendar?.map(
 					(calendarItem, i) =>
 						html`<div class="text-center ${getCalendarItemClass(calendarItem, currentDate)}">
-							${calendarItem.enabled
+							${calendarItem.enabled || isAdmin()
 								? html`<a href="#" @click=${() => handleCalendarDayClick(calendarItem.date)}>
 										<div class="py-2 md:hover:bg-gray-500">${calendarItem.date.getDate()}</div>
 								  </a>`
@@ -228,7 +311,6 @@ const Component: HauntedFunc<Properties> = (host) => {
 
 	const templateTimeSlots = () =>
 		html`<div class="mt-4">
-			<!-- ${currentDate?.toDateString()} -->
 			<div class="grid grid-rows-5 grid-cols-4 grid-flow-col gap-4">
 				${currentTimeSlots.map((timeSlot) => {
 					if (timeSlot.free) {

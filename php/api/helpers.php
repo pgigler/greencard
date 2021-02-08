@@ -71,6 +71,8 @@ function getAuthorizationHeader()
 		$headers = trim($_SERVER["Authorization"]);
 	} elseif (isset($_SERVER['X-Authorization'])) {
 		$headers = trim($_SERVER["X-Authorization"]);
+	} elseif (isset($_SERVER['HTTP_X_AUTHORIZATION'])) {
+		$headers = trim($_SERVER["HTTP_X_AUTHORIZATION"]);
 	} elseif (isset($_SERVER['HTTP_AUTHORIZATION'])) {
 		//Nginx or fast CGI
 		$headers = trim($_SERVER["HTTP_AUTHORIZATION"]);

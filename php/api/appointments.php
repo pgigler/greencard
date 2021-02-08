@@ -13,7 +13,7 @@ $fromDate = date("Y-m-d", strtotime($request->fromDate));
 $toDate = date("Y-m-d", strtotime($request->toDate));
 
 $tablePrefix = \My\Helpers\getTablePrefix();
-$pdo = createDBContext();
+$pdo = \My\Helpers\createDBContext();
 
 $stmtAppointments = $pdo->prepare(
 	"SELECT * FROM `${tablePrefix}appointments` WHERE day >= :fromDate AND day <= :toDate AND deleted = 0"

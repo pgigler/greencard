@@ -50,14 +50,11 @@ export interface CalendarItem {
 	inCurrentMonth: boolean;
 }
 
-export interface AppointmentModelShort {
+export interface AppointmentModel {
+	id: number;
 	day: string;
 	serviceType: ServiceType;
 	timeSlotStr?: string;
-}
-
-export interface AppointmentModel extends AppointmentModelShort {
-	id: number;
 	email: string;
 	name: string;
 	phone: string;
@@ -66,20 +63,13 @@ export interface AppointmentModel extends AppointmentModelShort {
 	remark: string;
 }
 
-export interface DayModelShort {
+export interface DayModel {
+	id: number;
 	day: string;
 	status: "Enabled" | "Disabled";
 }
 
-export interface Daymodel extends DayModelShort {
-	id: number;
-}
-
-export const getTimeSlots = (
-	qAppointments: AppointmentModelShort[],
-	serviceType?: ServiceType,
-	date?: Date
-): TimeSlot[] => {
+export const getTimeSlots = (qAppointments: AppointmentModel[], serviceType?: ServiceType, date?: Date): TimeSlot[] => {
 	if (date !== undefined && serviceType !== undefined) {
 		const temp = qAppointments.filter((appt) => appt.day === formatDate(date) && appt.serviceType === serviceType);
 		const appointmentsForDate = temp.length === 1 ? temp : [];
@@ -98,7 +88,7 @@ export const getCalendarItemClass = (calendarItem: CalendarItem, selectedDate?: 
 	if (isTodaySelected) {
 		classes.push("bg-brand-yellow", "border", "text-black");
 	} else if (!calendarItem.enabled) {
-		classes.push("bg-white", "text-gray-500");
+		classes.push("bg-white", "border", "text-gray-500");
 	} else {
 		classes.push("bg-brand-gray2", "border", "text-white");
 	}
@@ -118,10 +108,11 @@ export const getTimeSlotClass = (timeSlot: TimeSlot, selected: boolean) => {
 	return classes.join(" ");
 };
 
-export const generateCalendar = (qDays: DayModelShort[], currentDate: Date): CalendarItem[] => {
+export const generateCalendar = (qDays: DayModel[], currentDate: Date): CalendarItem[] => {
 	const thirtyDaysLater = addDays(new Date(), 40); // appointment can be made 40 days in advance
 	const firstDayOfMonth = getFirstDayOfMonth(currentDate);
 	const lastDayOfMonth = getLastDayOfMonth(currentDate);
+	const firstDayOfNextMonth = addDays(lastDayOfMonth, 1);
 	const firstWeekday = firstDayOfMonth.getDay(); // 0 - Sunday, 1 - Monday, ..., 6 - Saturday
 	const lastWeekday = lastDayOfMonth.getDay();
 	const leftPad = ((firstWeekday + 6) % 7) - 1;
@@ -139,7 +130,7 @@ export const generateCalendar = (qDays: DayModelShort[], currentDate: Date): Cal
 		}),
 		...createRange(0, days).map((num) => {
 			const date = addDays(firstDayOfMonth, num);
-			let enabled = (date.getDay() + 6) % 7 < 5 && date > getNow();
+			let enabled = isWeekDay(date) && date > getNow();
 			enabled =
 				(date <= thirtyDaysLater &&
 					enabled &&
@@ -152,7 +143,7 @@ export const generateCalendar = (qDays: DayModelShort[], currentDate: Date): Cal
 			};
 		}),
 		...createRange(0, rightPad).map((num) => {
-			const date = addDays(firstDayOfMonth, num + 1);
+			const date = addDays(firstDayOfNextMonth, num);
 			const enabled = false;
 			return {
 				date,
@@ -191,6 +182,10 @@ export const createRange = (start: number, end: number) => {
 
 export const getNow = () => {
 	return addDays(new Date(), 0);
+};
+
+export const isWeekDay = (date: Date) => {
+	return (date.getDay() + 6) % 7 < 5;
 };
 
 // Validation

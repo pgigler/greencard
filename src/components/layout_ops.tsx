@@ -10,7 +10,7 @@ const LayoutOps = ({ children }: any) => {
 	return (
 		<>
 			<HeaderOps />
-			<div>
+			<div style={{ backgroundColor: "#e8e3d1" }}>
 				<main>{children}</main>
 				{process.env.NODE_ENV === "development" ? (
 					<div className="fixed bottom-0 left-0 bg-gray-400 text-gray-700 font-medium p-4 z-10">

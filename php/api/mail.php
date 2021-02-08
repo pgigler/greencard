@@ -7,6 +7,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 $mail = new PHPMailer();
+$mail->CharSet = 'UTF-8';
 $mail->IsSMTP(); // Send via SMTP
 $mail->Host = SMTP_HOST;
 $mail->SMTPAuth = true;
