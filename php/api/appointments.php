@@ -38,8 +38,8 @@ while ($rowDays = $stmtDays->fetch(PDO::FETCH_ASSOC)) {
 	$result->days[] = $rowDays;
 }
 
-echo json_encode($result, JSON_UNESCAPED_UNICODE);
-
 header('HTTP/1.1 200 OK');
+
+echo json_encode($result, JSON_UNESCAPED_UNICODE);
 
 ?>

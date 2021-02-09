@@ -1,4 +1,10 @@
-import { useLayoutEffect, useState, useEffect as reactUseEffect } from "react";
+import {
+	useLayoutEffect,
+	useState as reactUseState,
+	useReducer as reactUseReducer,
+	useMemo as reactUseMemo,
+	useEffect as reactUseEffect,
+} from "react";
 import { ApiClient } from "./ApiClient";
 
 export function useWindowSize() {
@@ -13,6 +19,10 @@ export function useWindowSize() {
 	}, []);
 	return size;
 }
+
+export const useState = reactUseState;
+export const useMemo = reactUseMemo;
+export const useReducer = reactUseReducer;
 
 export function useApiClient() {
 	const [client] = useState<ApiClient>(
@@ -50,3 +60,17 @@ export function useEffect(
 		// }, 0);
 	}, values);
 }
+
+export const useLoadingReducer = () =>
+	reactUseReducer(
+		(state: { count: number }, action: "inc" | "dec") => {
+			if (action === "inc") {
+				return { count: state.count + 1 };
+			} else if (action === "dec") {
+				return { count: state.count - 1 };
+			} else {
+				return state;
+			}
+		},
+		{ count: 0 }
+	);

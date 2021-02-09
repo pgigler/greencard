@@ -1,11 +1,9 @@
 import React from "react";
+import Appointment from "../../cc/appointment";
+import { isBrowser } from "../../util/helper";
 
 const OpsAppointments = () => {
-	return (
-		<div className="container p-4">
-			<h1 className="mb-4 text-2xl font-semibold">Időpont foglalások</h1>
-		</div>
-	);
+    return <div className="container px-4 mb-8">{isBrowser() ? <Appointment mode="ADMIN" /> : ""}</div>;
 };
 
 export default OpsAppointments;

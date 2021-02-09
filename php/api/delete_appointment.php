@@ -26,8 +26,8 @@ $stmtDelete = $pdo->prepare(
 );
 $stmtDelete->execute($data);
 
-echo json_encode(new \stdClass(), JSON_UNESCAPED_UNICODE);
-
 header('HTTP/1.1 200 OK');
+
+echo json_encode(new \stdClass(), JSON_UNESCAPED_UNICODE);
 
 ?>

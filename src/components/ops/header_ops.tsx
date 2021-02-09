@@ -10,7 +10,7 @@ interface Menu {
 }
 
 const MENUS: Menu[] = [
-	// { title: "Időpont foglalások", slug: "/ops/appointments" },
+	{ title: "Foglalások", slug: "/ops/appointments" },
 	// { title: "Ügyfelek", slug: "/ops/customers" },
 	{ title: "Profil", slug: "/ops/profile" },
 ];

@@ -45,8 +45,13 @@ $stmtAdd = $pdo->prepare(
 );
 $stmtAdd->execute($data);
 
-echo json_encode(new \stdClass(), JSON_UNESCAPED_UNICODE);
+\My\Helpers\sendEmail($data["email"], 'Visszaigazolás',
+    "Kedves " . $data["name"] . "!<br/><br/>Köszönjük a foglalást. Várjuk a megadott időpontban. Lemondani, időpontot módosítani emailen: vizsgaallomas1@gmail.com, vagy munkaidőben tud telefonon: +36 (30) 131 4101.<br/><br/>"
+    . "Adatok:<br/><br/>Név: " . $data["name"] . "<br/>Telefonszám: " . $data["phone"] . "<br/>Időpont: " . $data["day"] . " " . $data["timeSlot"]
+    . "<br/>Autó: " . $data["autoType"] . " (" . $data["regNumber"] . ")<br/>Megjegyzés: " . $data["remark"] . "<br/><br/>Üdvözlettel,<br/>Zöldkártya Bt.");
 
 header('HTTP/1.1 200 OK');
+
+echo json_encode(new \stdClass(), JSON_UNESCAPED_UNICODE);
 
 ?>

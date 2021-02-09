@@ -21,8 +21,8 @@ $pdo = \My\Helpers\createDBContext();
 $stmtDelete = $pdo->prepare("DELETE FROM `${tablePrefix}days` WHERE id = :id");
 $stmtDelete->execute($data);
 
-echo json_encode(new \stdClass(), JSON_UNESCAPED_UNICODE);
-
 header('HTTP/1.1 200 OK');
+
+echo json_encode(new \stdClass(), JSON_UNESCAPED_UNICODE);
 
 ?>

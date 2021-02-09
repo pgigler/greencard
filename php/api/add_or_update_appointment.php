@@ -43,8 +43,8 @@ if (isset($request->id)) {
 	$stmtAdd->execute($data);
 }
 
-echo json_encode(new \stdClass(), JSON_UNESCAPED_UNICODE);
-
 header('HTTP/1.1 200 OK');
+
+echo json_encode(new \stdClass(), JSON_UNESCAPED_UNICODE);
 
 ?>

@@ -6,6 +6,8 @@ require_once __DIR__ . '/../greencard_config.php';
 require __DIR__ . '/../vendor/autoload.php';
 
 use Google\Auth\AccessToken;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
 function getTablePrefix()
 {
@@ -100,6 +102,39 @@ function createDBContext()
 		return new \PDO($dsn, DB_USER, DB_PASS);
 	} catch (\PDOException $e) {
 		throw new \PDOException($e->getMessage(), (int) $e->getCode());
+	}
+}
+
+function sendEmail($to, $subject, $body)
+{
+	try {
+		$mail = new PHPMailer();
+		$mail->CharSet = 'UTF-8';
+		$mail->IsSMTP(); // Send via SMTP
+		$mail->Host = SMTP_HOST;
+		$mail->SMTPAuth = true;
+
+		$mail->Username = SMTP_USERNAME;
+		$mail->Password = SMTP_PASSWORD;
+
+		$mail->From = SMTP_FROM;
+		$mail->FromName = "Zöldkártya Bt.";
+		$mail->AddAddress($to); // To
+		$mail->AddReplyTo('zoldkartyabt1@gmail.com');
+
+		// $mail->WordWrap = 80; // Word wrap
+		// $mail->AddAttachment('/var/tmp/file.tar.gz');
+		$mail->IsHTML(true);
+
+		$mail->Subject = $subject;
+		$mail->Body = $body;
+		$mail->AltBody = $body;
+
+		if (!$mail->Send()) {
+			throw new \Exception($mail->ErrorInfo);
+		}
+	} catch (Exception $e) {
+		throw $e;
 	}
 }
 
