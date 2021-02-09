@@ -1,4 +1,5 @@
 import { default as moment } from "moment";
+import { ApiError } from "./ApiClient";
 
 export const getFluid = (images: any, relativePath: string) => {
 	return images.filter((image) => image.node.relativePath === relativePath)[0].node.childImageSharp.fluid;
@@ -34,8 +35,8 @@ export const withErrorHandling = async (
 ) => {
 	try {
 		await callback();
-	} catch (error) {
-		if (error && error.statusCode === 401) {
+	} catch (error: any) {
+		if (error instanceof ApiError && error.status === 401) {
 			window.location.reload();
 		} else {
 			errorHandler(error);

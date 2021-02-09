@@ -20,6 +20,7 @@ import {
 	DayModel,
 	getLastDayOfMonth,
 	isWeekDay,
+	ServiceType,
 } from "./AppointmentHelpers";
 import { NotificationContainer, NotificationManager } from "react-notifications";
 
@@ -48,12 +49,29 @@ const Component: HauntedFunc<Properties> = (host) => {
 		return props.mode === "ADMIN";
 	};
 
+	const getAppointment = (serviceType?: string, date?: Date, timeSlotStr?: string): AppointmentModel => {
+		const dateStr = date !== undefined ? formatDate(date) : undefined;
+		if (isAdmin()) {
+			if (serviceType !== undefined && date !== undefined && timeSlotStr !== undefined) {
+				const existingAppt = qAppointments.find(
+					(appt) =>
+						appt.timeSlotStr === timeSlotStr && appt.serviceType === serviceType && appt.day === dateStr
+				);
+				if (existingAppt !== undefined) {
+					return existingAppt;
+				}
+			}
+			// Admin mode cleans up model between slot changes
+			return { serviceType, day: dateStr, timeSlotStr } as AppointmentModel;
+		} else {
+			// Non admin mode keeps values between slot changes
+			return { ...currentAppointment, serviceType, day: dateStr, timeSlotStr } as AppointmentModel;
+		}
+	};
+
 	const handleCalendarDayClick = (date: Date) => {
 		setCurrentDate(date);
-		setCurrentAppointment({
-			...currentAppointment,
-			timeSlotStr: undefined,
-		});
+		setCurrentAppointment(getAppointment(currentServiceType, date, undefined));
 		setValidations({});
 		setErrorMessage("");
 	};
@@ -62,11 +80,70 @@ const Component: HauntedFunc<Properties> = (host) => {
 		setErrorMessage("");
 		const validationResult = validateAllField();
 		if (validationResult) {
-			// TODO: Save appointment
-			// TODO: Handle server errors
-			setSent(true);
+			withErrorHandling(
+				async () => {
+					await apiClient.post(`/api/public/add_appointment.php`, {
+						...currentAppointment,
+						timeSlot: currentAppointment.timeSlotStr,
+					});
+
+					setSent(true);
+				},
+				(error) => {
+					if (error instanceof ApiError && error.status === 422) {
+						NotificationManager.error("Sajnos ez az időpont már nem elérhető, kérem válasszon másikat.");
+					} else {
+						NotificationManager.error(error.message);
+					}
+				}
+			);
 		} else {
 			setErrorMessage("Hiba. Kérem ellenőrizze az adatokat.");
+		}
+	};
+
+	const saveOrAddAppt = () => {
+		setErrorMessage("");
+		const validationResult = validateAllField();
+		if (validationResult) {
+			withErrorHandling(
+				async () => {
+					await apiClient.post(`/api/add_or_update_appointment.php`, {
+						...currentAppointment,
+						timeSlot: currentAppointment.timeSlotStr,
+					});
+
+					await loadCurrentMonth();
+					NotificationManager.info("Sikeres mentés");
+				},
+				(error: Error) => {
+					NotificationManager.error(error.message);
+				}
+			);
+		} else {
+			setErrorMessage("Hiba. Kérem ellenőrizze az adatokat.");
+		}
+	};
+
+	const deleteAppt = () => {
+		if (confirm("Biztosan törölni akarja a foglalást?")) {
+			withErrorHandling(
+				async () => {
+					await apiClient.post(`/api/delete_appointment.php`, {
+						...currentAppointment,
+						timeSlot: currentAppointment.timeSlotStr,
+					});
+
+					loadCurrentMonth();
+					setCurrentAppointment(
+						getAppointment(currentServiceType, currentDate, currentAppointment.timeSlotStr)
+					);
+					NotificationManager.info("Foglalás törölve");
+				},
+				(error: Error) => {
+					NotificationManager.error(error.message);
+				}
+			);
 		}
 	};
 
@@ -132,13 +209,13 @@ const Component: HauntedFunc<Properties> = (host) => {
 						await apiClient.post(`/api/delete_day.php`, {
 							id: dayRecordFromDB.id,
 						});
-						loadCurrentMonth();
+						await loadCurrentMonth();
 					} else if (dayRecordFromDB === undefined) {
 						await apiClient.post(`/api/add_day.php`, {
 							day: formatDate(currentDate),
 							status: tempIsWeekDay ? "DISABLED" : "ENABLED",
 						});
-						loadCurrentMonth();
+						await loadCurrentMonth();
 					}
 				},
 				(error: Error) => {
@@ -152,10 +229,12 @@ const Component: HauntedFunc<Properties> = (host) => {
 
 	const apiClient = useApiClient();
 	const [loading, dispatchLoading] = useLoadingReducer();
+	const [accessDenied, setAccessDenied] = useState<boolean>(false);
 	const [currentMonth, setCurrentMonth] = useState<Date>(getFirstDayOfMonth(getNow()));
 	const [calendar, setCalendar] = useState<CalendarItem[]>([]);
 	const [currentTimeSlots, setCurrentTimeSlots] = useState<TimeSlot[]>([]);
 	const [currentDate, setCurrentDate] = useState<Date | undefined>(undefined);
+	const [currentServiceType, setCurrentServiceType] = useState<ServiceType | undefined>(undefined);
 	const [currentAppointment, setCurrentAppointment] = useState<AppointmentModel>({} as AppointmentModel);
 	const [errorMessage, setErrorMessage] = useState<string>("");
 	const [validations, setValidations] = useState<
@@ -172,8 +251,8 @@ const Component: HauntedFunc<Properties> = (host) => {
 	}, [currentMonth, qDays]);
 
 	useEffect(() => {
-		setCurrentTimeSlots(getTimeSlots(qAppointments, currentAppointment.serviceType, currentDate));
-	}, [currentDate, qAppointments, currentAppointment]);
+		setCurrentTimeSlots(getTimeSlots(qAppointments, currentServiceType, currentDate));
+	}, [currentDate, qAppointments, currentServiceType]);
 
 	const loadCurrentMonth = async () => {
 		withErrorHandling(
@@ -185,7 +264,11 @@ const Component: HauntedFunc<Properties> = (host) => {
 						toDate: formatDate(getLastDayOfMonth(currentMonth)),
 					});
 					setQAppointments(
-						result.resp.appointments.map((appt) => ({ ...appt, day: formatDate(parseDate(appt.day)) }))
+						result.resp.appointments.map((appt) => ({
+							...appt,
+							day: formatDate(parseDate(appt.day)),
+							timeSlotStr: appt.timeSlot,
+						}))
 					);
 					setQDays(
 						result.resp.days.map((day) => ({
@@ -197,7 +280,11 @@ const Component: HauntedFunc<Properties> = (host) => {
 				} else {
 					const result = await apiClient.get(`/api/public/appointments.php`);
 					setQAppointments(
-						result.resp.appointments.map((appt) => ({ ...appt, day: formatDate(parseDate(appt.day)) }))
+						result.resp.appointments.map((appt) => ({
+							...appt,
+							day: formatDate(parseDate(appt.day)),
+							timeSlotStr: appt.timeSlot,
+						}))
 					);
 					setQDays(
 						result.resp.days.map((day) => ({
@@ -208,24 +295,34 @@ const Component: HauntedFunc<Properties> = (host) => {
 					);
 				}
 			},
-			(error: Error) => {
-				NotificationManager.error(error.message);
+			(error) => {
+				if (error instanceof ApiError && error.status === 403) {
+					setAccessDenied(true);
+				} else {
+					NotificationManager.error(error.message);
+				}
 			},
 			() => dispatchLoading("dec")
 		);
 	};
 
-	useEffect(() => {
+	useEffect(async () => {
 		if (!isAdmin()) {
-			loadCurrentMonth();
+			await loadCurrentMonth();
 		}
 	}, []);
 
-	useEffect(() => {
+	useEffect(async () => {
 		if (isAdmin()) {
-			loadCurrentMonth();
+			await loadCurrentMonth();
 		}
 	}, [currentMonth]);
+
+	useEffect(() => {
+		if (currentServiceType !== undefined) {
+			setCurrentAppointment(getAppointment(currentServiceType, currentDate, undefined));
+		}
+	}, [currentServiceType]);
 
 	// TEMPLATE
 
@@ -233,10 +330,7 @@ const Component: HauntedFunc<Properties> = (host) => {
 		html`<div class="mt-4">
 			<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
 				${SERVICE_TYPES.map(
-					(service) => html`<a
-						href="#"
-						@click=${() => setCurrentAppointment({ ...currentAppointment, serviceType: service.type })}
-					>
+					(service) => html`<a href="#" @click=${() => setCurrentServiceType(service.type)}>
 						<div
 							class="text-center border border-black py-4 ${currentAppointment.serviceType ===
 							service.type
@@ -313,11 +407,11 @@ const Component: HauntedFunc<Properties> = (host) => {
 		html`<div class="mt-4">
 			<div class="grid grid-rows-5 grid-cols-4 grid-flow-col gap-4">
 				${currentTimeSlots.map((timeSlot) => {
-					if (timeSlot.free) {
+					if (timeSlot.free || isAdmin()) {
 						return html`<a
 							href="#"
 							@click=${() => {
-								setCurrentAppointment({ ...currentAppointment, timeSlotStr: timeSlot.label });
+								setCurrentAppointment(getAppointment(currentServiceType, currentDate, timeSlot.label));
 							}}
 						>
 							<div class=${getTimeSlotClass(timeSlot, currentAppointment.timeSlotStr === timeSlot.label)}>
@@ -403,9 +497,15 @@ const Component: HauntedFunc<Properties> = (host) => {
 
 	const templateSend = () => html`<div>
 		<div class="mt-4 flex justify-around md:justify-start w-full">
-			<a class="inline-block" href="#" @click=${() => send()}>
-				<span class="btn btn-primary">Küldés</span>
-			</a>
+			${isAdmin()
+				? html`<a class="inline-block" href="#" @click=${saveOrAddAppt}>
+							<span class="btn btn-primary">Mentés</span> </a
+						><a class="inline-block ml-4" href="#" @click=${deleteAppt}>
+							<span class="btn btn-primary">Törlés</span>
+						</a>`
+				: html`<a class="inline-block" href="#" @click=${send}>
+						<span class="btn btn-primary">Küldés</span>
+				  </a>`}
 		</div>
 		${errorMessage.length > 0 ? html`<div class="mt-4 text-red-500">${errorMessage}</div>` : ""}
 	</div>`;
@@ -426,7 +526,9 @@ const Component: HauntedFunc<Properties> = (host) => {
 	</div>`;
 
 	if (loading.count > 0) {
-		return html`Kérem várjon míg lekérdezzük az foglaltságot...`;
+		return html`<div class="pt-12">Kérem várjon míg lekérdezzük az foglaltságot...</div>`;
+	} else if (accessDenied) {
+		return html`<h1 class="pt-12 text-4xl leading-tight font-semibold text-center">Hozzáférés megtagadva</h1>`;
 	} else if (!sent) {
 		return html`<div>
 			<h1 class="pt-12 text-4xl leading-tight font-semibold">Időpont foglalás</h1>
@@ -458,6 +560,7 @@ import useCustomElement from "../util/useCustomElement";
 import { formatDate, isBrowser, parseDate, withErrorHandling } from "../util/helper";
 import { HauntedFunc, useApiClient, useEffect, useLoadingReducer, useState } from "../util/CustomHauntedHooks";
 import { component } from "haunted";
+import { ApiError } from "../util/ApiClient";
 
 const Appointment = (props) => {
 	const [ref] = useCustomElement(props);

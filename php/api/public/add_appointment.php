@@ -1,8 +1,8 @@
 <?php declare(strict_types=1);
 http_response_code(500);
 
-require_once __DIR__ . '/../greencard_config.php';
-require 'helpers.php';
+require_once __DIR__ . '/../../greencard_config.php';
+require '../helpers.php';
 
 \My\Helpers\handleCORS();
 
@@ -19,11 +19,24 @@ $data = [
 	"phone" => $request->phone,
 	"regNumber" => $request->regNumber,
 	"autoType" => $request->autoType,
-	"remark" => $request->remark,
+	"remark" => isset($request->remark) ? $request->remark : "",
 ];
 
 $tablePrefix = \My\Helpers\getTablePrefix();
 $pdo = \My\Helpers\createDBContext();
+
+$stmtCheck = $pdo->prepare("SELECT COUNT(*) FROM `${tablePrefix}appointments` WHERE day = :day AND serviceType = :serviceType aND timeSlot = :timeSlot");
+$stmtCheck->bindParam(':day', $data["day"]);
+$stmtCheck->bindParam(':serviceType', $data["serviceType"]);
+$stmtCheck->bindParam(':timeSlot', $data["timeSlot"]);
+$stmtCheck->execute();
+$count = $stmtCheck->fetchColumn();
+
+// if appointment already exists on this slot
+if ($count > 0) {
+    header('HTTP/1.1 422 Unprocessable Entity');
+    exit(0);
+}
 
 $data["creator"] = 'Anonymous';
 $stmtAdd = $pdo->prepare(

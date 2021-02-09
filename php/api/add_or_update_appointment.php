@@ -4,7 +4,6 @@ http_response_code(500);
 require_once __DIR__ . '/../greencard_config.php';
 require 'helpers.php';
 
-
 \My\Helpers\handleCORS();
 $authEmail = \My\Helpers\authenticate();
 
@@ -13,7 +12,7 @@ header('Content-Type: application/json; charset=utf-8');
 $request = json_decode(file_get_contents('php://input'));
 
 $data = [
-    "day" => date("Y-m-d", strtotime($request->day)),
+	"day" => date("Y-m-d", strtotime($request->day)),
 	"serviceType" => $request->serviceType,
 	"timeSlot" => $request->timeSlot,
 	"email" => $request->email,
@@ -21,7 +20,7 @@ $data = [
 	"phone" => $request->phone,
 	"regNumber" => $request->regNumber,
 	"autoType" => $request->autoType,
-	"remark" => $request->remark,
+	"remark" => isset($request->remark) ? $request->remark : "",
 ];
 
 $tablePrefix = \My\Helpers\getTablePrefix();

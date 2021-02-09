@@ -7,6 +7,14 @@ export interface ApiResponse {
 	resp: any;
 }
 
+export class ApiError extends Error {
+	public status: number;
+	constructor(status: number, message: string) {
+		super(message);
+		this.status = status;
+	}
+}
+
 export class ApiClient {
 	private abortController;
 
@@ -49,16 +57,8 @@ export class ApiClient {
 
 		if (resp.status < 300 && resp.status >= 200) {
 			return { status: resp.status, resp: await resp.json() };
-		} else if (resp.status === 401) {
-			throw Error("401 - Authentication failed");
-		} else if (resp.status === 404) {
-			throw Error("404 - Not Found");
-		} else if (resp.status === 409) {
-			throw Error("409 - Conflict");
-		} else if (resp.status === 500) {
-			throw Error("500 - Server error");
 		} else {
-			throw Error(`${resp.status} - Unexpected error`);
+			throw new ApiError(resp.status, resp.statusText);
 		}
 	}
 

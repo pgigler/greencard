@@ -71,9 +71,11 @@ export interface DayModel {
 
 export const getTimeSlots = (qAppointments: AppointmentModel[], serviceType?: ServiceType, date?: Date): TimeSlot[] => {
 	if (date !== undefined && serviceType !== undefined) {
-		const temp = qAppointments.filter((appt) => appt.day === formatDate(date) && appt.serviceType === serviceType);
-		const appointmentsForDate = temp.length === 1 ? temp : [];
-		return TIME_SLOTS.filter((_, i) => date?.getDay() !== 5 || i < TIME_SLOTS.length - 1).map((label) => ({
+		const appointmentsForDate = qAppointments.filter(
+			(appt) => appt.day === formatDate(date) && appt.serviceType === serviceType
+		);
+		const isFriday = date?.getDay() === 5;
+		return TIME_SLOTS.filter((_, i) => !isFriday || i < TIME_SLOTS.length - 1).map((label) => ({
 			label,
 			free: !appointmentsForDate.some((appt) => appt.timeSlotStr === label),
 		}));

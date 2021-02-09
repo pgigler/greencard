@@ -1,10 +1,10 @@
 DELETE FROM uat_appointments;
 DELETE FROM uat_days;
 
-SET @today = '2021-02-09';
-SET @yesterday = '2021-02-08';
-SET @threemonthslater = '2021-05-09';
-SET @threemonthslaterplusoneday = '2021-05-10';
+SET @yesterday = '2021-02-10';
+SET @today = '2021-02-11';
+SET @threemonthslater = '2021-05-11';
+SET @threemonthslaterplusoneday = '2021-05-12';
 
 INSERT INTO uat_appointments (`day`, serviceType, timeSlot, email, `name`, phone, regNumber, autoType, remark, createdTs, creator) VALUES
     (@yesterday, 'MotTest', '9:30', 'geza@hopp.com', 'Kiss Géza', '06302221111', 'ABC-123', 'Ford Fiesta', 'Árvíztűrő tükörfúrógép', now(), 'anonymous'),
