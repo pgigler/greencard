@@ -177,6 +177,9 @@ const IndexPage = () => {
 						<div>Bejelentkezés:</div>
 						<div>+36 (30) 131 4101</div>
 					</div>
+					<Link to="/idopont-foglalas">
+						<div className="btn btn-primary">Online időpont foglalás</div>
+					</Link>
 				</div>
 				{/* <div className="flex justify-around mt-4">
 					<Link to="/idopont-foglalas">

@@ -25,7 +25,7 @@ $data = [
 $tablePrefix = \My\Helpers\getTablePrefix();
 $pdo = \My\Helpers\createDBContext();
 
-$stmtCheck = $pdo->prepare("SELECT COUNT(*) FROM `${tablePrefix}appointments` WHERE day = :day AND serviceType = :serviceType aND timeSlot = :timeSlot");
+$stmtCheck = $pdo->prepare("SELECT COUNT(*) FROM `${tablePrefix}appointments` WHERE day = :day AND serviceType = :serviceType AND timeSlot = :timeSlot AND deleted = 0");
 $stmtCheck->bindParam(':day', $data["day"]);
 $stmtCheck->bindParam(':serviceType', $data["serviceType"]);
 $stmtCheck->bindParam(':timeSlot', $data["timeSlot"]);
@@ -40,13 +40,13 @@ if ($count > 0) {
 
 $data["creator"] = 'Anonymous';
 $stmtAdd = $pdo->prepare(
-    "INSERT INTO `${tablePrefix}appointments` (`day`, serviceType, timeSlot, email, name, phone, regNumber, autoType, remark, createdTs, creator)" .
-        " VALUES (:day, :serviceType, :timeSlot, :email, :name, :phone, :regNumber, :autoType, :remark, now(), :creator)"
+    "INSERT INTO `${tablePrefix}appointments` (`day`, serviceType, timeSlot, email, name, phone, regNumber, autoType, remark, creator)" .
+        " VALUES (:day, :serviceType, :timeSlot, :email, :name, :phone, :regNumber, :autoType, :remark, :creator)"
 );
 $stmtAdd->execute($data);
 
 \My\Helpers\sendEmail($data["email"], 'Visszaigazolás',
-    "Kedves " . $data["name"] . "!<br/><br/>Köszönjük a foglalást. Várjuk a megadott időpontban. Lemondani, időpontot módosítani emailen: vizsgaallomas1@gmail.com, vagy munkaidőben tud telefonon: +36 (30) 131 4101.<br/><br/>"
+    "Kedves " . $data["name"] . "!<br/><br/>Köszönjük a foglalást. Várjuk a megadott időpontban. Lemondani, időpontot módosítani emailen: zoldkartyabt1@gmail.com, vagy munkaidőben tud telefonon: +36 (30) 131 4101.<br/><br/>"
     . "Adatok:<br/><br/>Név: " . $data["name"] . "<br/>Telefonszám: " . $data["phone"] . "<br/>Időpont: " . $data["day"] . " " . $data["timeSlot"]
     . "<br/>Autó: " . $data["autoType"] . " (" . $data["regNumber"] . ")<br/>Megjegyzés: " . $data["remark"] . "<br/><br/>Üdvözlettel,<br/>Zöldkártya Bt.");
 

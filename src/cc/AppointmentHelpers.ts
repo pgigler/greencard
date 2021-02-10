@@ -61,6 +61,10 @@ export interface AppointmentModel {
 	autoType: string;
 	regNumber: string;
 	remark: string;
+	creator: string;
+	createdTs: string;
+	updater: string;
+	updatedTs: string;
 }
 
 export interface DayModel {

@@ -12,9 +12,9 @@ CREATE TABLE uat_appointments(
 	regNumber VARCHAR(10) NOT NULL,
 	autoType VARCHAR(100) NOT NULL,
 	remark VARCHAR(500) NOT NULL,
-    createdTs TIMESTAMP NOT NULL,
+    createdTs TIMESTAMP DEFAULT now(),
     creator VARCHAR(100) NOT NULL,
-    updatedTs TIMESTAMP,
+    updatedTs TIMESTAMP DEFAULT '0000-00-00 00:00:00' ON UPDATE now(),
     updater VARCHAR(100),
     deleted INT NOT NULL DEFAULT 0 -- 0 (false), 1 (true)
 );

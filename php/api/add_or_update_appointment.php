@@ -30,15 +30,15 @@ if (isset($request->id)) {
 	$data['id'] = $request->id;
 	$data["updater"] = $authEmail;
 	$stmtUpdate = $pdo->prepare(
-		"UPDATE `${tablePrefix}appointments` SET day = :day, serviceType = :serviceType, timeSlot = :timeSlot, email = :email, updatedTs = now(), updater = :updater" .
+		"UPDATE `${tablePrefix}appointments` SET day = :day, serviceType = :serviceType, timeSlot = :timeSlot, email = :email, updater = :updater" .
 			", name = :name, phone = :phone, regNumber = :regNumber, autoType = :autoType, remark = :remark WHERE id = :id"
 	);
 	$stmtUpdate->execute($data);
 } else {
 	$data["creator"] = $authEmail;
 	$stmtAdd = $pdo->prepare(
-		"INSERT INTO `${tablePrefix}appointments` (`day`, serviceType, timeSlot, email, name, phone, regNumber, autoType, remark, createdTs, creator)" .
-			" VALUES (:day, :serviceType, :timeSlot, :email, :name, :phone, :regNumber, :autoType, :remark, now(), :creator)"
+		"INSERT INTO `${tablePrefix}appointments` (`day`, serviceType, timeSlot, email, name, phone, regNumber, autoType, remark, creator)" .
+			" VALUES (:day, :serviceType, :timeSlot, :email, :name, :phone, :regNumber, :autoType, :remark, :creator)"
 	);
 	$stmtAdd->execute($data);
 }

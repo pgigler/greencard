@@ -1,3 +1,4 @@
+/* eslint-disable no-null/no-null */
 import { html } from "lit-html";
 import "../ui/dc-components";
 import * as DC from "../ui/dc-components-typing";
@@ -104,12 +105,20 @@ const Component: HauntedFunc<Properties> = (host) => {
 
 	const saveOrAddAppt = () => {
 		setErrorMessage("");
-		const validationResult = validateAllField();
-		if (validationResult) {
+		if (isAdmin() || validateAllField()) {
 			withErrorHandling(
 				async () => {
 					await apiClient.post(`/api/add_or_update_appointment.php`, {
-						...currentAppointment,
+						...(isAdmin()
+							? {
+									...currentAppointment,
+									email: currentAppointment.email ?? "",
+									name: currentAppointment.name ?? "",
+									phone: currentAppointment.phone ?? "",
+									autoType: currentAppointment.autoType ?? "",
+									regNumber: currentAppointment.regNumber ?? "",
+							  }
+							: currentAppointment),
 						timeSlot: currentAppointment.timeSlotStr,
 					});
 
@@ -253,6 +262,10 @@ const Component: HauntedFunc<Properties> = (host) => {
 	useEffect(() => {
 		setCurrentTimeSlots(getTimeSlots(qAppointments, currentServiceType, currentDate));
 	}, [currentDate, qAppointments, currentServiceType]);
+
+	useEffect(() => {
+		setCurrentAppointment(getAppointment(currentServiceType, currentDate, currentAppointment.timeSlotStr));
+	}, [qAppointments]);
 
 	const loadCurrentMonth = async () => {
 		withErrorHandling(
@@ -492,6 +505,23 @@ const Component: HauntedFunc<Properties> = (host) => {
 						setCurrentAppointment({ ...currentAppointment, remark: e.detail.value });
 					}}
 				></dc-input>
+				${isAdmin()
+					? html`${currentAppointment.creator !== null && currentAppointment.creator !== undefined
+							? html`<div>
+									Létrehozta:
+									${currentAppointment.creator === "Anonymous"
+										? "Ismeretlen"
+										: currentAppointment.creator}
+									(${currentAppointment.createdTs})
+							  </div>`
+							: ""}
+					  ${currentAppointment.updater !== null && currentAppointment.updater !== undefined
+							? html`<div>
+									Utoljára módosította: ${currentAppointment.updater}
+									(${currentAppointment.updatedTs})
+							  </div>`
+							: ""}`
+					: ""}
 			</div>
 		</div>`;
 
@@ -518,7 +548,7 @@ const Component: HauntedFunc<Properties> = (host) => {
 				Ha nem érkezne meg az email pár percen belül, kérem vegye fel ügyfélszolgálatunkkal a kapcsolatot
 				emailben:
 				<a class="text-brand-blue font-semibold" href="mailto:zoldkartyabt1@gmail.com"
-					>vizsgaallomas1@gmail.com</a
+					>zoldkartyabt1@gmail.com</a
 				>
 				vagy munkaidőben telefonon: <span class="text-brand-blue font-semibold">+36 (30) 131 4101</span>.
 			</p>

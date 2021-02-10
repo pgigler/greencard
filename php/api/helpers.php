@@ -121,6 +121,7 @@ function sendEmail($to, $subject, $body)
 		$mail->FromName = "Zöldkártya Bt.";
 		$mail->AddAddress($to); // To
 		$mail->AddReplyTo('zoldkartyabt1@gmail.com');
+        $mail->AddCC('zoldkartyabt1@gmail.com');
 
 		// $mail->WordWrap = 80; // Word wrap
 		// $mail->AddAttachment('/var/tmp/file.tar.gz');
