@@ -1,4 +1,5 @@
 import { getCurrentUser } from "./auth";
+import "abortcontroller-polyfill/dist/abortcontroller-polyfill-only";
 
 const apiUrl = process.env.GATSBY_API_URL;
 
