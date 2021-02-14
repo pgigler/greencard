@@ -20,9 +20,13 @@ function handleCORS()
 	$isUAT = ENV == "uat";
 
 	header("Access-Control-Allow-Headers: Authorization, X-Authorization, Content-Type");
+
 	// UAT is cross-domain query, so allow it
 	if ($isUAT) {
 		header("Access-Control-Allow-Origin: *");
+		header("Access-Control-Allow-Methods: *");
+	} else {
+		header("Access-Control-Allow-Origin: https://www.zoldkartyabt.hu");
 		header("Access-Control-Allow-Methods: *");
 	}
 
@@ -121,7 +125,7 @@ function sendEmail($to, $subject, $body)
 		$mail->FromName = "Zöldkártya Bt.";
 		$mail->AddAddress($to); // To
 		$mail->AddReplyTo('zoldkartyabt1@gmail.com');
-        $mail->AddCC('zoldkartyabt1@gmail.com');
+		$mail->AddCC('zoldkartyabt1@gmail.com');
 
 		// $mail->WordWrap = 80; // Word wrap
 		// $mail->AddAttachment('/var/tmp/file.tar.gz');
