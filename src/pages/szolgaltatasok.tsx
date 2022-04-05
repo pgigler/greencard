@@ -69,35 +69,32 @@ const ServicesPage = () => {
 					<tbody>
 						<tr>
 							<td>Személygépjármű (M1)</td>
-							<td className="font-bold text-black">22.000 Ft</td>
-						</tr>
-						<tr>
-							<td>Személygépjármű (4x4 - M1G)</td>
-							<td className="font-bold text-black">26.000 Ft</td>
-						</tr>
-						<tr>
-							<td>Tehergépjármű (3,5 tonnáig)</td>
 							<td className="font-bold text-black">24.000 Ft</td>
 						</tr>
 						<tr>
-							<td>Tehergépjármű (4x4)</td>
+							<td>Személygépjármű (4x4 - M1G)</td>
 							<td className="font-bold text-black">28.000 Ft</td>
 						</tr>
 						<tr>
+							<td>Tehergépjármű (3,5 tonnáig)</td>
+							<td className="font-bold text-black">25.000 Ft</td>
+						</tr>
+						<tr>
+							<td>Tehergépjármű (4x4)</td>
+							<td className="font-bold text-black">29.000 Ft</td>
+						</tr>
+						<tr>
 							<td>Motorkerékpár</td>
-							<td className="font-bold text-black">9.900 Ft</td>
+							<td className="font-bold text-black">12.000 Ft</td>
 						</tr>
 						<tr>
 							<td>Utánfutó (fék nélkül)</td>
-							<td className="font-bold text-black">16.000 Ft</td>
-						</tr>
-						<tr>
-							<td>Komplett állapotfelmérés</td>
-							<td className="font-bold text-black">10.000 Ft</td>
+							<td className="font-bold text-black">20.000 Ft</td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
+			<div className="pt-4">Bankkártyás fizetés átmenetileg nem elérhető</div>
 			<div className="pt-4">(fék, futómű átvizsgálás, festékréteg mérés, lengéscsillapító mérés)</div>
 			<div className="pt-4">
 				A műszaki vizsgára minden esetben előzetes átvizsgálás után kerül sor, melynek költségét a vizsga ára
