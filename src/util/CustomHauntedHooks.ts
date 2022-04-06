@@ -62,6 +62,8 @@ export function useEffect(
 				// eslint-disable-next-line no-console
 				console.error(reason);
 			});
+		} else {
+			return result;
 		}
 		// }, 0);
 	}, values);

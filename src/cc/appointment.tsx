@@ -135,7 +135,7 @@ const Component: HauntedFunc<Properties> = (host) => {
 	};
 
 	const deleteAppt = () => {
-		if (confirm("Biztosan törölni akarja a foglalást?")) {
+		if (currentAppointment.id) {
 			withErrorHandling(
 				async () => {
 					await apiClient.post(`/api/delete_appointment.php`, {
@@ -266,6 +266,29 @@ const Component: HauntedFunc<Properties> = (host) => {
 	useEffect(() => {
 		setCurrentAppointment(getAppointment(currentServiceType, currentDate, currentAppointment.timeSlotStr));
 	}, [qAppointments]);
+
+	useEffect(() => {
+		const handleHotKeys = (e) => {
+			if (e.ctrlKey && e.key === "s") {
+				// Prevent the Save dialog to open
+				e.preventDefault();
+
+				saveOrAddAppt();
+			}
+
+			if (e.ctrlKey && e.key === "x") {
+				// Prevent the Save dialog to open
+				e.preventDefault();
+				deleteAppt();
+			}
+		};
+
+		document.addEventListener("keydown", handleHotKeys);
+
+		return () => {
+			document.removeEventListener("keydown", handleHotKeys);
+		};
+	}, [currentDate, currentAppointment, currentServiceType]);
 
 	const loadCurrentMonth = async () => {
 		withErrorHandling(
@@ -530,7 +553,15 @@ const Component: HauntedFunc<Properties> = (host) => {
 			${isAdmin()
 				? html`<a class="inline-block" href="#" @click=${saveOrAddAppt}>
 							<span class="btn btn-primary">Mentés</span> </a
-						><a class="inline-block ml-4" href="#" @click=${deleteAppt}>
+						><a
+							class="inline-block ml-4"
+							href="#"
+							@click=${() => {
+								if (confirm("Biztosan törölni akarja a foglalást?")) {
+									deleteAppt();
+								}
+							}}
+						>
 							<span class="btn btn-primary">Törlés</span>
 						</a>`
 				: html`<a class="inline-block" href="#" @click=${send}>
@@ -555,21 +586,20 @@ const Component: HauntedFunc<Properties> = (host) => {
 		</div>
 	</div>`;
 
-	if (loading.count > 0) {
-		return html`<div class="pt-12">Kérem várjon míg lekérdezzük az foglaltságot...</div>`;
-	} else if (accessDenied) {
-		return html`<h1 class="pt-12 text-4xl leading-tight font-semibold text-center">Hozzáférés megtagadva</h1>`;
-	} else if (!sent) {
-		return html`<div>
-			<h1 class="pt-12 text-4xl leading-tight font-semibold">Időpont foglalás</h1>
-			${templateServiceTypes()} ${currentAppointment.serviceType !== undefined ? templateCalendar() : ""}
-			${currentDate !== undefined ? templateTimeSlots() : ""}
-			${currentAppointment.timeSlotStr !== undefined ? templatePersonalInfo() : ""}
-			${currentAppointment.timeSlotStr !== undefined ? templateSend() : ""}
-		</div>`;
-	} else {
-		return templateSuccess();
-	}
+	return html`
+		${loading.count > 0 ? html`<div class="pt-12 fixed top-0 right-0 mt-4 p-4">Feldolgozás...</div>` : ""}
+		${accessDenied
+			? html`<h1 class="pt-12 text-4xl leading-tight font-semibold text-center">Hozzáférés megtagadva</h1>`
+			: !sent
+			? html`<div>
+					<h1 class="pt-12 text-4xl leading-tight font-semibold">Időpont foglalás</h1>
+					${templateServiceTypes()} ${currentAppointment.serviceType !== undefined ? templateCalendar() : ""}
+					${currentDate !== undefined ? templateTimeSlots() : ""}
+					${currentAppointment.timeSlotStr !== undefined ? templatePersonalInfo() : ""}
+					${currentAppointment.timeSlotStr !== undefined ? templateSend() : ""}
+			  </div>`
+			: templateSuccess()}
+	`;
 };
 
 if (isBrowser() && customElements.get(name) === undefined) {
@@ -587,7 +617,7 @@ if (isBrowser() && customElements.get(name) === undefined) {
 
 import React from "react";
 import useCustomElement from "../util/useCustomElement";
-import { formatDate, isBrowser, parseDate, withErrorHandling } from "../util/helper";
+import { formatDate, isBrowser, isEmpty, parseDate, withErrorHandling } from "../util/helper";
 import { HauntedFunc, useApiClient, useEffect, useLoadingReducer, useState } from "../util/CustomHauntedHooks";
 import { component } from "haunted";
 import { ApiError } from "../util/ApiClient";

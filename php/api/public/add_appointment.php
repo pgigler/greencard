@@ -45,9 +45,11 @@ $stmtAdd = $pdo->prepare(
 );
 $stmtAdd->execute($data);
 
+$serviceType = $data["serviceType"] == "MotTest" ? "Műszaki vizsga" : "Eredetiség vizsgálat";
+
 \My\Helpers\sendEmail($data["email"], 'Visszaigazolás',
-    "Kedves " . $data["name"] . "!<br/><br/>Köszönjük a foglalást. Várjuk a megadott időpontban. Lemondani, időpontot módosítani emailen: zoldkartyabt1@gmail.com, vagy munkaidőben tud telefonon: +36 (30) 131 4101.<br/><br/>"
-    . "Adatok:<br/><br/>Név: " . $data["name"] . "<br/>Telefonszám: " . $data["phone"] . "<br/>Időpont: " . $data["day"] . " " . $data["timeSlot"]
+    "Kedves " . $data["name"] . "!<br/><br/>Köszönjük a foglalást. Várjuk a megadott időpontban. Lemondani, időpontot módosítani emailen: zoldkartyabt1@gmail.com, vagy munkaidőben tud telefonon: +36 (30) 131 4101.<br/>"
+    . "<br/>" . $serviceType . "<br/><br/>Név: " . $data["name"] . "<br/>Telefonszám: " . $data["phone"] . "<br/>Időpont: " . $data["day"] . " " . $data["timeSlot"]
     . "<br/>Autó: " . $data["autoType"] . " (" . $data["regNumber"] . ")<br/>Megjegyzés: " . $data["remark"] . "<br/><br/>Üdvözlettel,<br/>Zöldkártya Bt.");
 
 header('HTTP/1.1 200 OK');
