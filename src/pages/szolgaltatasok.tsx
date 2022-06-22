@@ -299,8 +299,8 @@ const ServicesPage = () => {
 				</div>
 			</div>
 			<div className="mt-4">
-				Az S.O.S. szolgáltatás díja bruttó <span className="font-bold text-black">5000 Ft</span>, mely a Műszaki
-				vizsga illetve az Eredetiség vizsga díján felül értendő.
+				Az S.O.S. szolgáltatás díja bruttó <span className="font-bold text-black">10.000 Ft</span>, mely a
+				Műszaki vizsga illetve az Eredetiség vizsga díján felül értendő.
 			</div>
 		</div>
 	);
