@@ -203,31 +203,31 @@ const IndexPage = () => {
 				<div className="md:flex justify justify-between p-4 mx-4 md:px-16 md:mx-0 border-4 border-red-600">
 					<div className="md:mr-8">
 						<h2 className="pb-4 w-full text-center md:text-left title title-wide text-red-600 underline">
-							S.O.S Műszaki vizsga
+							Műszaki vizsga
 						</h2>
 						<div className="text-center md:text-left">
 							Későn vette észre, hogy lejárt a műszaki vizsgája? Esetleg a rendőrök figyelmeztették?
 							Hozzánk bármikor hozhatja az autóját, akár 4 órán belül levizsgáztatjuk.
 						</div>
 						<h2 className="hidden lg:block py-4 w-full title title-wide text-red-600 underline">
-							S.O.S Eredetiségvizsgálat
+							Eredetiségvizsgálat
 						</h2>
 						<h2 className="lg:hidden text-center md:text-left py-4 w-full title title-wide text-red-600 underline">
-							S.O.S Eredetiség-vizsgálat
+							Eredetiség-vizsgálat
 						</h2>
 						<div className="text-center md:text-left">Hipergyors vizsgálat bármelyik kategóriában.</div>
 						<div className="mt-8 text-center md:text-right">
-							<Link to="/szolgaltatasok#sos">
+							<Link to="/szolgaltatasok">
 								<div className="btn btn-primary">Részletek</div>
 							</Link>
 						</div>
 					</div>
 					<div className="mt-8 md:mt-0">
 						<div className="hidden md:block mt-0 ml-8">
-							<Img fluid={sos} alt="SOS" style={{ width: "300px" }} />
+							<Img fluid={sos} alt="hipergyors" style={{ width: "300px" }} />
 						</div>
 						<div className="md:hidden">
-							<Img className="m-auto" fluid={sos} alt="SOS" style={{ maxWidth: "300px" }} />
+							<Img className="m-auto" fluid={sos} alt="hipergyors" style={{ maxWidth: "300px" }} />
 						</div>
 					</div>
 				</div>
