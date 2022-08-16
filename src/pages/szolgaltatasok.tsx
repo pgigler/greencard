@@ -188,14 +188,8 @@ const ServicesPage = () => {
 					</tbody>
 				</table>
 			</div>
-			<div className="pt-4">Bankkártyás fizetés átmenetileg nem elérhető</div>
-			<div className="pt-4">
-				Ha a gépjármű állapota nem megfelelő a kategória szerinti átvizsgálási díj kerül felszámításra.
-			</div>
-			<div className="pt-4">
-				Hiba esetén szervizünkben teljes körű javításra van lehetőség. Amennyiben gépjárművét nálunk javíttatja,
-				az előzetes átvizsgálás díja nem kerül felszámításra.
-			</div>
+			<div className="pt-4 font-bold">Bankkártyás fizetés átmenetileg nem elérhető</div>
+			<div className="pt-4">Hiba esetén szervizünkben teljes körű javításra van lehetőség.</div>
 			<div className="pt-4">A műszaki vizsgához szükséges okmányok:</div>
 			<ul className="list-disc list-inside mt-4 ml-4">
 				<li>gépjármű forgalmi engedély</li>
