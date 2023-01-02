@@ -117,15 +117,15 @@ const ServicesPage = () => {
 					<tbody>
 						<tr>
 							<td>Személygépkocsi (M1)</td>
-							<td className="font-bold text-black">7.710 Ft</td>
+							<td className="font-bold text-black">9.710 Ft</td>
 						</tr>
 						<tr>
 							<td>Tehergépkocsi (N1)</td>
-							<td className="font-bold text-black">7.910 Ft</td>
+							<td className="font-bold text-black">9.910 Ft</td>
 						</tr>
 						<tr>
 							<td>Motorkerékpár (L3e)</td>
-							<td className="font-bold text-black">7.640 Ft</td>
+							<td className="font-bold text-black">10.640 Ft</td>
 						</tr>
 						<tr>
 							<td>Utánfutó (O1)</td>
@@ -133,11 +133,15 @@ const ServicesPage = () => {
 						</tr>
 						<tr>
 							<td>Személygépkocsi (4x4 - M1G)</td>
-							<td className="font-bold text-black">7.710 Ft</td>
+							<td className="font-bold text-black">9.610 Ft</td>
 						</tr>
 						<tr>
 							<td>Tehergépkocsi (4x4 - N1G)</td>
-							<td className="font-bold text-black">7.910 Ft</td>
+							<td className="font-bold text-black">9.810 Ft</td>
+						</tr>
+						<tr>
+							<td>LPG gázos autó felár</td>
+							<td className="font-bold text-black">+ 4.000 Ft</td>
 						</tr>
 					</tbody>
 				</table>
@@ -163,15 +167,15 @@ const ServicesPage = () => {
 					<tbody>
 						<tr>
 							<td>Személygépkocsi (M1)</td>
-							<td className="font-bold text-black">24.000 Ft</td>
+							<td className="font-bold text-black">26.000 Ft</td>
 						</tr>
 						<tr>
 							<td>Tehergépkocsi (N1)</td>
-							<td className="font-bold text-black">25.000 Ft</td>
+							<td className="font-bold text-black">27.000 Ft</td>
 						</tr>
 						<tr>
 							<td>Motorkerékpár (L3e)</td>
-							<td className="font-bold text-black">12.000 Ft</td>
+							<td className="font-bold text-black">15.000 Ft</td>
 						</tr>
 						<tr>
 							<td>Utánfutó (O1)</td>
@@ -179,11 +183,15 @@ const ServicesPage = () => {
 						</tr>
 						<tr>
 							<td>Személygépkocsi (4x4 - M1G)</td>
-							<td className="font-bold text-black">28.000 Ft</td>
+							<td className="font-bold text-black">30.000 Ft</td>
 						</tr>
 						<tr>
 							<td>Tehergépkocsi (4x4 - N1G)</td>
-							<td className="font-bold text-black">29.000 Ft</td>
+							<td className="font-bold text-black">31.000 Ft</td>
+						</tr>
+						<tr>
+							<td>LPG gázos autó felár</td>
+							<td className="font-bold text-black">+ 4.000 Ft</td>
 						</tr>
 					</tbody>
 				</table>
