@@ -223,11 +223,11 @@ const ServicesPage = () => {
 				<li>Fék, futóműszerviz</li>
 				<li>Gépjármű diagnosztika</li>
 				<li>Időszakos karbantartás</li>
-				<li>Fényszóró polírozás</li>
+				{/* <li>Fényszóró polírozás</li> */}
 				<li>Műszaki vizsgára való felkészítés</li>
-				<li>Gépjármű vásárlás előtti állapotfelmérés</li>
+				{/* <li>Gépjármű vásárlás előtti állapotfelmérés</li> */}
 			</ul>
-			<div className="pt-4 text-red-600 font-bold">A gépjármű javítás díja: bruttó 7.500 Ft/óra</div>
+			<div className="pt-4 text-red-600 font-bold">A gépjármű javítás díja: bruttó 10.000 Ft/óra</div>
 			<div className="pt-4">
 				A javítás minden esetben a hiba feltárása és az előzetes árajánlat után történik.
 			</div>
@@ -456,7 +456,7 @@ const ServicesPage = () => {
 							style={{ width: "300px" }}
 						/>
 					</div>
-					<div className="md:flex justify-between mt-8">
+					{/* <div className="md:flex justify-between mt-8">
 						<div className="mr-8">{gumiSzerviz}</div>
 						<Img
 							className="hidden md:block mt-24"
@@ -464,14 +464,13 @@ const ServicesPage = () => {
 							alt="Gumiszerviz"
 							style={{ width: "600px" }}
 						/>
-						{/* Mobile */}
 						<Img
 							className="md:hidden mt-8 m-auto"
 							fluid={fluidGumiSzerviz}
 							alt="Gumiszerviz"
 							style={{ width: "300px" }}
 						/>
-					</div>
+					</div> */}
 					{/* <div className="md:flex justify-between mt-8 md:mt-32">
 						<div className="mr-8">{sos}</div>
 						<Img

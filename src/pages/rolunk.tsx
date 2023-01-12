@@ -15,8 +15,8 @@ const AboutUsPage = () => {
 					EREDETISÉG és MŰSZAKI VIZSGÁT is készítünk.
 				</p>
 				<p className="text-lg my-8">
-					Szervizünkben a teljes gépjármű szervizelés, karbantartás részeként, igény szerint gumiszerelést,
-					fényszóró polírozást, belső motortisztítást, ózonos belső tisztítást is végzünk.
+					Szervizünkben a teljes gépjármű szervizelés, karbantartás részeként, igény szerint belső
+					motortisztítást, ózonos belső tisztítást is végzünk.
 				</p>
 				<p className="text-lg my-8">
 					Fontos számunkra a bizalom. Ügyfeleink igényeit szem előtt tartva, a szerelés során felmerülő
