@@ -47,3 +47,9 @@ Spec:
 # Linux
 
 Errors: tail zoldkartyabt.hu/error.log -f
+
+# UAT
+
+mysql is available via tunnel only (3306:127.0.0.1:3306)
+
+# TODO:

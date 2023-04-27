@@ -39,6 +39,8 @@ interface Properties {
 	mode: AppintmentMode;
 }
 
+const FORBIDDEN_TIME_SLOTS_FOR_CLIENTS = ["12:00", "12:30", "15:00", "15:30"];
+
 const Component: HauntedFunc<Properties> = (host) => {
 	const props: Properties = {
 		mode: host.mode !== undefined ? host.mode : DEFAULTS.mode,
@@ -443,23 +445,36 @@ const Component: HauntedFunc<Properties> = (host) => {
 		html`<div class="mt-4">
 			<div class="grid grid-rows-5 grid-cols-4 grid-flow-col gap-4">
 				${currentTimeSlots.map((timeSlot) => {
-					if (timeSlot.free || isAdmin()) {
-						return html`<a
-							href="#"
-							@click=${() => {
-								setCurrentAppointment(getAppointment(currentServiceType, currentDate, timeSlot.label));
-							}}
-						>
-							<div class=${getTimeSlotClass(timeSlot, currentAppointment.timeSlotStr === timeSlot.label)}>
-								${timeSlot.label}
-							</div>
-						</a>`;
-					} else {
-						return html`<div
-							class=${getTimeSlotClass(timeSlot, currentAppointment.timeSlotStr === timeSlot.label)}
-						>
+					if (!isAdmin() && FORBIDDEN_TIME_SLOTS_FOR_CLIENTS.includes(timeSlot.label)) {
+						return html`<div class=${getTimeSlotClass({ free: false, label: "12:00" }, false)}>
 							${timeSlot.label}
 						</div>`;
+					} else {
+						if (timeSlot.free || isAdmin()) {
+							return html`<a
+								href="#"
+								@click=${() => {
+									setCurrentAppointment(
+										getAppointment(currentServiceType, currentDate, timeSlot.label)
+									);
+								}}
+							>
+								<div
+									class=${getTimeSlotClass(
+										timeSlot,
+										currentAppointment.timeSlotStr === timeSlot.label
+									)}
+								>
+									${timeSlot.label}
+								</div>
+							</a>`;
+						} else {
+							return html`<div
+								class=${getTimeSlotClass(timeSlot, currentAppointment.timeSlotStr === timeSlot.label)}
+							>
+								${timeSlot.label}
+							</div>`;
+						}
 					}
 				})}
 			</div>

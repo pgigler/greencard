@@ -49,6 +49,20 @@ const ServicesPage = () => {
 		hash = window.location.hash;
 	}
 
+	const bigLine = (text, price) => (
+		<tr>
+			<td>{text}</td>
+			<td className="font-bold text-black text-right">{price}</td>
+		</tr>
+	);
+
+	const smallLine = (text, price) => (
+		<tr>
+			<td className="pl-4 text-sm">{text}</td>
+			<td className="text-black text-sm text-right">{price}</td>
+		</tr>
+	);
+
 	const muszakiVizsga = (
 		<div>
 			<p
@@ -59,6 +73,43 @@ const ServicesPage = () => {
 			</p>
 			<div>Feltüntetett áraink bruttóban értendők.</div>
 			<p
+				id="elozetes-atvizsgalas-muszaki-elott"
+				className="text-xl text-black font-semibold mb-8 text-center md:text-left mt-2"
+			>
+				Műszaki vizsga díja <span className="underline">előzetes átvizsgálással együtt</span>
+			</p>
+			<div>
+				<table className="mt-4 bg-gray-100 m-4" cellSpacing="5" cellPadding="5">
+					<thead>
+						<tr>
+							<td className="bg-brand-yellowdark font-semibold text-black">Típus</td>
+							<td className="bg-brand-yellowdark font-semibold text-black">Díjak (bruttó)</td>
+						</tr>
+					</thead>
+					<tbody>
+						{bigLine("Személygépkocsi (M1)", "26.000 Ft")}
+						{smallLine("Műszaki vizsga díja", "16.290 Ft")}
+						{smallLine("Átvizsgálás díja", "9.720 Ft")}
+						{bigLine("Tehergépkocsi (M1)", "27.000 Ft")}
+						{smallLine("Műszaki vizsga díja", "17.090 Ft")}
+						{smallLine("Átvizsgálás díja", "9.910 Ft")}
+						{bigLine("Motorkerékpár (L3e)", "15.000 Ft")}
+						{smallLine("Műszaki vizsga díja", "4.360 Ft")}
+						{smallLine("Átvizsgálás díja", "10.640 Ft")}
+						{bigLine("Utánfutó (O1)", "20.000 Ft")}
+						{smallLine("Műszaki vizsga díja", "10.490 Ft")}
+						{smallLine("Átvizsgálás díja", "9.510 Ft")}
+						{bigLine("Személygépkocsi (4x4 - M1G)", "30.000 Ft")}
+						{smallLine("Műszaki vizsga díja", "20.390 Ft")}
+						{smallLine("Átvizsgálás díja", "9.610 Ft")}
+						{bigLine("Tehergépkocsi (4x4 - N1G)", "31.000 Ft")}
+						{smallLine("Műszaki vizsga díja", "21.190 Ft")}
+						{smallLine("Átvizsgálás díja", "9.810 Ft")}
+						{bigLine("LPG gázos autó felár", "+ 4.000 Ft")}
+					</tbody>
+				</table>
+			</div>
+			{/* <p
 				id="elozetes-atvizsgalas-muszaki-elott"
 				className="text-xl text-black font-semibold mb-8 text-center md:text-left mt-2"
 			>
@@ -149,53 +200,7 @@ const ServicesPage = () => {
 			<div className="text-red-600 font-bold">
 				A műszaki vizsgálatot megelőző úgynevezett előzetes átvizsgálást, kizárólag az ügyfél kérelmére
 				végezzük, megrendelés alapján.
-			</div>
-			<p
-				id="elozetes-atvizsgalas-muszaki-elott"
-				className="text-xl text-black font-semibold mb-8 text-center md:text-left mt-2"
-			>
-				Műszaki vizsga díja <span className="underline">előzetes átvizsgálással együtt</span>
-			</p>
-			<div>
-				<table className="mt-4 bg-gray-100 m-4" cellSpacing="5" cellPadding="5">
-					<thead>
-						<tr>
-							<td className="bg-brand-yellowdark font-semibold text-black">Típus</td>
-							<td className="bg-brand-yellowdark font-semibold text-black">Díjak (bruttó)</td>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>Személygépkocsi (M1)</td>
-							<td className="font-bold text-black">26.000 Ft</td>
-						</tr>
-						<tr>
-							<td>Tehergépkocsi (N1)</td>
-							<td className="font-bold text-black">27.000 Ft</td>
-						</tr>
-						<tr>
-							<td>Motorkerékpár (L3e)</td>
-							<td className="font-bold text-black">15.000 Ft</td>
-						</tr>
-						<tr>
-							<td>Utánfutó (O1)</td>
-							<td className="font-bold text-black">20.000 Ft</td>
-						</tr>
-						<tr>
-							<td>Személygépkocsi (4x4 - M1G)</td>
-							<td className="font-bold text-black">30.000 Ft</td>
-						</tr>
-						<tr>
-							<td>Tehergépkocsi (4x4 - N1G)</td>
-							<td className="font-bold text-black">31.000 Ft</td>
-						</tr>
-						<tr>
-							<td>LPG gázos autó felár</td>
-							<td className="font-bold text-black">+ 4.000 Ft</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
+			</div> */}
 			<div className="pt-4 font-bold">Bankkártyás fizetés átmenetileg nem elérhető</div>
 			<div className="pt-4">Hiba esetén szervizünkben teljes körű javításra van lehetőség.</div>
 			<div className="pt-4">A műszaki vizsgához szükséges okmányok:</div>
@@ -285,7 +290,7 @@ const ServicesPage = () => {
 						</tr>
 						<tr>
 							<td>500 ccm3 alatt</td>
-							<td className="font-bold text-black">15.000 Ft</td>
+							<td className="font-bold text-black">15.500 Ft</td>
 						</tr>
 						<tr>
 							<td>500 ccm3 felett</td>
@@ -401,7 +406,7 @@ const ServicesPage = () => {
 			<div className="container px-4 my-8">
 				<div className="w-full">
 					<div className="md:flex justify-between">
-						<div className="mr-8">{muszakiVizsga}</div>
+						<div className="md:mr-8">{muszakiVizsga}</div>
 						<div>
 							<Img
 								className="hidden md:block mt-24"
