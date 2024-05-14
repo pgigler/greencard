@@ -5,6 +5,8 @@ import SEO from "../components/seo";
 import { getFluid, isBrowser } from "../util/helper";
 import Img from "gatsby-image";
 
+const AUDIT_PROOF = true;
+
 const ServicesPage = () => {
 	const data = useStaticQuery(graphql`
 		query ServicesPageQuery {
@@ -72,9 +74,70 @@ const ServicesPage = () => {
 				Műszaki vizsga
 			</p>
 			<div>Feltüntetett áraink bruttóban értendők.</div>
+			{AUDIT_PROOF && (
+				<div>
+					<p
+						id="elozetes-atvizsgalas-muszaki-elott"
+						className="text-xl text-black font-semibold mb-8 text-center md:text-left mt-4"
+					>
+						Műszaki vizsga díja
+					</p>
+					<div>
+						<table className="mt-4 bg-gray-100 m-4" cellSpacing="5" cellPadding="5">
+							<thead>
+								<tr>
+									<td className="bg-brand-yellowdark font-semibold text-black">Típus</td>
+									<td className="bg-brand-yellowdark font-semibold text-black">Díjak (bruttó)</td>
+								</tr>
+							</thead>
+							<tbody>
+								{bigLine("Személygépkocsi (M1)", "16.290 Ft")}
+								{bigLine("Tehergépkocsi (M1)", "17.090 Ft")}
+								{bigLine("Motorkerékpár (L3e)", "4.360 Ft")}
+								{bigLine("Utánfutó (O1)", "10.490 Ft")}
+								{bigLine("Személygépkocsi (4x4 - M1G)", "20.390 Ft")}
+								{bigLine("Tehergépkocsi (4x4 - N1G)", "21.190 Ft")}
+								{/* {bigLine("LPG gázos autó felár", "+ 4.000 Ft")} */}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			)}
+
+			{AUDIT_PROOF && (
+				<div>
+					<p
+						id="elozetes-atvizsgalas-muszaki-elott"
+						className="text-xl text-black font-semibold mb-8 text-center md:text-left mt-4"
+					>
+						Átvizsgálás díja
+					</p>
+					<div>
+						<table className="mt-4 bg-gray-100 m-4" cellSpacing="5" cellPadding="5">
+							<thead>
+								<tr>
+									<td className="bg-brand-yellowdark font-semibold text-black">Típus</td>
+									<td className="bg-brand-yellowdark font-semibold text-black">Díjak (bruttó)</td>
+								</tr>
+							</thead>
+							<tbody>
+								{bigLine("Személygépkocsi (M1)", "9.720 Ft")}
+								{bigLine("Tehergépkocsi (M1)", "9.910 Ft")}
+								{bigLine("Motorkerékpár (L3e)", "10.640 Ft")}
+								{bigLine("Utánfutó (O1)", "9.510 Ft")}
+								{bigLine("Személygépkocsi (4x4 - M1G)", "9.610 Ft")}
+								{bigLine("Tehergépkocsi (4x4 - N1G)", "9.810 Ft")}
+								{/* {bigLine("LPG gázos autó felár", "+ 4.000 Ft")} */}
+							</tbody>
+						</table>
+						{AUDIT_PROOF && <div className="">Előzetes átvizsgálás külön megrendelésre!</div>}
+					</div>
+				</div>
+			)}
+
 			<p
 				id="elozetes-atvizsgalas-muszaki-elott"
-				className="text-xl text-black font-semibold mb-8 text-center md:text-left mt-2"
+				className="text-xl text-black font-semibold mb-8 text-center md:text-left mt-4"
 			>
 				Műszaki vizsga díja <span className="underline">előzetes átvizsgálással együtt</span>
 			</p>
@@ -105,7 +168,7 @@ const ServicesPage = () => {
 						{bigLine("Tehergépkocsi (4x4 - N1G)", "31.000 Ft")}
 						{smallLine("Műszaki vizsga díja", "21.190 Ft")}
 						{smallLine("Átvizsgálás díja", "9.810 Ft")}
-						{bigLine("LPG gázos autó felár", "+ 4.000 Ft")}
+						{/* {bigLine("LPG gázos autó felár", "+ 4.000 Ft")} */}
 					</tbody>
 				</table>
 			</div>
