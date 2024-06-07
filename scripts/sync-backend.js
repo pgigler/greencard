@@ -9,7 +9,7 @@ const rimraf = require("rimraf");
 
 const localTempFolder = "temp/php";
 
-async function syncBackend(onlyApi, remoteTempFolder, pRemoteDestFolder, env) {
+async function justZipBackend(ssh, onlyApi, remoteTempFolder, pRemoteDestFolder, env) {
 	const envPath = env === "uat" ? "/uat" : "";
 	const envPostfix = env === "prod" ? "_prod" : "_uat";
 	const remoteDestFolder = `${pRemoteDestFolder}${envPath}`;
@@ -17,7 +17,7 @@ async function syncBackend(onlyApi, remoteTempFolder, pRemoteDestFolder, env) {
 		rimraf.sync(localTempFolder);
 		mkdirp.sync(localTempFolder);
 
-		await runCommand(`rm -rf ${remoteTempFolder} && mkdir -p ${remoteTempFolder}`);
+		// await runCommand(ssh, `rm -rf ${remoteTempFolder} && mkdir -p ${remoteTempFolder}`);
 
 		console.log("zip api...");
 		await zipDir("php/api", `${localTempFolder}/api.zip`);
@@ -28,35 +28,55 @@ async function syncBackend(onlyApi, remoteTempFolder, pRemoteDestFolder, env) {
 			});
 		}
 
-		console.log("sync...");
-		await sync(localTempFolder, `${remoteTempFolder}`);
-
-		if (!onlyApi) {
-			console.log("unzip vendor.zip...");
-			await runCommand(`unzip ${remoteTempFolder}/vendor.zip -d  ${remoteTempFolder}/vendor`, false);
-		}
-		console.log("unzip api.zip...");
-		await runCommand(`unzip ${remoteTempFolder}/api.zip -d  ${remoteTempFolder}/api`, false);
-
-		await runCommand(
-			`mkdir -p ${remoteDestFolder} && rm -rf ${remoteDestFolder}/api && mv ${remoteTempFolder}/api ${remoteDestFolder} && cp /web/greencard_config${envPostfix}.php ${remoteDestFolder}/greencard_config.php`
-		);
-		if (!onlyApi) {
-			await runCommand(`rm -rf ${remoteDestFolder}/vendor && mv ${remoteTempFolder}/vendor ${remoteDestFolder}`);
-		}
-
-		console.log("Successfully deployed");
+		console.log("Backend successfully zipped");
 	} catch (err) {
 		console.log(chalk.red(err));
 	}
 }
 
-async function syncBackendFull(remoteTempFolder, remoteDestFolder, env) {
-	await syncBackend(false, remoteTempFolder, remoteDestFolder, env);
+async function deployBackend(ssh, onlyApi, remoteTempFolder, pRemoteDestFolder, env) {
+	const envPath = env === "uat" ? "/uat" : "";
+	const envPostfix = env === "prod" ? "_prod" : "_uat";
+	const remoteDestFolder = `${pRemoteDestFolder}${envPath}`;
+	try {
+		if (!onlyApi) {
+			console.log("unzip vendor.zip...");
+			await runCommand(ssh, `unzip ${remoteTempFolder}/vendor.zip -d  ${remoteTempFolder}/vendor`, false);
+		}
+		console.log("unzip api.zip...");
+		await runCommand(ssh, `unzip ${remoteTempFolder}/api.zip -d  ${remoteTempFolder}/api`, false);
+
+		await runCommand(
+			ssh,
+			`mkdir -p ${remoteDestFolder} && rm -rf ${remoteDestFolder}/api && mv ${remoteTempFolder}/api ${remoteDestFolder} && cp /web/greencard_config${envPostfix}.php ${remoteDestFolder}/greencard_config.php`
+		);
+		if (!onlyApi) {
+			await runCommand(
+				ssh,
+				`rm -rf ${remoteDestFolder}/vendor && mv ${remoteTempFolder}/vendor ${remoteDestFolder}`
+			);
+		}
+
+		console.log("Backend successfully prepared");
+	} catch (err) {
+		console.log(chalk.red(err));
+	}
 }
 
-async function syncBackendOnlyApi(remoteTempFolder, remoteDestFolder, env) {
-	await syncBackend(true, remoteTempFolder, remoteDestFolder, env);
+async function justZipBackendFull(ssh, remoteTempFolder, remoteDestFolder, env) {
+	await justZipBackend(ssh, false, remoteTempFolder, remoteDestFolder, env);
 }
 
-module.exports = { syncBackendFull, syncBackendOnlyApi };
+async function deployBackendFull(ssh, remoteTempFolder, remoteDestFolder, env) {
+	await deployBackend(ssh, false, remoteTempFolder, remoteDestFolder, env);
+}
+
+async function justZipBackendOnlyApi(ssh, remoteTempFolder, remoteDestFolder, env) {
+	await justZipBackend(ssh, true, remoteTempFolder, remoteDestFolder, env);
+}
+
+async function deployBackendOnlyApi(ssh, remoteTempFolder, remoteDestFolder, env) {
+	await deployBackend(ssh, true, remoteTempFolder, remoteDestFolder, env);
+}
+
+module.exports = { justZipBackendFull, deployBackendFull, justZipBackendOnlyApi, deployBackendOnlyApi };

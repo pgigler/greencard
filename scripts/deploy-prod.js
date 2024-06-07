@@ -3,7 +3,7 @@ require("dotenv").config();
 const chalk = require("chalk");
 const runCommand = require("./run-command.js");
 const sync = require("./sync.js");
-const { syncBackendFull } = require("./sync-backend.js");
+const { justZipBackendFull, deployBackendFull } = require("./sync-backend.js");
 const zipDir = require("./zip-dir.js");
 const mkdirp = require("mkdirp");
 const rimraf = require("rimraf");
@@ -18,14 +18,23 @@ const remotePhpTempFolder = `${remoteStagingDir}/tempphpprod`;
 const remoteTempFolder = `${remoteStagingDir}/temp`;
 const remoteOldFolder = `${remoteStagingDir}/old`;
 
-// 1. Uncomment justZip
-// 2. Copy manually from C:\Projects\my\greencard\temp\public\public.zip to /web/staging/greencardhu/temp (overwrite)
-// 3. Uncomment deploy
-// 4. Comment back everything
+const args = process.argv.slice(2);
+
+// TODO: automatize copy files
+// - deploy:prod:justzip
+// - see copyFiles()
+// - deploy:prod:remotedeploy
 
 async function run(ssh) {
-	// await justZip(ssh);
-	// await deploy(ssh);
+	if (args.includes("--just-zip")) {
+		console.log("Just zip...");
+		await justZip(ssh);
+	} else if (args.includes("--remote-deploy")) {
+		console.log("Remote deploy...");
+		await deploy(ssh);
+	} else {
+		console.log("Unknown command");
+	}
 }
 
 async function justZip(ssh) {
@@ -39,10 +48,17 @@ async function justZip(ssh) {
 		console.log("zip public...");
 		await zipDir(localSrcFolder, `${localTempFolder}/public.zip`);
 		await runCommand(ssh, `rm -rf ${remoteTempFolder} && mkdir -p ${remoteTempFolder}`);
+
+		justZipBackendFull(ssh, remotePhpTempFolder, `${remoteTempFolder}/public`, "prod");
 	} catch (err) {
 		console.log(err);
 		console.log(chalk.red(err));
 	}
+}
+
+async function copyFiles(ssh) {
+	// Copy manually from C:\Projects\my\greencard\temp\public\public.zip to /web/staging/greencardhu/temp (overwrite)
+	// Copy manually from C:\Projects\my\greencard\temp\php\*.* to /web/staging/greencardhu/tempphpprod (overwrite)
 }
 
 async function deploy(ssh) {
@@ -50,7 +66,7 @@ async function deploy(ssh) {
 		// console.log("sync...");
 		// await sync(localTempFolder, `${remoteTempFolder}`);
 		await runCommand(ssh, `unzip ${remoteTempFolder}/public.zip -d  ${remoteTempFolder}/public`, false);
-		// await syncBackendFull(remotePhpTempFolder, `${remoteTempFolder}/public`, "prod");
+		await deployBackendFull(ssh, remotePhpTempFolder, `${remoteTempFolder}/public`, "prod");
 		await runCommand(
 			ssh,
 			`rm -rf ${remoteOldFolder} && mv ${remoteProdFolder} ${remoteOldFolder} && mv ${remoteTempFolder}/public ${remoteProdFolder}`

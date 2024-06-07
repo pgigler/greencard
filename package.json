@@ -91,8 +91,9 @@
     "_deploy:uat:build": "gatsby clean && cross-env ENV=uat gatsby build --prefix-paths",
     "deploy:uat": "npm run _deploy:uat:build && node ./scripts/deploy-uat.js && npm run clean",
     "_deploy:prod:build": "gatsby clean && cross-env ENV=prod gatsby build",
-    "______deploy:prod": "npm run _deploy:prod:build && node ./scripts/deploy-prod.js && npm run clean",
-    "deploy:prod": "npm run _deploy:prod:build",
+    "_______deploy:prod": "npm run _deploy:prod:build && node ./scripts/deploy-prod.js && npm run clean",
+    "deploy:prod:justzip": "npm run _deploy:prod:build && node ./scripts/deploy-prod.js --just-zip && npm run clean",
+    "deploy:prod:remotedeploy": "node ./scripts/deploy-prod.js --remote-deploy",
     "deploy:prod:sorry": "node ./scripts/deploy-prod-sorry.js",
     "deploy:prod:backend": "node ./scripts/deploy-prod-backend.js",
     "deploy:prod:backend:onlyapi": "node ./scripts/deploy-prod-backend.js onlyapi",
@@ -105,5 +106,8 @@
     "ngrok": "C:/utils/ngrok/ngrok.exe http 8020",
     "test2": "gatsby serve --prefix-paths",
     "tail": "powershell.exe Get-Content -Path 'C:/Windows/Temp/PHP74x64_errors.log' -Wait"
+  },
+  "engines": {
+    "node": "14.17.0"
   }
 }
