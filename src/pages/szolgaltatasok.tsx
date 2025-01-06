@@ -7,6 +7,38 @@ import Img from "gatsby-image";
 
 const AUDIT_PROOF = true;
 
+const PR_MUSZ = {
+	SZGK: 16290,
+	TEHERGK: 17090,
+	MK: 4360,
+	UF: 10490,
+	SZGK_4X4: 20390,
+	TEHERGK_4X4: 21190,
+};
+
+const PR_MUSZ_ATV = {
+	SZGK: 26000 + 1000,
+	TEHERGK: 27000 + 1000,
+	MK: 15000 + 1000,
+	UF: 20000 + 1000,
+	SZGK_4X4: 30000 + 1000,
+	TEHERGK_4X4: 31000 + 1000,
+};
+
+const PR_ATV = {
+	SZGK: PR_MUSZ_ATV.SZGK - PR_MUSZ.SZGK,
+	TEHERGK: PR_MUSZ_ATV.TEHERGK - PR_MUSZ.TEHERGK,
+	MK: PR_MUSZ_ATV.MK - PR_MUSZ.MK,
+	UF: PR_MUSZ_ATV.UF - PR_MUSZ.UF,
+	SZGK_4X4: PR_MUSZ_ATV.SZGK_4X4 - PR_MUSZ.SZGK_4X4,
+	TEHERGK_4X4: PR_MUSZ_ATV.TEHERGK_4X4 - PR_MUSZ.TEHERGK_4X4,
+};
+
+// Split by 3 digits, join with dot plus Ft
+const formatPrice = (price: number) => {
+	return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + " Ft";
+};
+
 const ServicesPage = () => {
 	const data = useStaticQuery(graphql`
 		query ServicesPageQuery {
@@ -91,12 +123,12 @@ const ServicesPage = () => {
 								</tr>
 							</thead>
 							<tbody>
-								{bigLine("Személygépkocsi (M1)", "16.290 Ft")}
-								{bigLine("Tehergépkocsi (M1)", "17.090 Ft")}
-								{bigLine("Motorkerékpár (L3e)", "4.360 Ft")}
-								{bigLine("Utánfutó (O1)", "10.490 Ft")}
-								{bigLine("Személygépkocsi (4x4 - M1G)", "20.390 Ft")}
-								{bigLine("Tehergépkocsi (4x4 - N1G)", "21.190 Ft")}
+								{bigLine("Személygépkocsi (M1)", formatPrice(PR_MUSZ.SZGK))}
+								{bigLine("Tehergépkocsi (M1)", formatPrice(PR_MUSZ.TEHERGK))}
+								{bigLine("Motorkerékpár (L3e)", formatPrice(PR_MUSZ.MK))}
+								{bigLine("Utánfutó (O1)", formatPrice(PR_MUSZ.UF))}
+								{bigLine("Személygépkocsi (4x4 - M1G)", formatPrice(PR_MUSZ.SZGK_4X4))}
+								{bigLine("Tehergépkocsi (4x4 - N1G)", formatPrice(PR_MUSZ.TEHERGK_4X4))}
 								{/* {bigLine("LPG gázos autó felár", "+ 4.000 Ft")} */}
 							</tbody>
 						</table>
@@ -121,12 +153,12 @@ const ServicesPage = () => {
 								</tr>
 							</thead>
 							<tbody>
-								{bigLine("Személygépkocsi (M1)", "9.720 Ft")}
-								{bigLine("Tehergépkocsi (M1)", "9.910 Ft")}
-								{bigLine("Motorkerékpár (L3e)", "10.640 Ft")}
-								{bigLine("Utánfutó (O1)", "9.510 Ft")}
-								{bigLine("Személygépkocsi (4x4 - M1G)", "9.610 Ft")}
-								{bigLine("Tehergépkocsi (4x4 - N1G)", "9.810 Ft")}
+								{bigLine("Személygépkocsi (M1)", formatPrice(PR_ATV.SZGK))}
+								{bigLine("Tehergépkocsi (M1)", formatPrice(PR_ATV.TEHERGK))}
+								{bigLine("Motorkerékpár (L3e)", formatPrice(PR_ATV.MK))}
+								{bigLine("Utánfutó (O1)", formatPrice(PR_ATV.UF))}
+								{bigLine("Személygépkocsi (4x4 - M1G)", formatPrice(PR_ATV.SZGK_4X4))}
+								{bigLine("Tehergépkocsi (4x4 - N1G)", formatPrice(PR_ATV.TEHERGK_4X4))}
 								{/* {bigLine("LPG gázos autó felár", "+ 4.000 Ft")} */}
 							</tbody>
 						</table>
@@ -150,24 +182,24 @@ const ServicesPage = () => {
 						</tr>
 					</thead>
 					<tbody>
-						{bigLine("Személygépkocsi (M1)", "26.000 Ft")}
-						{smallLine("Műszaki vizsga díja", "16.290 Ft")}
-						{smallLine("Átvizsgálás díja", "9.720 Ft")}
-						{bigLine("Tehergépkocsi (M1)", "27.000 Ft")}
-						{smallLine("Műszaki vizsga díja", "17.090 Ft")}
-						{smallLine("Átvizsgálás díja", "9.910 Ft")}
-						{bigLine("Motorkerékpár (L3e)", "15.000 Ft")}
-						{smallLine("Műszaki vizsga díja", "4.360 Ft")}
-						{smallLine("Átvizsgálás díja", "10.640 Ft")}
-						{bigLine("Utánfutó (O1)", "20.000 Ft")}
-						{smallLine("Műszaki vizsga díja", "10.490 Ft")}
-						{smallLine("Átvizsgálás díja", "9.510 Ft")}
-						{bigLine("Személygépkocsi (4x4 - M1G)", "30.000 Ft")}
-						{smallLine("Műszaki vizsga díja", "20.390 Ft")}
-						{smallLine("Átvizsgálás díja", "9.610 Ft")}
-						{bigLine("Tehergépkocsi (4x4 - N1G)", "31.000 Ft")}
-						{smallLine("Műszaki vizsga díja", "21.190 Ft")}
-						{smallLine("Átvizsgálás díja", "9.810 Ft")}
+						{bigLine("Személygépkocsi (M1)", formatPrice(PR_MUSZ_ATV.SZGK))}
+						{smallLine("Műszaki vizsga díja", formatPrice(PR_MUSZ.SZGK))}
+						{smallLine("Átvizsgálás díja", formatPrice(PR_ATV.SZGK))}
+						{bigLine("Tehergépkocsi (M1)", formatPrice(PR_MUSZ_ATV.TEHERGK))}
+						{smallLine("Műszaki vizsga díja", formatPrice(PR_MUSZ.TEHERGK))}
+						{smallLine("Átvizsgálás díja", formatPrice(PR_ATV.TEHERGK))}
+						{bigLine("Motorkerékpár (L3e)", formatPrice(PR_MUSZ_ATV.MK))}
+						{smallLine("Műszaki vizsga díja", formatPrice(PR_MUSZ.MK))}
+						{smallLine("Átvizsgálás díja", formatPrice(PR_ATV.MK))}
+						{bigLine("Utánfutó (O1)", formatPrice(PR_MUSZ_ATV.UF))}
+						{smallLine("Műszaki vizsga díja", formatPrice(PR_MUSZ.UF))}
+						{smallLine("Átvizsgálás díja", formatPrice(PR_ATV.UF))}
+						{bigLine("Személygépkocsi (4x4 - M1G)", formatPrice(PR_MUSZ_ATV.SZGK_4X4))}
+						{smallLine("Műszaki vizsga díja", formatPrice(PR_MUSZ.SZGK_4X4))}
+						{smallLine("Átvizsgálás díja", formatPrice(PR_ATV.SZGK_4X4))}
+						{bigLine("Tehergépkocsi (4x4 - N1G)", formatPrice(PR_MUSZ_ATV.TEHERGK_4X4))}
+						{smallLine("Műszaki vizsga díja", formatPrice(PR_MUSZ.TEHERGK_4X4))}
+						{smallLine("Átvizsgálás díja", formatPrice(PR_ATV.TEHERGK_4X4))}
 						{/* {bigLine("LPG gázos autó felár", "+ 4.000 Ft")} */}
 					</tbody>
 				</table>
