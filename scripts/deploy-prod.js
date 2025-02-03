@@ -22,7 +22,8 @@ const args = process.argv.slice(2);
 
 // TODO: automatize copy files
 // - deploy:prod:justzip
-// - see copyFiles()
+// - Copy manually from C:\Projects\my\greencard\temp\public\public.zip to /web/staging/greencardhu/temp (overwrite)
+// - ONLY IF PHP CHANGES: Copy manually from C:\Projects\my\greencard\temp\php\*.* to /web/staging/greencardhu/tempphpprod (overwrite)
 // - deploy:prod:remotedeploy
 
 async function run(ssh) {

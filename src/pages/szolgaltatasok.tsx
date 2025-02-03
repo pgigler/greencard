@@ -5,24 +5,24 @@ import SEO from "../components/seo";
 import { getFluid, isBrowser } from "../util/helper";
 import Img from "gatsby-image";
 
-const AUDIT_PROOF = true;
+const AUDIT_PROOF = false;
 
 const PR_MUSZ = {
-	SZGK: 16290,
-	TEHERGK: 17090,
-	MK: 4360,
+	SZGK: 26700,
+	TEHERGK: 28100,
+	MK: 7200,
 	UF: 10490,
-	SZGK_4X4: 20390,
-	TEHERGK_4X4: 21190,
+	SZGK_4X4: 33400,
+	TEHERGK_4X4: 34800,
 };
 
 const PR_MUSZ_ATV = {
-	SZGK: 26000 + 1000,
-	TEHERGK: 27000 + 1000,
-	MK: 15000 + 1000,
-	UF: 20000 + 1000,
-	SZGK_4X4: 30000 + 1000,
-	TEHERGK_4X4: 31000 + 1000,
+	SZGK: 39990,
+	TEHERGK: 41990,
+	MK: 19990,
+	UF: 21990,
+	SZGK_4X4: 46990,
+	TEHERGK_4X4: 48990,
 };
 
 const PR_ATV = {
@@ -32,6 +32,15 @@ const PR_ATV = {
 	UF: PR_MUSZ_ATV.UF - PR_MUSZ.UF,
 	SZGK_4X4: PR_MUSZ_ATV.SZGK_4X4 - PR_MUSZ.SZGK_4X4,
 	TEHERGK_4X4: PR_MUSZ_ATV.TEHERGK_4X4 - PR_MUSZ.TEHERGK_4X4,
+};
+
+const ER_VIZSG = {
+	SZGK_TO_1400: 22950,
+	SZGK_TO_2000: 24975,
+	SZGK_FROM_2000: 27000,
+	TEHERGK_TO_3500: 27000,
+	MK_TO_500: 20925,
+	MK_FROM_500: 22950,
 };
 
 // Split by 3 digits, join with dot plus Ft
@@ -183,26 +192,27 @@ const ServicesPage = () => {
 					</thead>
 					<tbody>
 						{bigLine("Személygépkocsi (M1)", formatPrice(PR_MUSZ_ATV.SZGK))}
-						{smallLine("Műszaki vizsga díja", formatPrice(PR_MUSZ.SZGK))}
-						{smallLine("Átvizsgálás díja", formatPrice(PR_ATV.SZGK))}
+						{AUDIT_PROOF && smallLine("Műszaki vizsga díja", formatPrice(PR_MUSZ.SZGK))}
+						{AUDIT_PROOF && smallLine("Átvizsgálás díja", formatPrice(PR_ATV.SZGK))}
 						{bigLine("Tehergépkocsi (M1)", formatPrice(PR_MUSZ_ATV.TEHERGK))}
-						{smallLine("Műszaki vizsga díja", formatPrice(PR_MUSZ.TEHERGK))}
-						{smallLine("Átvizsgálás díja", formatPrice(PR_ATV.TEHERGK))}
+						{AUDIT_PROOF && smallLine("Műszaki vizsga díja", formatPrice(PR_MUSZ.TEHERGK))}
+						{AUDIT_PROOF && smallLine("Átvizsgálás díja", formatPrice(PR_ATV.TEHERGK))}
 						{bigLine("Motorkerékpár (L3e)", formatPrice(PR_MUSZ_ATV.MK))}
-						{smallLine("Műszaki vizsga díja", formatPrice(PR_MUSZ.MK))}
-						{smallLine("Átvizsgálás díja", formatPrice(PR_ATV.MK))}
+						{AUDIT_PROOF && smallLine("Műszaki vizsga díja", formatPrice(PR_MUSZ.MK))}
+						{AUDIT_PROOF && smallLine("Átvizsgálás díja", formatPrice(PR_ATV.MK))}
 						{bigLine("Utánfutó (O1)", formatPrice(PR_MUSZ_ATV.UF))}
-						{smallLine("Műszaki vizsga díja", formatPrice(PR_MUSZ.UF))}
-						{smallLine("Átvizsgálás díja", formatPrice(PR_ATV.UF))}
+						{AUDIT_PROOF && smallLine("Műszaki vizsga díja", formatPrice(PR_MUSZ.UF))}
+						{AUDIT_PROOF && smallLine("Átvizsgálás díja", formatPrice(PR_ATV.UF))}
 						{bigLine("Személygépkocsi (4x4 - M1G)", formatPrice(PR_MUSZ_ATV.SZGK_4X4))}
-						{smallLine("Műszaki vizsga díja", formatPrice(PR_MUSZ.SZGK_4X4))}
-						{smallLine("Átvizsgálás díja", formatPrice(PR_ATV.SZGK_4X4))}
+						{AUDIT_PROOF && smallLine("Műszaki vizsga díja", formatPrice(PR_MUSZ.SZGK_4X4))}
+						{AUDIT_PROOF && smallLine("Átvizsgálás díja", formatPrice(PR_ATV.SZGK_4X4))}
 						{bigLine("Tehergépkocsi (4x4 - N1G)", formatPrice(PR_MUSZ_ATV.TEHERGK_4X4))}
-						{smallLine("Műszaki vizsga díja", formatPrice(PR_MUSZ.TEHERGK_4X4))}
-						{smallLine("Átvizsgálás díja", formatPrice(PR_ATV.TEHERGK_4X4))}
+						{AUDIT_PROOF && smallLine("Műszaki vizsga díja", formatPrice(PR_MUSZ.TEHERGK_4X4))}
+						{AUDIT_PROOF && smallLine("Átvizsgálás díja", formatPrice(PR_ATV.TEHERGK_4X4))}
 						{/* {bigLine("LPG gázos autó felár", "+ 4.000 Ft")} */}
 					</tbody>
 				</table>
+				LPG gázüzemű gépjárművek felára: {formatPrice(5000)}
 			</div>
 			{/* <p
 				id="elozetes-atvizsgalas-muszaki-elott"
@@ -361,15 +371,15 @@ const ServicesPage = () => {
 					<tbody>
 						<tr>
 							<td>1400 ccm3-ig</td>
-							<td className="font-bold text-black">17.000 Ft</td>
+							<td className="font-bold text-black">{formatPrice(ER_VIZSG.SZGK_TO_1400)}</td>
 						</tr>
 						<tr>
 							<td>1401-2000 ccm3</td>
-							<td className="font-bold text-black">18.500 Ft</td>
+							<td className="font-bold text-black">{formatPrice(ER_VIZSG.SZGK_TO_2000)}</td>
 						</tr>
 						<tr>
 							<td>2000 ccm3 felett</td>
-							<td className="font-bold text-black">20.000 Ft</td>
+							<td className="font-bold text-black">{formatPrice(ER_VIZSG.SZGK_FROM_2000)}</td>
 						</tr>
 						<tr>
 							<td className="bg-brand-yellowdark font-semibold text-black">Tehergépjármű</td>
@@ -377,7 +387,7 @@ const ServicesPage = () => {
 						</tr>
 						<tr>
 							<td>3,5 tonnáig</td>
-							<td className="font-bold text-black">20.000 Ft</td>
+							<td className="font-bold text-black">{formatPrice(ER_VIZSG.TEHERGK_TO_3500)}</td>
 						</tr>
 						<tr>
 							<td className="bg-brand-yellowdark font-semibold text-black">Motorkerékpár</td>
@@ -385,11 +395,11 @@ const ServicesPage = () => {
 						</tr>
 						<tr>
 							<td>500 ccm3 alatt</td>
-							<td className="font-bold text-black">15.500 Ft</td>
+							<td className="font-bold text-black">{formatPrice(ER_VIZSG.MK_TO_500)}</td>
 						</tr>
 						<tr>
 							<td>500 ccm3 felett</td>
-							<td className="font-bold text-black">17.000 Ft</td>
+							<td className="font-bold text-black">{formatPrice(ER_VIZSG.MK_FROM_500)}</td>
 						</tr>
 					</tbody>
 				</table>
